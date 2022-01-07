@@ -15,7 +15,7 @@ const createRating = (req, res) => {
 }
 //get all ratings by for a movie
 const getRatings = (req, res) => {
-	dal.getOrderById(req.params.movie_id).then(result => {
+	dal.getAllRatings(req.params.movie_id).then(result => {
 		res.json(result);
 	})
 	.catch(handle(req, res));

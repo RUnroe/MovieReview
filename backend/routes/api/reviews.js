@@ -12,14 +12,14 @@ const createReview = (req, res) => {
 	})
 	.catch(handle(req, res));
 }
-//get all order by order_id
+//get all reviews for a movie
 const getReviews = (req, res) => {
 	dal.getReviews(req.params.movie_id).then(result => {
 		res.json(result);
 	})
 	.catch(handle(req, res));
 }
-//get all orders (purchased) for user by user_id
+//Delete a review. Either delete a review you own or admin can delete any review
 const deleteReview = (req, res) => {
 	dal.deleteReview(req.session.user_id, req.session.is_admin, req.params.movie_id, req.params.review_id).then(result => {
 		res.json(result);
