@@ -5,6 +5,13 @@ const requireAuth = (redirect) => (req, res, next) => {
 	else res.sendStatus(401);
 };
 
+const requireAdmin = (redirect) => (req, res, next) => {
+	if(req.session.user_id && req.session.is_admin) next();
+	else if (redirect) res.redirect(redirect);
+	else res.sendStatus(401);
+
+}
+
 const requireNotAuth = (redirect) => (req, res, next) => {
 	if (req.session.user_id) {
 		if (redirect) res.redirect(redirect);
@@ -48,9 +55,10 @@ const requirePresenceOfParameter = (param, name, res) => {
 };
 
 module.exports = {
-	requireAuth
-	, requireNotAuth
-	, handle
-	, respond
-	, requirePresenceOfParameter
+	requireAuth,
+	requireAdmin,
+	requireNotAuth,
+	handle,
+	respond,
+	requirePresenceOfParameter
 };
