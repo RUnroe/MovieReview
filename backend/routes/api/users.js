@@ -8,9 +8,9 @@ const { requireAuth, requireAdmin, requireNotAuth, handle } = require('../util')
 
 const createUser = (req, res) => {
 	dal.createUser(req.body)
-		.then(({user_id, is_seller}) => {
+		.then(({user_id, is_admin}) => {
 			req.session.user_id = user_id.toString(); // log them in
-			req.session.is_seller = is_seller.toString(); // log them in
+			req.session.is_admin = is_admin.toString(); // log them in
 			console.log("session created");
 			//res.header('Location', '/api/auth');
 			res.status(201);
@@ -30,7 +30,7 @@ const authenticate = (req, res, next) => {
 			}
 			if (value.user_id) {
 				req.session.user_id = value.user_id;
-				req.session.is_seller = value.is_seller.toString(); // log them in
+				req.session.is_admin = value.is_admin.toString(); // log them in
 
 				console.log("session created");
 				res.statusMessage = 'Authenticated';
@@ -62,7 +62,6 @@ const updateUser = (req, res) => {
 	dal.updateUser(req.session.user_id, req.body).then(() => {
 		res.status(204);
 		res.statusMessage = 'Updated User';
-		if(req.body.is_seller) req.session.is_seller = req.body.is_seller.toString();
 		res.end();
 	})
 	.catch(handle(req, res));
@@ -87,35 +86,8 @@ const removeUser = (req, res) => {
 	.catch(handle(req, res));
 }
 
-const checkSession = (req, res) => {
-	//console.log("check Auth:",req.session);
-	
-	if(req.session && req.session.user_id) {
-		const is_seller = req.session.is_seller === "true" ? "seller" : "buyer";
-		// res.json({authLevel: is_seller});
-		dal.getUserById({user_id: req.session.user_id}).then( user => {
-			let retUser = Object.assign(user, {authLevel: is_seller});
-			delete retUser._id;
-			delete retUser.is_seller;
-
-			res.json(retUser);
-		})
-		.catch(handle(req, res));
-	}
-	else res.json({authLevel: ""});
-}
 
 
-const checkCredentials = (req, res) => {
-	let user_id = null;
-	if(req.session && req.session.user_id) user_id = req.session.user_id;
-	dal.checkCredentials({user_id, username: req.body.username, email: req.body.email}).then(response => {
-		// console.log(req.body.username, req.body.email);
-		// console.log(response);
-		res.json(response);
-	})
-	.catch(handle(req, res));
-}
 
 
 const routes = [
@@ -144,11 +116,6 @@ const routes = [
 		methods: ['delete'],
 		handler: [requireAdmin(), removeUser]
 	},
-	{
-		uri: '/api/user/check',
-		methods: ['post'],
-		handler: checkCredentials
-	},
 
 	{
 		uri: '/api/auth',
@@ -159,12 +126,7 @@ const routes = [
 		uri: '/api/auth',
 		methods: ['delete'],
 		handler: [requireAuth(), endSession]
-	},
-	{
-		uri: '/api/auth',
-		methods: ['get'],
-		handler: checkSession
-	},
+	}
 
 ];
 
