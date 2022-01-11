@@ -1,7 +1,7 @@
 
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,node,react,firebase
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio,visualstudiocode,node,react,firebase
-
+secrets.json
 ### Firebase ###
 .idea
 **/node_modules/*
