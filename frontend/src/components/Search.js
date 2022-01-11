@@ -1,45 +1,47 @@
-// import React, { useState } from 'react';
+import React, { useState } from 'react';
+import '../styles/Search.scss';
 
-// const Search = () => {
-//     let [search, setSearch] = useState();
-//     let [searchResults, setSearchResults] = useState();
+const Search = () => {
+    let [searchParams, setSearchParams] = useState();
+    let [searchResults, setSearchResults] = useState();
 
-//     const getMovies = async (search) => {
-//         let res = await fetch(`/api/getMovies/?query=${search}`);
-//         let body = await res.json();
+    //Grabs the search parameters and fetch's the api
+    const getMovies = async (search) => {
+        let res = await fetch(`/api/getMovies/?search=${search}`);
+        let body = await res.json();
 
-//         //If the request status has not succeeded then throw an error
-//         if (res.status !== 200) {
-//             throw new Error('Something went wrong', body.message);
-//         }
+        //If the request status has not succeeded then throw an error
+        if (res.status !== 200) {
+            throw new Error('Something went wrong', body);
+        }
 
-//         return body;
-//     }
+        return body;
+    }
 
-//     const handleInput = (e) => {
-//         setSearch(e.target.value), () => {
-//             getMovies(search).then(res => {
-//                 setSearchResults(res.response.results);
-//             })
-//         }
-//     }
+    const handleInput = (e) => {
+        setSearchParams(e.target.value);
 
-//     return (
-//         <div className='search-wrapper'>
-//             <div className='search-bar'>
-//                 <input
-//                     type='text'
-//                     placeholder='Search...'
-//                     value={search}
-//                     onChange={handleInput}
-//                     className='search-input'
-//                 />
-//             </div>
-//             <div>
+        //Puts Search Paramaters into 'getMovies' and sets the results state
+        getMovies(searchParams).then(res => {
+            setSearchResults(res.response.results)
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 
-//             </div>
-//         </div>
-//     )
-// }
+    return (
+        <div className='search-wrapper'>
+            <div className='search-bar'>
+                <input
+                    type='text'
+                    placeholder='Search...'
+                    value={searchParams}
+                    onChange={handleInput}
+                    className='search-input input-small'
+                />
+            </div>
+        </div>
+    )
+}
 
-// export default Search;
+export default Search;

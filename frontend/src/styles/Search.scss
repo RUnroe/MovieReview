@@ -1,0 +1,18 @@
+.search-input {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 15px 10px 15px;
+    border: 2px solid #000000;
+    border-radius: 50px;
+    // width: 350px;
+}
+
+.search-input::placeholder {
+    font-weight: 700;
+    font-size: 12px;
+    color: #ACC8EA;
+}
+
+.search-input:focus {
+    outline: none;
+}
