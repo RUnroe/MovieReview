@@ -70,7 +70,7 @@ const updatePassword = (req, res) => {
 }
 
 const removeSelf = (req, res) => {
-	dal.removeUser(req.session.user_id, req.body).then(() => {
+	dal.removeUser(req.session.user_id).then(() => {
 		res.status(204);
 		res.statusMessage = 'Removed User';
 		res.end();
@@ -79,7 +79,7 @@ const removeSelf = (req, res) => {
 }
 
 const removeUser = (req, res) => {
-	dal.removeUser(req.body.user_id, req.body).then(() => {
+	dal.removeUser(req.params.user_id).then(() => {
 		res.status(204);
 		res.statusMessage = 'Removed User';
 		res.end();

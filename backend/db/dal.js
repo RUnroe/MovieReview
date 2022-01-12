@@ -120,6 +120,10 @@ const updatePassword = async (user_id, password) => {
 }
 
 
+const removeUser = async (user_id) => {
+    const result = await db.collection('users').doc(user_id).delete();
+    console.log(result);
+}
 
 
 
@@ -128,5 +132,5 @@ const updatePassword = async (user_id, password) => {
 
 
 module.exports =  {
-	createUser, getUserById, updatePassword
+	createUser, getUserById, updatePassword, removeUser
 };
