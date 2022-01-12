@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const { v4: uuidv4 } = require('uuid');
+const short = require('short-uuid');
 const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
 const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
 
@@ -20,8 +20,8 @@ const hash = async (pw) => {
 };
 const verify_hash = (input, hash) => bcrypt.compareSync(input, hash);
 
-
-const genId = () => (uuidv4());
+const translator = short();
+const genId = () => (translator.new());
 
 
 const isFieldEmpty = field => {
@@ -70,3 +70,4 @@ const createUser = async (_user) => {
     //create session for user 
 
 }
+console.log(genId());
