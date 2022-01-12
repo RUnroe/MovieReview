@@ -59,8 +59,8 @@ const getUser = (req, res) => {
 	.catch(handle(req, res));
 }
 
-const updateUser = (req, res) => {
-	dal.updateUser(req.session.user_id, req.body).then(() => {
+const updatePassword = (req, res) => {
+	dal.updatePassword(req.session.user_id, req.body.password).then(() => {
 		res.status(204);
 		res.statusMessage = 'Updated User';
 		res.end();
@@ -105,7 +105,7 @@ const routes = [
     {
 		uri: '/api/user',
 		methods: ['put'],
-		handler: [requireAuth(), updateUser]
+		handler: [requireAuth(), updatePassword]
 	}, 
     {
 		uri: '/api/user',

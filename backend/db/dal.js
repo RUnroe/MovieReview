@@ -102,37 +102,31 @@ const getUserById = async (user_id) => {
     }
 }
 
-const updateUser = async (user_id, _user) => {
-    //validate data
-    let fields = [];
-	if(_user.hasOwnProperty(username)) fields.push({name: "username", value: _user.username, regex: /^[a-zA-Z0-9_ ]+$/}); 
-	if(_user.hasOwnProperty(password)) fields.push({name: "password", value: _user.password, regex: /^(?=.*[A-Za-z])(?=.*\d).{6,}$/});
-    const errors = findErrors(fields);
+const updatePassword = async (user_id, password) => {
+    //validate password
+    const errors = findErrors([fields.push({name: "password", value: password, regex: /^(?=.*[A-Za-z])(?=.*\d).{6,}$/})]);
 	if (errors.length) {
 		throw errors;
 	}
 
-    //check if username already exists
-
-    if( _user.hasOwnProperty(username) && await getUserByUsername(_user.username)) throw "User already exists with that username";
 
     //salt and hash password
-    if(_user.hasOwnProperty(password)) {
-        let securePassword = hash(_user.password);
-        console.log(_user.password, securePassword, verify_hash(_user.password, securePassword));
-    }
+    let securePassword = hash(password);
+    console.log(password, securePassword, verify_hash(password, securePassword));
 
-    //add user to database
-    
-    let newData = {};
-    if(_user.hasOwnProperty(username)) newData.username = _user.username; 
-	if(_user.hasOwnProperty(password)) newData.password = securePassword;
-
-    const result = await db.collection('users').doc(userId).update(newData);
+    //update password in database
+    const result = await db.collection('users').doc(user_id).update({password: securePassword});
     console.log(result);
 }
 
 
+
+
+
+
+
+
+
 module.exports =  {
-	createUser, getUserById, updateUser
+	createUser, getUserById, updatePassword
 };
