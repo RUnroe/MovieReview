@@ -9,14 +9,11 @@ initializeApp({credential: cert(require('../secrets').firebase)});
 const db = getFirestore();
 
 
-let salt = bcrypt.genSaltSync(10);
+
 
 //TODO: adjust for bcrypt later
-const hash = async (pw) => {
-	return bcrypt.hashSync(pw, salt)
-		.catch(err => {
-			throw ['An error occurred while hashing password'];
-		});
+const hash = (pw) => {
+	return  bcrypt.hashSync(pw, 8);
 };
 const verify_hash = (input, hash) => bcrypt.compareSync(input, hash);
 
@@ -46,14 +43,15 @@ const createUser = async (_user) => {
     //validate data
     const errors = findErrors([
 		{name: "username", value: _user.username, regex: /^[a-zA-Z0-9_ ]+$/}, 
-		{name: "password", value: _user.password, regex: /^(?=.*[A-Za-z])(?=.*\d).{8,}$/}
+		{name: "password", value: _user.password, regex: /^(?=.*[A-Za-z])(?=.*\d).{6,}$/}
 	]);
 	if (errors.length) {
 		throw errors;
 	}
 
     //salt and hash password
-
+    let securePassword = hash(_user.password);
+    console.log(_user.password, securePassword, verify_hash(_user.password, securePassword));
 
     //add user to database
     const userId = genId();
@@ -66,8 +64,12 @@ const createUser = async (_user) => {
         user_id: userId
 
     });
-
-    //create session for user 
+    console.log(result);
+    return {user_id: userId, is_admin: false};
 
 }
-console.log(genId());
+
+
+module.exports =  {
+	createUser
+};

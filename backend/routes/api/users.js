@@ -7,6 +7,7 @@ const configure = (obj) => {
 const { requireAuth, requireAdmin, requireNotAuth, handle } = require('../util');
 
 const createUser = (req, res) => {
+    console.log('Body', req.body);
 	dal.createUser(req.body)
 		.then(({user_id, is_admin}) => {
 			req.session.user_id = user_id.toString(); // log them in
