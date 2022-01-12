@@ -24,6 +24,15 @@ const getMoviesBySearch = (req, res) => {
 }
 
 
+//Get collection of movies
+//TODO: Get query params and pass through to dal
+const getMovies = (req, res) => {
+	dal.getMovies().then(result => {
+		res.json(result);
+	})
+	.catch(handle(req, res));
+}
+
 
 
 const routes = [
@@ -36,6 +45,12 @@ const routes = [
 		uri: '/api/search',
 		methods: ['get'],
 		handler: getMoviesBySearch
+	},
+	{
+		uri: '/api/movies',
+		methods: ['get'],
+		handler: getMovies
+
 	}
 ];
 
