@@ -15,6 +15,6 @@
     "express-session": "^1.17.2",
     "firebase": "^9.6.2",
     "firebase-admin": "^10.0.1",
-    "uuidv4": "^6.2.12"
+    "uuid": "^8.3.2"
   }
 }
