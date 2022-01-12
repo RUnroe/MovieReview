@@ -127,10 +127,54 @@ const removeUser = async (user_id) => {
 
 
 
+// ==============================
+//            Auth
+// ==============================
+
+
+
+
+// ==============================
+//            Ratings
+// ==============================
+
+const createRating = async (user_id, movie_id, rating) => {
+    //validate data
+    const errors = findErrors([
+        {name: "rating", value: rating, regex: /^[0-5]$/}
+
+    ]);
+    if (errors.length) {
+        throw errors;
+    }
+
+    //create rating
+    const result = await db.collection('ratings').doc(`${user_id}m${movie_id}`).set({
+        rating: rating
+    });
+    console.log(result);
+    return result;
+}
+
+// createRating("33", "mivei", "4");
+
+
+// ==============================
+//            Reviews
+// ==============================
+
+
+
+
+// ==============================
+//            Movies
+// ==============================
+
 
 
 
 
 module.exports =  {
-	createUser, getUserById, updatePassword, removeUser
+	createUser, getUserById, updatePassword, removeUser,
+    createRating
 };

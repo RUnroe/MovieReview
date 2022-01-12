@@ -7,7 +7,7 @@ const configure = (obj) => {
 const { requireAuth, requireNotAuth, handle } = require('../util');
 
 const createRating = (req, res) => {
-	dal.createRating(req.session.user_id, req.params.movie_id, req.body).then((success) => {
+	dal.createRating(req.session.user_id, req.params.movie_id, req.body.rating).then((success) => {
 		if(success) res.sendStatus(200);
 		else res.sendStatus(401);
 	})
