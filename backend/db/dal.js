@@ -49,6 +49,10 @@ const createUser = async (_user) => {
 		throw errors;
 	}
 
+    //check if username already exists
+
+    if( await getUserByUsername(_user.username)) throw "User already exists with that username";
+
     //salt and hash password
     let securePassword = hash(_user.password);
     console.log(_user.password, securePassword, verify_hash(_user.password, securePassword));
@@ -69,7 +73,24 @@ const createUser = async (_user) => {
 
 }
 
+const getUserByUsername = async (username) => {
+    const user = await db.collection('users').where("username", "==", username).get();
+    return user._size;
+}
+
+const getUserById = async (user_id) => {
+    const user = await db.collection('users').doc(user_id).get();
+    if(!user.exists) throw `User with id (${user_id}) not found`;
+    else {
+        let userData = user.data();
+        delete userData.password; 
+        return userData;
+    }
+}
+
+
+
 
 module.exports =  {
-	createUser
+	createUser, getUserById
 };
