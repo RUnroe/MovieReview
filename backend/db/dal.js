@@ -42,27 +42,41 @@ const findErrors = fields => {
 const createUser = async (_user) => {
     //validate data
     const errors = findErrors([
-		{name: "username", value: _user.username, regex: /^[a-zA-Z0-9_ ]+$/}, 
-		{name: "password", value: _user.password, regex: /^(?=.*[A-Za-z])(?=.*\d).{6,}$/}
+		{name: "email", value: _user.email, regex: /\w+@\w+\.\w+/}, 
+		{name: "password", value: _user.password, regex: /^(?=.*[A-Za-z])(?=.*\d).{6,}$/},
+		{name: "phone", value: _user.phone, regex: /^(1?\([0-9]{3}\)( |)|(1-|1)?[0-9]{3}-?)[0-9]{3}-?[0-9]{4}$/m},
+		{name: "first name", value: _user.fname, regex:  /./}, 
+		{name: "last name", value: _user.lname, regex:  /./}, 
+		{name: "street", value: _user.street, regex: /../},
+		{name: "city", value: _user.city, regex:  /../},
+		{name: "state", value: _user.state, regex: /^[a-z, A-Z]{2}$/},
+		{name: "zip code", value: _user.zip_code, regex: /^[0-9]{5}(-[0-9]{4})?$/m},
+
 	]);
 	if (errors.length) {
 		throw errors;
 	}
 
-    //check if username already exists
+    //check if email already exists
 
-    if( await getUserByUsername(_user.username)) throw "User already exists with that username";
+    if( await getUserByEmail(_user.email)) throw "User already exists with that email";
 
     //salt and hash password
     let securePassword = hash(_user.password);
-    console.log(_user.password, securePassword, verify_hash(_user.password, securePassword));
 
     //add user to database
     const userId = genId();
 
     const result = await db.collection('users').doc(userId).set({
-        username: _user.username,
+        email: _user.email,
         password: securePassword,
+        phone: _user.phone,
+        fname: _user.fname,
+        lname: _user.lname,
+        street: _user.street,
+        city: _user.city,
+        state: _user.state,
+        zip_code: _user.zip_code,
         is_admin: false,
         api_key: genId(),
         user_id: userId
@@ -73,8 +87,8 @@ const createUser = async (_user) => {
 
 }
 
-const getUserByUsername = async (username) => {
-    const user = await db.collection('users').where("username", "==", username).get();
+const getUserByEmail = async (email) => {
+    const user = await db.collection('users').where("email", "==", email).get();
     return user._size;
 }
 
