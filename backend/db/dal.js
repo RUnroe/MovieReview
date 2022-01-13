@@ -11,7 +11,6 @@ const db = getFirestore();
 
 
 
-//TODO: adjust for bcrypt later
 const hash = (pw) => {
 	return  bcrypt.hashSync(pw, 8);
 };
@@ -158,8 +157,19 @@ const createRating = async (user_id, movie_id, rating) => {
     return result;
 }
 
+// createRating("55323", "mivei", "3");
 
+const getAllRatings = async (movie_id) => {
+    const ratings = await db.collection('ratings').where("movie_id", "==", movie_id).get();
+    let allRatings = [];
+    ratings.forEach(doc => allRatings.push(doc.data()));
+    return allRatings;
+}
+// const test = async () => {
+//     console.log( await getAllRatings("mivei"));
+// }
 
+// test();
 // ==============================
 //            Reviews
 // ==============================
@@ -177,5 +187,5 @@ const createRating = async (user_id, movie_id, rating) => {
 
 module.exports =  {
 	createUser, getUserById, updatePassword, removeUser,
-    createRating
+    createRating, getAllRatings
 };
