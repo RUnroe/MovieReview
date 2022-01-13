@@ -7,7 +7,7 @@ const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestor
 
 initializeApp({credential: cert(require('../secrets').firebase)});
 const db = getFirestore();
-
+// console.log(db);
 
 
 
@@ -174,8 +174,40 @@ const getAllRatings = async (movie_id) => {
 //            Reviews
 // ==============================
 
+const createReview = async (user_id, movie_id, review) => {
+    //validate data
+    const errors = findErrors([
+        {name: "review", value: review, regex: /^(.{1,250})$/}
+
+    ]);
+    if (errors.length) {
+        throw errors;
+    }
+
+    //generate review id
+    const review_id = genId();
+
+    //create review
+    const result = await db.collection('reviews').doc(review_id).set({
+        review_id: review_id,
+        user_id: user_id,
+        movie_id: movie_id,
+        review: review
+    });
+    console.log(result);
+    return result;
+}
+
+// createReview("1", "movie", "This movie was great");
+
+const getReviews = async (movie_id) => {
+
+}
 
 
+const deleteReview = async (user_id, is_admin, ) => {
+
+}
 
 // ==============================
 //            Movies
@@ -187,5 +219,6 @@ const getAllRatings = async (movie_id) => {
 
 module.exports =  {
 	createUser, getUserById, updatePassword, removeUser,
-    createRating, getAllRatings
+    createRating, getAllRatings,
+    createReview, getReviews, deleteReview
 };
