@@ -150,13 +150,14 @@ const createRating = async (user_id, movie_id, rating) => {
 
     //create rating
     const result = await db.collection('ratings').doc(`${user_id}m${movie_id}`).set({
+        user_id: user_id,
+        movie_id: movie_id,
         rating: rating
     });
     console.log(result);
     return result;
 }
 
-// createRating("33", "mivei", "4");
 
 
 // ==============================
