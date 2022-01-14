@@ -5,6 +5,7 @@ import Search from './components/Search';
 import MovieDetails from './components/MovieDetails';
 import MovieLanding from './components/MovieLanding';
 import Login from './components/Login';
+import Register from './components/Register';
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
       <Routes>
         <Route exact path='/' element={<MovieLanding />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/test' element={<MovieDetails />} />
       </Routes>
     </Router>
   );

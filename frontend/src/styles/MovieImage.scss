@@ -1,0 +1,26 @@
+.movie-image {
+    background-color: gray;
+    width: 250px;
+    height: 350px;
+    border-radius: 10px;
+    transition: all .5s ease;
+}
+
+.movie-name {
+    font-size: 13px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: -10px 0 0 15px;
+    width: 250px;
+}
+
+.movie-image-container {
+    // min-width: calc(100% * (1/4) - 50px - 1px);
+    margin: 15px;
+    transition: all .5s ease;
+}
+
+.movie-image-container:hover, .movie-image:hover {
+    cursor: pointer;
+    transform: translateY(-5px);
+}

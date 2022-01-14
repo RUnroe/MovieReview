@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
-import Search from '../components/Search';
-import MovieDetails from '../components/MovieDetails';
+import React, { useEffect, useState } from 'react';
+import MovieImage from './MovieImage';
+import '../styles/Landing.scss';
 
 const MovieLanding = () => {
-    let [movies, setMovies] = useState([]);
+    let [moviess, setMovies] = useState([]);
+    //dummy array
+    let movies = ['one', 'two', 'three', 'four', 'five']
     let [pages, setPages] = useState(1);
+
+    useEffect(() => {
+        getMovies('1').then((res) => {
+            console.log(res);
+        });
+    }, [])
 
     const getMovies = async (pagecount) => {
         let res = await fetch(`/api/getMovies/?pagenum=${pagecount}`);
@@ -19,32 +27,44 @@ const MovieLanding = () => {
     }
 
     const changePage = (page) => {
-        setMovies([])
+        //Resets Movies array to be empty which then fills the array with the getMovies function
+        setMovies([]);
 
-        getMovies(page).then(res => {
-            setMovies(res.response.results)
-            setPages(res.response.page)
+        getMovies(page).then((res) => {
+            setMovies(res.response.results);
+            setPages(res.response.page);
         }).catch(err => {
-            console.log(err)
+            console.log(err);
         })
     }
 
     return (
         <div className='movie-landing-wrapper'>
-            <div>
-                <div className='movie-landing-header-text'>Movies</div>
-                <div>Page {pages}</div>
+            <div className='movie-landing-header-wrapper'>
+                <div className='movie-landing-header'>
+                    Movies
+                    <div className='movie-landing-page'>Page {pages}</div>
+                </div>
             </div>
-            <div>
+            <div className='movie-landing-clickable-wrapper'>
                 {movies.map((movie => {
-                    return <MovieDetails key={movie.id} changePage={changePage} />
+                    return (
+                        //Grabs movie ID then gives it to MovieImage to change page
+                        <MovieImage key={movie.id} id={movie.id} changePage={changePage} />
+                    )
                 }))}
             </div>
-            <div className='page-switch-btn btn-prev'>
-                prev
-            </div>
-            <div className='page-switch-btn btn-next'>
-                next
+            <div className='page-switch-btn-wrapper'>
+                <div>
+                    { pages === 1 ? null : (
+                        <div className='page-switch-btn btn-prev'>
+                            Previous
+                        </div>
+                    )}
+                    <div className='page-switch-btn btn-next' onClick={() => { getMovies() }}>
+                        Next
+                    </div>
+                </div>
             </div>
         </div>
     )

@@ -1,40 +1,37 @@
 import React, { useState, useEffect } from 'react';
+import '../styles/MovieDetails.scss';
 
 const MovieDetails = () => {
     let [movieInfo, setMovieInfo] = useState('');
 
-    useEffect(() => {
-    }, [])
-
-    const Loading = () => {
-        return (
-            <div className='movie-page-wrapper'>
-                <span>Loading Info...</span>
-            </div>
-        )
-    }
+    let dummyarray = ['larry', 'jerry', 'harry', 'ben', 'melinda', 'joe', 'carrie', 'velma'];
 
     return (
-        <div className='movie-page-wrapper'>
-            <div className='movie-page-header'>
-                back
-                <div className='movie-page-details'>
+        <div className='movie-details-wrapper'>
+            <div className='movie-details-header'>
+                <div className='back'>&#8592;</div>
+                <div className='movie-details-container'>
                     <div>
-                        <div>
-                            Image
-                        </div>
-                        <div className='movie-page-title'>
-                            Title
-                        </div>
+                        <div className='movie-details-banner'></div>
                     </div>
-                    <div>
-                        <div>
-                            Release Year | Rating
-                        </div>
+                    <div className='movie-details-bar'>
+                        <span className='movie-details-title'>Title</span>
+                        <div className='movie-details-genre-and-rating'>Genre | Rating</div>
                     </div>
-                    <div>
-                        <div className='movie-page-description'>
+                    <div className='movie-details-actors-wrapper'>
+                        <div className='movie-details-actors-header'>Actors</div>
+                        <div className='movie-details-actors-container'>
+                            {dummyarray.map((actor => {
+                                return (
+                                    <div className='movie-details-actor'>{actor}</div>
+                                )
+                            }))}
+                        </div>
+                        <div className='movie-details-description'>
                             Movie Description
+                        </div>
+                        <div>
+                            Reviews
                         </div>
                     </div>
                 </div>
