@@ -7,11 +7,19 @@ const configure = (obj) => {
 const { requireAuth, requireNotAuth, handle } = require('../util');
 
 //get movie by id
-const getMovieById = (req, res) => {
-	dal.getMovieById(req.params.movie_id).then(result => {
-		res.json(result);
-	})
-	.catch(handle(req, res));
+// const getMovieById = (req, res) => {
+// 	dal.getMovieById(req.params.movie_id).then(result => {
+// 		res.json(result);
+// 	})
+// 	.catch(handle(req, res));
+// }
+const getMovieById = async (req, res) => {
+	let dbData = await dal.getMovieById(req.params.movie_id);
+	let apiData = await fetch(`https://api.themoviedb.org/3/movie/${req.params.movie_id}?api_key=${require('./secrets').moviedb.api_key}`);
+
+	const result = Object.assign(apiData,dbData);
+	console.log(result);
+	res.json(result);
 }
 
 //get movies from search params
