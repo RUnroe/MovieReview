@@ -258,7 +258,7 @@ const getMovieById = async (movie_id) => {
     //append data to api data object
 
     //return data
-    return {rating: 4, reviews: [{user: "Ryan Unroe", review: "This movie is great"}]};
+    return {avgRating: 4, reviews: [{user: "Ryan Unroe", review: "This movie is great"}]};
 }
 
 const getMoviesBySearch = async (page, title, genre, actor) => {

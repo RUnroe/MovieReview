@@ -1,3 +1,4 @@
+const fetch = require('node-fetch');
 const dal = {};
 const configure = (obj) => {
 	Object.assign(dal, obj.dal);
@@ -15,7 +16,8 @@ const { requireAuth, requireNotAuth, handle } = require('../util');
 // }
 const getMovieById = async (req, res) => {
 	let dbData = await dal.getMovieById(req.params.movie_id);
-	let apiData = await fetch(`https://api.themoviedb.org/3/movie/${req.params.movie_id}?api_key=${require('./secrets').moviedb.api_key}`);
+	let apiData = await fetch(`https://api.themoviedb.org/3/movie/${req.params.movie_id}?api_key=${require('../../secrets').moviedb.api_key}`);
+	apiData = await apiData.json();
 
 	const result = Object.assign(apiData,dbData);
 	console.log(result);
