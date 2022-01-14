@@ -250,7 +250,35 @@ const deleteReview = async (user_id, is_admin, review_id) => {
 //            Movies
 // ==============================
 
+const getMovieById = async (movie_id) => {
+    //get api data
 
+    //get db data
+
+    //append data to api data object
+
+    //return data
+}
+
+const getMoviesBySearch = async (page, title, genre, actor) => {
+    //get api data
+
+    //get db data
+
+    //append data to api data object
+
+    //return data
+}
+
+const getMovies = async (page, count) => {
+    //get api data
+
+    //get db data
+
+    //append data to api data object
+
+    //return data
+}
 
 
 

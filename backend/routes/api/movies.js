@@ -17,7 +17,11 @@ const getMovieById = (req, res) => {
 //get movies from search params
 //TODO: Get query params and pass through to dal
 const getMoviesBySearch = (req, res) => {
-	dal.getMoviesBySearch().then(result => {
+	let page = req.query.page;
+	let title = req.query.title;
+	let genre = req.query.genre;
+	let actor = req.query.actor;
+	dal.getMoviesBySearch(page, title, genre, actor).then(result => {
 		res.json(result);
 	})
 	.catch(handle(req, res));
@@ -27,7 +31,9 @@ const getMoviesBySearch = (req, res) => {
 //Get collection of movies
 //TODO: Get query params and pass through to dal
 const getMovies = (req, res) => {
-	dal.getMovies().then(result => {
+	let page = req.query.page;
+	let count = req.query.title;
+	dal.getMovies(page, count).then(result => {
 		res.json(result);
 	})
 	.catch(handle(req, res));
