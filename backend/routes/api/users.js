@@ -7,6 +7,7 @@ const configure = (obj) => {
 const { requireAuth, requireAdmin, requireNotAuth, handle } = require('../util');
 
 const createUser = (req, res) => {
+    console.log('Body', req.body);
 	dal.createUser(req.body)
 		.then(({user_id, is_admin}) => {
 			req.session.user_id = user_id.toString(); // log them in
@@ -52,14 +53,14 @@ const endSession = (req, res) => {
 };
 
 const getUser = (req, res) => {
-    dal.getUserById({user_id: req.params.user_id}).then( user => {
+    dal.getUserById(req.params.user_id).then( user => {
 		res.json(user);
 	})
 	.catch(handle(req, res));
 }
 
-const updateUser = (req, res) => {
-	dal.updateUser(req.session.user_id, req.body).then(() => {
+const updatePassword = (req, res) => {
+	dal.updatePassword(req.session.user_id, req.body.password).then(() => {
 		res.status(204);
 		res.statusMessage = 'Updated User';
 		res.end();
@@ -69,7 +70,7 @@ const updateUser = (req, res) => {
 }
 
 const removeSelf = (req, res) => {
-	dal.removeUser(req.session.user_id, req.body).then(() => {
+	dal.removeUser(req.session.user_id).then(() => {
 		res.status(204);
 		res.statusMessage = 'Removed User';
 		res.end();
@@ -78,7 +79,7 @@ const removeSelf = (req, res) => {
 }
 
 const removeUser = (req, res) => {
-	dal.removeUser(req.body.user_id, req.body).then(() => {
+	dal.removeUser(req.params.user_id).then(() => {
 		res.status(204);
 		res.statusMessage = 'Removed User';
 		res.end();
@@ -104,7 +105,7 @@ const routes = [
     {
 		uri: '/api/user',
 		methods: ['put'],
-		handler: [requireAuth(), updateUser]
+		handler: [requireAuth(), updatePassword]
 	}, 
     {
 		uri: '/api/user',
