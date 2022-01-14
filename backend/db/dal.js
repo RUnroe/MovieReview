@@ -212,9 +212,39 @@ const getReviews = async (movie_id) => {
 
 // test();
 
-const deleteReview = async (user_id, is_admin, ) => {
 
+const getReviewById = async (review_id) => {
+    const reviews = await db.collection('reviews').where("review_id", "==", review_id).get();
+    let allReviews = [];
+    reviews.forEach(doc => allReviews.push(doc.data()));
+    return allReviews[0];
 }
+
+
+const deleteReview = async (user_id, is_admin, review_id) => {
+    //If the request is from an admin
+    if(is_admin) {
+        const result = await db.collection('reviews').doc(review_id).delete();
+        console.log(result);
+        return true;
+    }
+    else {
+        let review = await getReviewById(review_id);
+        //If user owns the review
+        if(review && review.user_id === user_id) {
+            const result = await db.collection('reviews').doc(review_id).delete();
+            console.log(result);
+            return true;
+        }
+        return false;
+    }
+}
+// const test = async () => {
+//     console.log(deleteReview("1", false, "2Hi4hpBX6Qns8Z2yESnjq9"));
+// }
+
+// test();
+
 
 // ==============================
 //            Movies

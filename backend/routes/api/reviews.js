@@ -21,7 +21,7 @@ const getReviews = (req, res) => {
 }
 //Delete a review. Either delete a review you own or admin can delete any review
 const deleteReview = (req, res) => {
-	dal.deleteReview(req.session.user_id, req.session.is_admin, req.params.movie_id, req.params.review_id).then(result => {
+	dal.deleteReview(req.session.user_id, req.session.is_admin, req.params.review_id).then(result => {
 		res.json(result);
 	})
 	.catch(handle(req, res));
@@ -42,7 +42,7 @@ const routes = [
 		handler: getReviews
 	},
     {
-		uri: '/api/:movie_id/review/:review_id',
+		uri: '/api/review/:review_id',
 		methods: ['delete'],
 		handler: [requireAuth(), deleteReview]
 	}
