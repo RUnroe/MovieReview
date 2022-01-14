@@ -201,9 +201,16 @@ const createReview = async (user_id, movie_id, review) => {
 // createReview("1", "movie", "This movie was great");
 
 const getReviews = async (movie_id) => {
-
+    const reviews = await db.collection('reviews').where("movie_id", "==", movie_id).get();
+    let allReviews = [];
+    reviews.forEach(doc => allReviews.push(doc.data()));
+    return allReviews;
 }
+// const test = async () => {
+//     console.log( await getReviews("movie"));
+// }
 
+// test();
 
 const deleteReview = async (user_id, is_admin, ) => {
 
