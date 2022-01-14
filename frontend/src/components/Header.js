@@ -4,9 +4,9 @@ import '../styles/Header.scss';
 import Search from './Search';
 
 const Header = (props) => {
-    let navigate = useNavigate();
+    // let navigate = useNavigate();
 
-    console.log(navigate)
+    // console.log(navigate)
 
     return (
         <header>
