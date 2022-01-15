@@ -287,5 +287,5 @@ module.exports =  {
 	createUser, getUserById, updatePassword, removeUser,
     createRating, getAllRatings,
     createReview, getReviews, deleteReview,
-    getMovieById
+    getMovieById, getMoviesBySearch, getMovies
 };
