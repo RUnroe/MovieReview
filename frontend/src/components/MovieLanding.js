@@ -3,36 +3,31 @@ import MovieImage from './MovieImage';
 import '../styles/Landing.scss';
 
 const MovieLanding = () => {
-    let [moviess, setMovies] = useState([]);
+    let [movies, setMovies] = useState([]);
+    let [movieCount, setMovieCount] = useState(1)
     //dummy array
-    let movies = ['one', 'two', 'three', 'four', 'five']
+    // let movies = ['one', 'two', 'three', 'four', 'five']
     let [pages, setPages] = useState(1);
 
-    useEffect(() => {
-        getMovies('1').then((res) => {
-            console.log(res);
+    const getMovies = async (count) => {
+        let res = await fetch(`http://localhost:3005/api/movies`).then((res) => {
+            res.json();
+        }).then((data) => {
+            console.log(data)
+        }).catch((err) => {
+            console.log(err)
         });
-    }, [])
 
-    const getMovies = async (pagecount) => {
-        let res = await fetch(`/api/getMovies/?pagenum=${pagecount}`);
-        let body = await res.json();
-
-        //If the request status has not succeeded then throw an error
-        if (res.status !== 200) {
-            throw new Error('Something went wrong', body);
-        }
-
-        return body;
+        setMovieCount(res.response.count);
     }
 
-    const changePage = (page) => {
+    const changePage = (count) => {
         //Resets Movies array to be empty which then fills the array with the getMovies function
         setMovies([]);
 
-        getMovies(page).then((res) => {
-            setMovies(res.response.results);
-            setPages(res.response.page);
+        getMovies(count).then((res) => {
+            setMovies(res.response.title);
+            setPages(res.response.count);
         }).catch(err => {
             console.log(err);
         })
