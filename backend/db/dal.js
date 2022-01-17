@@ -258,6 +258,7 @@ const getMovieById = async (movie_id) => {
     //append data to api data object
 
     //return data
+    return {avgRating: 4, reviews: [{user: "Ryan Unroe", review: "This movie is great"}]};
 }
 
 const getMoviesBySearch = async (page, title, genre, actor) => {
@@ -285,5 +286,6 @@ const getMovies = async (page, count) => {
 module.exports =  {
 	createUser, getUserById, updatePassword, removeUser,
     createRating, getAllRatings,
-    createReview, getReviews, deleteReview
+    createReview, getReviews, deleteReview,
+    getMovieById, getMoviesBySearch, getMovies
 };
