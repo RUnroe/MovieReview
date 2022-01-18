@@ -4,21 +4,18 @@ import '../styles/Landing.scss';
 
 const MovieLanding = () => {
     let [movies, setMovies] = useState([]);
-    let [movieCount, setMovieCount] = useState(1)
-    //dummy array
-    // let movies = ['one', 'two', 'three', 'four', 'five']
+    let [movieCount, setMovieCount] = useState(1);
     let [pages, setPages] = useState(1);
 
-    const getMovies = async (count) => {
-        let res = await fetch(`http://localhost:3005/api/movies`).then((res) => {
-            res.json();
-        }).then((data) => {
-            console.log(data)
-        }).catch((err) => {
-            console.log(err)
-        });
-
-        setMovieCount(res.response.count);
+    const getMovies = async () => {
+        await fetch(`http://localhost:3005/api/movies`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        }).then(
+            res => res.json()
+        ).then(
+            data => console.log(data)
+        ).catch(err => console.log(err))
     }
 
     const changePage = (count) => {
@@ -51,7 +48,7 @@ const MovieLanding = () => {
             </div>
             <div className='page-switch-btn-wrapper'>
                 <div>
-                    { pages === 1 ? null : (
+                    {pages === 1 ? null : (
                         <div className='page-switch-btn btn-prev'>
                             Previous
                         </div>

@@ -104,5 +104,22 @@
 }
 
 .movie-details-description {
-    // background-color: aqua;
+    margin-bottom: 25px;
+    padding: 100px 0 100px 0;
+    background-color: bisque;
+}
+
+.add-review-btn {
+    font-size: 15px;
+    text-align: center;
+    width: 115px;
+    padding: 8px;
+    margin: auto auto;
+    border-radius: 9px;
+    color: #FFFFFF;
+    background-color: #1C2E4A;
+}
+
+.add-review-btn:hover {
+    cursor: pointer;
 }

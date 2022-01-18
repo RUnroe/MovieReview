@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import '../styles/Login.scss';
 
 const Login = () => {
@@ -8,13 +9,12 @@ const Login = () => {
 
     let navigate = useNavigate();
 
-    const authUser = async () => {
+    const loginUser = async () => {
         await fetch(`http://localhost:3005/api/auth`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                email: email,
-                password: password
+                
             })
         }).then()
     }
@@ -37,7 +37,7 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder='Password'
             />
-            <div className='login-btn' onClick={() => { authUser() }}>Sign in</div>
+            <div className='login-btn' onClick={() => {loginUser()}}>Sign in</div>
             <Link to='/register' className='login-btn'>Register</Link>
             <Link to='/forgotpassword' className='forgot-div'>Forgot Password?</Link>
         </div >
