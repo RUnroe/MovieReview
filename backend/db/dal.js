@@ -42,7 +42,7 @@ const createUser = async (_user) => {
     //validate data
     const errors = findErrors([
 		{name: "email", value: _user.email, regex: /\w+@\w+\.\w+/}, 
-		{name: "password", value: _user.password, regex: /^(?=.*[A-Za-z])(?=.*\d).{6,}$/},
+		{name: "password", value: _user.password, regex: /^.{6,}$/},
 		{name: "phone", value: _user.phone, regex: /^(1?\([0-9]{3}\)( |)|(1-|1)?[0-9]{3}-?)[0-9]{3}-?[0-9]{4}$/m},
 		{name: "first name", value: _user.fname, regex:  /./}, 
 		{name: "last name", value: _user.lname, regex:  /./}, 
@@ -103,7 +103,7 @@ const getUserById = async (user_id) => {
 
 const updatePassword = async (user_id, password) => {
     //validate password
-    const errors = findErrors([fields.push({name: "password", value: password, regex: /^(?=.*[A-Za-z])(?=.*\d).{6,}$/})]);
+    const errors = findErrors([fields.push({name: "password", value: password, regex: /^.{6,}$/})]);
 	if (errors.length) {
 		throw errors;
 	}
