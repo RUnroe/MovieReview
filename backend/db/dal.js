@@ -250,36 +250,22 @@ const deleteReview = async (user_id, is_admin, review_id) => {
 //            Movies
 // ==============================
 
-const getMovieById = async (movie_id) => {
-    //get api data
 
+
+const getMovieById = async (movie_id) => {
     //get db data
 
-    //append data to api data object
+    let ratings = await getAllRatings(movie_id);
+    let reviews = await getReviews(movie_id);
+
+    for(let i = 0; i < reviews.length; i++) {
+        let user = await getUserById(reviews[i].user_id);
+        reviews[i].user = `${user.fname} ${user.lname}`;
+    }
 
     //return data
-    return {avgRating: 4, reviews: [{user: "Ryan Unroe", review: "This movie is great"}, {user: "Ryan Unroe", review: "This movie is great"}]};
+    return {ratings: ratings, reviews: reviews};
 }
-
-// const getMoviesBySearch = async (page, title, genre, actor) => {
-//     //get api data
-
-//     //get db data
-
-//     //append data to api data object
-
-//     //return data
-// }
-
-// const getMovies = async (page, count) => {
-//     //get api data
-
-//     //get db data
-
-//     //append data to api data object
-
-//     //return data
-// }
 
 
 
