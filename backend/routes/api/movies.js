@@ -38,19 +38,41 @@ const getMovieById = async (req, res) => {
 //TODO: Get query params and pass through to dal
 const getMoviesBySearch = async (req, res) => {
 	let page = req.query.page;
-	let title = req.query.title;
-	let genre = req.query.genre;
-	let actor = req.query.actor;
-	let apiData = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${require('../../secrets').moviedb.api_key}&language=en-US&query=${title}&page=${page}`);
-	apiData = await apiData.json();
+	let search = req.query.search;
 
+	let genres = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${require('../../secrets').moviedb.api_key}&language=en-US`);
+	genres = await genres.json();
 
-	//list of genres https://api.themoviedb.org/3/genre/movie/list?api_key=59814bf01dd3dddf38c3fffe8c9b5fd6&language=en-US
-	//movies by genre https://api.themoviedb.org/3/discover/movie?api_key=59814bf01dd3dddf38c3fffe8c9b5fd6&with_genres=28
+	let searchGenreId = false; 
+	genres.genres.forEach(genre => {
+		if(search.toLowerCase().includes(genre.name.toLowerCase())) searchGenreId = genre.id;
+	})
 
-	//normalize actor data
+	let apiData;
+	if(searchGenreId) {
+		apiData = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${require('../../secrets').moviedb.api_key}&with_genres=${searchGenreId}`)
+		apiData = await apiData.json();
+	}
+	else {
+		//TODO: remove TV data. Normalize actor data
+		apiData = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${require('../../secrets').moviedb.api_key}&language=en-US&query=${search}&page=${page}`);
+		apiData = await apiData.json();
 
-	return apiData;
+		//expand person known for results
+		apiData.results = apiData.results.map(media => {
+			if(media.media_type == "person") return [...media.known_for];
+			return media;
+		});
+
+		apiData.results = [].concat(...apiData.results);
+
+		//remove tv results
+		apiData.results = apiData.results.filter(media => media.media_type != "tv");
+
+		
+	}
+
+	res.json(apiData);
 }
 
 

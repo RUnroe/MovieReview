@@ -258,28 +258,28 @@ const getMovieById = async (movie_id) => {
     //append data to api data object
 
     //return data
-    return {avgRating: 4, reviews: [{user: "Ryan Unroe", review: "This movie is great"}]};
+    return {avgRating: 4, reviews: [{user: "Ryan Unroe", review: "This movie is great"}, {user: "Ryan Unroe", review: "This movie is great"}]};
 }
 
-const getMoviesBySearch = async (page, title, genre, actor) => {
-    //get api data
+// const getMoviesBySearch = async (page, title, genre, actor) => {
+//     //get api data
 
-    //get db data
+//     //get db data
 
-    //append data to api data object
+//     //append data to api data object
 
-    //return data
-}
+//     //return data
+// }
 
-const getMovies = async (page, count) => {
-    //get api data
+// const getMovies = async (page, count) => {
+//     //get api data
 
-    //get db data
+//     //get db data
 
-    //append data to api data object
+//     //append data to api data object
 
-    //return data
-}
+//     //return data
+// }
 
 
 
@@ -287,5 +287,5 @@ module.exports =  {
 	createUser, getUserById, updatePassword, removeUser,
     createRating, getAllRatings,
     createReview, getReviews, deleteReview,
-    getMovieById, getMoviesBySearch, getMovies
+    getMovieById
 };
