@@ -22,8 +22,15 @@ const getMovieById = async (req, res) => {
 	let apiData = await fetch(`https://api.themoviedb.org/3/movie/${req.params.movie_id}?api_key=${require('../../secrets').moviedb.api_key}`);
 	apiData = await apiData.json();
 
-	const result = Object.assign(apiData,dbData);
-	console.log(result);
+	let castData = await fetch(`https://api.themoviedb.org/3/movie/${req.params.movie_id}/credits?api_key=${require('../../secrets').moviedb.api_key}&language=en-US`);
+	castData = await castData.json();
+	delete castData.id;
+	castData.cast = await castData.cast.slice(0, 10);
+	castData.crew = await castData.crew.slice(0, 10);
+
+	let result = Object.assign(apiData,dbData);
+	result = Object.assign(result, castData);
+	// console.log(result);
 	res.json(result);
 }
 
