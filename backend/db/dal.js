@@ -42,7 +42,7 @@ const createUser = async (_user) => {
     //validate data
     const errors = findErrors([
 		{name: "email", value: _user.email, regex: /\w+@\w+\.\w+/}, 
-		{name: "password", value: _user.password, regex: /^(?=.*[A-Za-z])(?=.*\d).{6,}$/},
+		{name: "password", value: _user.password, regex: /^.{6,}$/},
 		{name: "phone", value: _user.phone, regex: /^(1?\([0-9]{3}\)( |)|(1-|1)?[0-9]{3}-?)[0-9]{3}-?[0-9]{4}$/m},
 		{name: "first name", value: _user.fname, regex:  /./}, 
 		{name: "last name", value: _user.lname, regex:  /./}, 
@@ -103,7 +103,7 @@ const getUserById = async (user_id) => {
 
 const updatePassword = async (user_id, password) => {
     //validate password
-    const errors = findErrors([fields.push({name: "password", value: password, regex: /^(?=.*[A-Za-z])(?=.*\d).{6,}$/})]);
+    const errors = findErrors([fields.push({name: "password", value: password, regex: /^.{6,}$/})]);
 	if (errors.length) {
 		throw errors;
 	}
@@ -258,28 +258,28 @@ const getMovieById = async (movie_id) => {
     //append data to api data object
 
     //return data
-    return {avgRating: 4, reviews: [{user: "Ryan Unroe", review: "This movie is great"}]};
+    return {avgRating: 4, reviews: [{user: "Ryan Unroe", review: "This movie is great"}, {user: "Ryan Unroe", review: "This movie is great"}]};
 }
 
-const getMoviesBySearch = async (page, title, genre, actor) => {
-    //get api data
+// const getMoviesBySearch = async (page, title, genre, actor) => {
+//     //get api data
 
-    //get db data
+//     //get db data
 
-    //append data to api data object
+//     //append data to api data object
 
-    //return data
-}
+//     //return data
+// }
 
-const getMovies = async (page, count) => {
-    //get api data
+// const getMovies = async (page, count) => {
+//     //get api data
 
-    //get db data
+//     //get db data
 
-    //append data to api data object
+//     //append data to api data object
 
-    //return data
-}
+//     //return data
+// }
 
 
 
@@ -287,5 +287,5 @@ module.exports =  {
 	createUser, getUserById, updatePassword, removeUser,
     createRating, getAllRatings,
     createReview, getReviews, deleteReview,
-    getMovieById, getMoviesBySearch, getMovies
+    getMovieById
 };
