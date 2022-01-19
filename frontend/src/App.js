@@ -15,7 +15,7 @@ function App() {
         <Route exact path='/' element={<MovieLanding />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/test' element={<MovieDetails />} />
+        <Route path='/details' element={<MovieDetails />} />
       </Routes>
     </Router>
   );

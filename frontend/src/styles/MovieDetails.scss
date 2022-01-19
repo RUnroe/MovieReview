@@ -6,7 +6,7 @@
     .movie-details-title {
         background-color: #ffffffd0;
         position: absolute;
-        top: 150px;
+        top: 95px;
         left: 25px;
         right: 25px;
         font-size: 5vw;
@@ -58,10 +58,16 @@
     cursor: pointer;
 }
 
-.movie-details-banner {
-    background-color: gray;
+.movie-details-container {
     position: relative;
-    padding: 200px 0 200px 0;
+    overflow: hidden;
+    background-size: cover;
+}
+
+.movie-details-banner {
+    overflow: hidden;
+    vertical-align: middle;
+    width: 100%;
 }
 
 .movie-details-bar {
@@ -118,6 +124,53 @@
     border-radius: 9px;
     color: #FFFFFF;
     background-color: #1C2E4A;
+}
+
+.reviews-wrapper {
+    margin-top: 20px;
+    margin-bottom: 100px;
+}
+
+.reviews-container {
+    position: relative;
+    background-color: #1C2E4A;
+    box-shadow: 0 0 15px 0 rgba(18,25,33,.1);
+    border-radius: 9px;
+    width: 200px;
+    margin: 12px;
+}
+
+.reviewer-name {
+    color: #ACC8EA;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 15px;
+    text-align: right;
+}
+
+.review-description {
+    padding: 20px 20px 20px 65px;
+    color: #FFFFFF;
+    
+}
+
+.review-description::before {
+    position: absolute;
+    top: 10px;
+    left: 27px;
+    content: '\201C';
+    font-weight: 700;
+    font-size: 50px;
+    font-family: Georgia, serif;
+}
+
+.review-description::after {
+    content: '';
+    border: 10px solid;
+    border-color: #1C2E4A transparent transparent #1C2E4A;
+    position: absolute;
+    bottom: -19px;
+    left: 30px;
 }
 
 .add-review-btn:hover {

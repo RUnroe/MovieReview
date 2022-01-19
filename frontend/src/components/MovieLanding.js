@@ -4,29 +4,23 @@ import '../styles/Landing.scss';
 
 const MovieLanding = () => {
     let [movies, setMovies] = useState([]);
-    let [movieCount, setMovieCount] = useState(1);
+    let [movieCount, setMovieCount] = useState(24);
+    let [moviePage, setMoviePage] = useState(1);
     let [pages, setPages] = useState(1);
 
+    useEffect(() => {
+        getMovies();
+    }, []);
+
     const getMovies = async () => {
-        await fetch(`http://localhost:3005/api/movies`, {
+        await fetch(`http://localhost:3005/api/movies?page=${3}&count=${24}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
-        }).then(
-            res => res.json()
-        ).then(
-            data => console.log(data)
-        ).catch(err => console.log(err))
-    }
-
-    const changePage = (count) => {
-        //Resets Movies array to be empty which then fills the array with the getMovies function
-        setMovies([]);
-
-        getMovies(count).then((res) => {
-            setMovies(res.response.title);
-            setPages(res.response.count);
-        }).catch(err => {
-            console.log(err);
+        }).then((res) => {
+            return res.json();
+        }).then((data) => {
+            // console.log(data);
+            setMovies(data);
         })
     }
 
@@ -42,7 +36,12 @@ const MovieLanding = () => {
                 {movies.map((movie => {
                     return (
                         //Grabs movie ID then gives it to MovieImage to change page
-                        <MovieImage key={movie.id} id={movie.id} changePage={changePage} />
+                        <MovieImage
+                            key={movie.id}
+                            id={movie.id}
+                            name={movie.title}
+                            image={movie.poster_path}
+                        />
                     )
                 }))}
             </div>
@@ -53,7 +52,7 @@ const MovieLanding = () => {
                             Previous
                         </div>
                     )}
-                    <div className='page-switch-btn btn-next' onClick={() => { getMovies() }}>
+                    <div className='page-switch-btn btn-next' onClick={() => { }}>
                         Next
                     </div>
                 </div>
