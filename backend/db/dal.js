@@ -198,7 +198,9 @@ const createReview = async (user_id, movie_id, review) => {
     return result;
 }
 
-// createReview("1", "movie", "This movie was great");
+// createReview("12d5qUwRS8Njr3pXfgfeyp", "557", "This movie was great!");
+// createReview("12kqra6Rfi6C53KJhCLL5r", "557", "This movie kinda sucked!");
+// createReview("16zb572krkr7mYHmk2FBLj", "557", "I like Tom Holland better tbh.");
 
 const getReviews = async (movie_id) => {
     const reviews = await db.collection('reviews').where("movie_id", "==", movie_id).get();
@@ -207,7 +209,7 @@ const getReviews = async (movie_id) => {
     return allReviews;
 }
 // const test = async () => {
-//     console.log( await getReviews("movie"));
+//     console.log( await getReviews("557"));
 // }
 
 // test();
@@ -253,21 +255,29 @@ const deleteReview = async (user_id, is_admin, review_id) => {
 
 
 const getMovieById = async (movie_id) => {
+    movie_id = `${movie_id}`;
     //get db data
 
     let ratings = await getAllRatings(movie_id);
     let reviews = await getReviews(movie_id);
+    // console.log(reviews);
 
     for(let i = 0; i < reviews.length; i++) {
         let user = await getUserById(reviews[i].user_id);
         reviews[i].user = `${user.fname} ${user.lname}`;
     }
+    // console.log(reviews);
 
     //return data
     return {ratings: ratings, reviews: reviews};
 }
 
 
+// const test = async () => {
+//     getMovieById("557");
+// }
+
+// test();
 
 module.exports =  {
 	createUser, getUserById, updatePassword, removeUser,
