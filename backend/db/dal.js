@@ -149,7 +149,38 @@ const removeUser = async (user_id) => {
 //            Auth
 // ==============================
 
+const authenticate = async ({email, password}) => {
+    //Check for input errors
+    const errors = findErrors([
+		{name: "email", value: email, regex: /\w+@\w+\.\w+/}, 
+        {name: "password", value: _user.password, regex: /^.{6,}$/}
+	]);
+	if (errors.length) {
+		throw errors;
+	}
+    //Get user by email
+    const records = await db.collection('users').where("email", "==", email).get();
+    let allUsers = [];
+    records.forEach(doc => allUsers.push(doc.data()));
+    let user = allUsers[0];
+	
+    //if passwords match, return user_id and id_admin
+    if (user)
+        return await verify_hash(user.password, password).then(ok => {
+            if (ok) return {user_id: user.user_id, is_admin: user.is_admin};
+            else return undefined;
+        });
+	return undefined;		
+}
 
+const checkCredentials = async ({user_id, email}) => {
+	const errors = false;
+	await dbclient.db('Bello').collection('Users').findOne({"email": email})
+		.then(result => {
+			if(result && user_id != result.user_id) errors = true;
+		});
+	return errors;
+}
 
 
 // ==============================
@@ -325,6 +356,7 @@ const getMovieById = async (movie_id) => {
 
 module.exports =  {
 	createUser, getUserById, updatePassword, removeUser,
+    authenticate, checkCredentials,
     createRating, getAllRatings,
     createReview, getReviews, deleteReview,
     getMovieById

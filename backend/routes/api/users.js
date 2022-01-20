@@ -23,7 +23,7 @@ const createUser = (req, res) => {
 
 // Authenticate the user by assigning them a session/cookie
 const authenticate = (req, res, next) => {
-	dal.authenticate({identifier: req.body.identifier, password: req.body.password})
+	dal.authenticate({email: req.body.email, password: req.body.password})
 		.then((value) => {
 			if(value === undefined || value === null) {
 				res.status(401).end();
