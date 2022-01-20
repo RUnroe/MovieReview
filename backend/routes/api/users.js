@@ -23,7 +23,7 @@ const createUser = (req, res) => {
 
 // Authenticate the user by assigning them a session/cookie
 const authenticate = (req, res, next) => {
-	dal.authenticate({identifier: req.body.identifier, password: req.body.password})
+	dal.authenticate({email: req.body.email, password: req.body.password})
 		.then((value) => {
 			if(value === undefined || value === null) {
 				res.status(401).end();
@@ -59,8 +59,8 @@ const getUser = (req, res) => {
 	.catch(handle(req, res));
 }
 
-const updateUser = (req, res) => {
-	dal.updateUser(req.session.user_id, req.body).then(() => {
+const updatePassword = (req, res) => {
+	dal.updatePassword(req.session.user_id, req.body.password).then(() => {
 		res.status(204);
 		res.statusMessage = 'Updated User';
 		res.end();
@@ -70,7 +70,7 @@ const updateUser = (req, res) => {
 }
 
 const removeSelf = (req, res) => {
-	dal.removeUser(req.session.user_id, req.body).then(() => {
+	dal.removeUser(req.session.user_id).then(() => {
 		res.status(204);
 		res.statusMessage = 'Removed User';
 		res.end();
@@ -79,7 +79,7 @@ const removeSelf = (req, res) => {
 }
 
 const removeUser = (req, res) => {
-	dal.removeUser(req.body.user_id, req.body).then(() => {
+	dal.removeUser(req.params.user_id).then(() => {
 		res.status(204);
 		res.statusMessage = 'Removed User';
 		res.end();
@@ -105,7 +105,7 @@ const routes = [
     {
 		uri: '/api/user',
 		methods: ['put'],
-		handler: [requireAuth(), updateUser]
+		handler: [requireAuth(), updatePassword]
 	}, 
     {
 		uri: '/api/user',

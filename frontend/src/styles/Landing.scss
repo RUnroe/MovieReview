@@ -1,7 +1,81 @@
+@font-face {
+    font-family: 'BebasNeue-Regular';
+    src: local('BebasNeue-Regular'),
+    url('../fonts/BebasNeue-Regular.ttf') format('truetype');
+    font-weight: 700;
+}
+
 $theme-main: #1C2E4A;
 $theme-dark: #333333;
 
-.movie-page-wrapper {
+$serif-font: Georgia, serif;
+$header-font: Segoe UI;
+
+@media screen and (min-width: 1230px) {
+    .movie-landing-clickable-wrapper {
+        max-width: 1230px;
+    }
+}
+
+.movie-landing-wrapper {
+    margin: 15px;
+}
+
+.movie-landing-clickable-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 35px auto;
+}
+
+.movie-landing-header-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.movie-landing-header {
+    position: relative;
+    font-size: 35px;
+    font-family: $header-font;
+    font-weight: 700;
+    width: 1230px;
+}
+
+.movie-landing-page {
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+    font-size: 15px !important;
+    font-family: $serif-font !important;
+    font-weight: 500 !important;
+}
+
+.page-switch-btn-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.page-switch-btn-wrapper > div {
+    position: relative;
+    width: 1230px;
+}
+
+.page-switch-btn {
+    font-size: 15px;
+    font-family: $serif-font;
     background-color: $theme-main;
+    text-align: center;
     color: #FFFFFF;
+    padding: 12px;
+    width: 58px;
+}
+
+.btn-next {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.page-switch-btn:hover {
+    cursor: pointer;
 }
