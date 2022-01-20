@@ -26,6 +26,8 @@ const isFieldEmpty = field => {
 const findErrors = fields => {
 	const errors = [];
 	fields.forEach(field => {
+        //make value a string if I can
+        if((!field.type || field.type === "string") && typeof field.value != "string") field.value = `${field.value}`; 
 		if(isFieldEmpty(field.value) || typeof field.value != (field.type ? field.type : "string") ||(field.regex && !field.regex.test(field.value))) {
 			errors.push(`Expected ${field.name}, but ${field.value} was supplied`);
 		}
@@ -87,14 +89,27 @@ const createUser = async (_user) => {
 }
 
 const getUserByEmail = async (email) => {
+    //Check for input errors
+    const errors = findErrors([
+		{name: "email", value: email, regex: /\w+@\w+\.\w+/}, 
+	]);
+	if (errors.length) {
+		throw errors;
+	}
+    //Get user by email
     const user = await db.collection('users').where("email", "==", email).get();
     return user._size;
 }
 
 const getUserById = async (user_id) => {
+    //Make sure user_id is a string
+    user_id = `${user_id}`;
+    
+    //Get user by user_id
     const user = await db.collection('users').doc(user_id).get();
     if(!user.exists) throw `User with id (${user_id}) not found`;
     else {
+        //Delete password and return back
         let userData = user.data();
         delete userData.password; 
         return userData;
@@ -120,6 +135,10 @@ const updatePassword = async (user_id, password) => {
 
 
 const removeUser = async (user_id) => {
+    //Make sure user_id is a string
+    user_id = `${user_id}`;
+    
+    //remove user by user_id
     const result = await db.collection('users').doc(user_id).delete();
     console.log(result);
 }
@@ -138,6 +157,11 @@ const removeUser = async (user_id) => {
 // ==============================
 
 const createRating = async (user_id, movie_id, rating) => {
+    //Make sure user_id and movie_id are strings
+    user_id = `${user_id}`;
+    movie_id = `${movie_id}`;
+    
+    
     //validate data
     const errors = findErrors([
         {name: "rating", value: rating, regex: /^[0-5]$/}
@@ -157,9 +181,14 @@ const createRating = async (user_id, movie_id, rating) => {
     return result;
 }
 
-// createRating("55323", "mivei", "3");
+// createRating("16zb572krkr7mYHmk2FBLj", "557", "3");
+// createRating("12d5qUwRS8Njr3pXfgfeyp", "557", "1");
+// createRating("12kqra6Rfi6C53KJhCLL5r", "557", "4");
 
 const getAllRatings = async (movie_id) => {
+    //Make sure movie_id is a string
+    movie_id = `${movie_id}`;
+
     const ratings = await db.collection('ratings').where("movie_id", "==", movie_id).get();
     let allRatings = [];
     ratings.forEach(doc => allRatings.push(doc.data()));
@@ -175,6 +204,9 @@ const getAllRatings = async (movie_id) => {
 // ==============================
 
 const createReview = async (user_id, movie_id, review) => {
+    //Make sure user_id and movie_id are strings
+    user_id = `${user_id}`;
+    movie_id = `${movie_id}`;
     //validate data
     const errors = findErrors([
         {name: "review", value: review, regex: /^(.{1,250})$/}
@@ -203,6 +235,9 @@ const createReview = async (user_id, movie_id, review) => {
 // createReview("16zb572krkr7mYHmk2FBLj", "557", "I like Tom Holland better tbh.");
 
 const getReviews = async (movie_id) => {
+    //Make sure movie_id is a string
+    movie_id = `${movie_id}`;
+    //Get all reviews for a movie
     const reviews = await db.collection('reviews').where("movie_id", "==", movie_id).get();
     let allReviews = [];
     reviews.forEach(doc => allReviews.push(doc.data()));
@@ -216,6 +251,9 @@ const getReviews = async (movie_id) => {
 
 
 const getReviewById = async (review_id) => {
+    //Make sure review_id is a string
+    review_id = `${review_id}`;
+    //Get review by review_id
     const reviews = await db.collection('reviews').where("review_id", "==", review_id).get();
     let allReviews = [];
     reviews.forEach(doc => allReviews.push(doc.data()));
@@ -224,6 +262,11 @@ const getReviewById = async (review_id) => {
 
 
 const deleteReview = async (user_id, is_admin, review_id) => {
+    //Make sure user_id, movie_id and review_id are strings
+    user_id = `${user_id}`;
+    movie_id = `${movie_id}`;
+    review_id = `${review_id}`;
+    
     //If the request is from an admin
     if(is_admin) {
         const result = await db.collection('reviews').doc(review_id).delete();
@@ -255,9 +298,10 @@ const deleteReview = async (user_id, is_admin, review_id) => {
 
 
 const getMovieById = async (movie_id) => {
+    //Make sure movie_id is a string
     movie_id = `${movie_id}`;
+    
     //get db data
-
     let ratings = await getAllRatings(movie_id);
     let reviews = await getReviews(movie_id);
     // console.log(reviews);
