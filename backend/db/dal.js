@@ -153,7 +153,7 @@ const authenticate = async ({email, password}) => {
     //Check for input errors
     const errors = findErrors([
 		{name: "email", value: email, regex: /\w+@\w+\.\w+/}, 
-        {name: "password", value: _user.password, regex: /^.{6,}$/}
+        {name: "password", value: password, regex: /^.{6,}$/}
 	]);
 	if (errors.length) {
 		throw errors;
@@ -163,13 +163,14 @@ const authenticate = async ({email, password}) => {
     let allUsers = [];
     records.forEach(doc => allUsers.push(doc.data()));
     let user = allUsers[0];
-	
+	console.log(user);
+    console.log(await verify_hash(user.password, password));
     //if passwords match, return user_id and id_admin
-    if (user)
-        return await verify_hash(user.password, password).then(ok => {
-            if (ok) return {user_id: user.user_id, is_admin: user.is_admin};
-            else return undefined;
-        });
+    if (user) {
+        if(await verify_hash(user.password, password))
+            return {user_id: user.user_id, is_admin: user.is_admin};
+        else return undefined;
+    }
 	return undefined;		
 }
 
