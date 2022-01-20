@@ -5,7 +5,7 @@ const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestor
 
 
 
-initializeApp({credential: cert(require('../secrets').firebase)});
+initializeApp({credential: cert(require('../secrets.json').firebase)});
 const db = getFirestore();
 
 
