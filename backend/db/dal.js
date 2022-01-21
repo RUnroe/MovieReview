@@ -116,6 +116,21 @@ const getUserById = async (user_id) => {
     }
 }
 
+const getUserByAPIKey = async (api_key) => {
+    //Make sure user_id is a string
+    api_key = `${api_key}`;
+    
+    //Get user by user_id
+    const user = await db.collection('users').where("api_key", "==", api_key).get();
+    if(!user.exists) throw `User with api_key (${api_key}) not found`;
+    else {
+        //Delete password and return back
+        let userData = user.data();
+        delete userData.password; 
+        return userData;
+    }
+}
+
 const updatePassword = async (user_id, password) => {
     //validate password
     const errors = findErrors([fields.push({name: "password", value: password, regex: /^.{6,}$/})]);
@@ -235,6 +250,11 @@ const getAllRatings = async (movie_id) => {
 //            Reviews
 // ==============================
 
+const createReviewAPI = async (api_key, movie_id, review) => {
+    let user = await getUserByAPIKey(api_key);
+    createReview(user.user_id, movie_id, review);
+}
+
 const createReview = async (user_id, movie_id, review) => {
     //Make sure user_id and movie_id are strings
     user_id = `${user_id}`;
@@ -299,6 +319,10 @@ const getReviewById = async (review_id) => {
     return allReviews[0];
 }
 
+const deleteReviewAPI = async (api_key, review_id) => {
+    let user = getUserByAPIKey(api_key);
+    deleteReview(user.user_id, user.is_admin, review_id);
+}
 
 const deleteReview = async (user_id, is_admin, review_id) => {
     //Make sure user_id, movie_id and review_id are strings
@@ -366,6 +390,6 @@ module.exports =  {
 	createUser, getUserById, updatePassword, removeUser,
     authenticate, checkCredentials,
     createRating, getAllRatings,
-    createReview, getReviews, deleteReview,
+    createReview, createReviewAPI, getReviews, deleteReview, deleteReviewAPI, 
     getMovieById
 };
