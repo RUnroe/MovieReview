@@ -17,29 +17,28 @@ const MovieImage = (movie) => {
                 return res.json();
             }
         }).then((data) => {
+            // console.log(data)
             let genres = data.genres;
-            let reviews = data.reviews;
+            let cast = data.cast;
             let genreArr = [];
-            let reviewArr = [];
-            let reviewerArr = [];
+            let castArr = [];
 
             for (var i = 0; i < genres.length; i++) {
                 genreArr.push(genres[i].name);
             }
 
-            for (var i = 0; i < reviews.length; i++) {
-                reviewArr.push(reviews[i].review);
-                reviewerArr.push(reviews[i].user);
+            for (var i = 0; i < cast.length; i++) {
+                castArr.push({ id: cast[i].id, name: cast[i].name, pic: cast[i].profile_path });
             }
 
             navigate('/details', {
                 state: {
+                    movie_id: data.id,
                     title: data.title,
                     banner: data.backdrop_path,
                     genre: genreArr.join(', '),
+                    cast: castArr,
                     overview: data.overview,
-                    review: reviewArr,
-                    reviewer: reviewerArr
                 }
             });
         })

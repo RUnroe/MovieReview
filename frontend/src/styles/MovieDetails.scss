@@ -1,4 +1,11 @@
-@media screen and (max-width: 700px) {
+@font-face {
+    font-family: 'RobotoCondensed-Regular';
+    src: local('RobotoCondensed-Regular'),
+    url('../fonts/RobotoCondensed-Regular.ttf') format('truetype');
+    font-weight: 500;
+}
+
+@media screen and (max-width: 699.9px) {
     .movie-details-bar {
         color: #000000;
     }
@@ -20,6 +27,10 @@
         color: #FFFFFF;
         font-size: 20px;
     }
+    
+    .movie-details-banner {
+        width: 100%;
+    }
 }
 
 @media screen and (min-width: 700px) {
@@ -38,6 +49,21 @@
     .movie-details-genre-and-rating {
         font-size: 17px;
         margin-top: 8px;
+    }
+
+    .movie-details-banner-container {
+        position: relative;
+        height: 490px;
+    }
+
+    .movie-details-banner {
+        position: relative;
+        z-index: -5;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        // image-rendering: pixelated;
     }
 }
 
@@ -67,7 +93,8 @@
 .movie-details-banner {
     overflow: hidden;
     vertical-align: middle;
-    width: 100%;
+    user-select: none;
+    // width: 100%;
 }
 
 .movie-details-bar {
@@ -82,13 +109,20 @@
     font-weight: 700;
 }
 
+.movie-details-overview-header {
+    margin: 15px 0 15px 15px;
+    font-size: 18px;
+    font-weight: 700;
+    // border-bottom: 2px solid #FFFFFF;
+}
+
 .movie-details-actors-wrapper {
     width: 100%;
     height: 100%;
     overflow: hidden;
 }
 
-.movie-details-actors-container {
+.movie-details-actors-container > div {
     display: flex;
     flex-direction: row;
     overflow-x: scroll;
@@ -96,23 +130,46 @@
     scrollbar-width: none;
 }
 
-.movie-details-actors-container::-webkit-scrollbar {
+.movie-details-actors-container >div::-webkit-scrollbar {
     display: none;
 }
 
 .movie-details-actor {
     flex-shrink: 0;
-    border-radius: 50px;
+    border-radius: 20px;
     margin-left: 15px;
-    width: 100px;
-    height: 100px;
-    background-color: gray;
+    width: 105px;
+    height: 150px;
+    user-select: none;
+    object-fit: cover;
+    object-position: center;
+    box-shadow: 0 0 15px 0 rgba(2, 4, 5, 0.1);
 }
 
-.movie-details-description {
+.movie-details-actor-name {
+    margin-left: 15px;
+    text-align: center;
+    font-size: 15px;
+    font-family: 'RobotoCondensed-Regular';
+}
+
+.movie-details-overview-description {
+    padding: 15px 15px 15px 15px;
     margin-bottom: 25px;
-    padding: 100px 0 100px 0;
-    background-color: bisque;
+    font-size: 20px;
+    max-width: 600px;
+    border: 2px solid #1C2E4A;
+    border-radius: 5px;
+}
+
+.movie-details-overview-wrapper {
+    display: flex;
+    flex-direction: column;
+    // background-color: #1C2E4A;
+    color: black;
+    padding: 5px 0 5px 0;
+    margin: 15px 0 30px 0;
+    border: 2px solid #1C2E4A;
 }
 
 .add-review-btn {
@@ -127,6 +184,9 @@
 }
 
 .reviews-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     margin-top: 20px;
     margin-bottom: 100px;
 }
@@ -134,7 +194,7 @@
 .reviews-container {
     position: relative;
     background-color: #1C2E4A;
-    box-shadow: 0 0 15px 0 rgba(18,25,33,.1);
+    box-shadow: 0 0 15px 0 rgba(18, 25, 33, .1);
     border-radius: 9px;
     width: 200px;
     margin: 12px;
@@ -151,7 +211,8 @@
 .review-description {
     padding: 20px 20px 20px 65px;
     color: #FFFFFF;
-    
+    font-size: 16px;
+    font-family: 'RobotoCondensed-Regular';
 }
 
 .review-description::before {
