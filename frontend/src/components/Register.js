@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import '../styles/Register.scss';
 
 const Register = () => {
-    // let [userName, setUserName] = useState('');
     let [firstName, setFirstName] = useState('');
     let [lastName, setLastName] = useState('');
     let [streetAddress, setStreetAddress] = useState('');
@@ -109,14 +108,6 @@ const Register = () => {
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder='Phone'
             />
-            {/* <input
-                className='register-input'
-                type='text'
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                placeholder='Username'
-                autoComplete='off'
-            /> */}
             <input
                 className='register-input'
                 type='password'

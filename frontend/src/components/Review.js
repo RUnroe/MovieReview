@@ -1,21 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Login.scss';
 
 const Review = () => {
+
+    // useEffect(() => {
+    //     getReviews();
+    // }, [])
+
+    // const getReviews = async () => {
+    //     await fetch(`http://localhost:3005/api/${movie_id}/review`, {
+    //         method: 'GET',
+    //         headers: { 'Content-Type': 'application/json' },
+    //     }).then((res) => {
+    //         return res.json();
+    //     }).then((data) => {
+    //         console.log(data)
+    //     })
+    // }
+
     const createReview = async (movie_id) => {
         // let headers = new Headers();
         await fetch(`http://localhost:3005/api/${movie_id}/review`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-
-            })
-        }).then()
-    }
-
-    const getReviews = async (movie_id) => {
-        await fetch(`http://localhost:3005/api/${movie_id}/review`, {
-            method: 'GET',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
 
