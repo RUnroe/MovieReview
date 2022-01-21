@@ -273,6 +273,13 @@ const getReviews = async (movie_id) => {
     const reviews = await db.collection('reviews').where("movie_id", "==", movie_id).get();
     let allReviews = [];
     reviews.forEach(doc => allReviews.push(doc.data()));
+
+    //Add user names to each allReviews
+    for(let i = 0; i < allReviews.length; i++) {
+        let user = await getUserById(allReviews[i].user_id);
+        allReviews[i].user = `${user.fname} ${user.lname}`;
+    }
+
     return allReviews;
 }
 // const test = async () => {
@@ -338,10 +345,10 @@ const getMovieById = async (movie_id) => {
     let reviews = await getReviews(movie_id);
     // console.log(reviews);
 
-    for(let i = 0; i < reviews.length; i++) {
-        let user = await getUserById(reviews[i].user_id);
-        reviews[i].user = `${user.fname} ${user.lname}`;
-    }
+    // for(let i = 0; i < reviews.length; i++) {
+    //     let user = await getUserById(reviews[i].user_id);
+    //     reviews[i].user = `${user.fname} ${user.lname}`;
+    // }
     // console.log(reviews);
 
     //return data
