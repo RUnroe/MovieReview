@@ -163,11 +163,11 @@ const authenticate = async ({email, password}) => {
     let allUsers = [];
     records.forEach(doc => allUsers.push(doc.data()));
     let user = allUsers[0];
-	console.log(user);
-    console.log(await verify_hash(user.password, password));
+	//console.log(user);
+    //console.log(await verify_hash(password, user.password));
     //if passwords match, return user_id and id_admin
     if (user) {
-        if(await verify_hash(user.password, password))
+        if(await verify_hash(password, user.password))
             return {user_id: user.user_id, is_admin: user.is_admin};
         else return undefined;
     }

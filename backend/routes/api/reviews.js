@@ -7,7 +7,7 @@ const configure = (obj) => {
 const { requireAuth, requireNotAuth, handle } = require('../util');
 
 const createReview = (req, res) => {
-	dal.createReview(req.session.user_id, req.params.movie_id, req.body).then((review_id) => {
+	dal.createReview(req.session.user_id, req.params.movie_id, req.body.review).then((review_id) => {
 		res.json(review_id);
 	})
 	.catch(handle(req, res));
@@ -32,12 +32,12 @@ const deleteReview = (req, res) => {
 
 const routes = [
 	{
-		uri: '/api/:movie_id/review',
+		uri: '/api/review/:movie_id',
 		methods: ['post'],
 		handler: [requireAuth(), createReview]
 	},
 	{
-		uri: '/api/:movie_id/review',
+		uri: '/api/review/:movie_id',
 		methods: ['get'],
 		handler: getReviews
 	},

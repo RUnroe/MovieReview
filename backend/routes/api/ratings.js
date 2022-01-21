@@ -26,12 +26,12 @@ const getRatings = (req, res) => {
 
 const routes = [
 	{
-		uri: '/api/:movie_id/rating',
+		uri: '/api/rating/:movie_id',
 		methods: ['post'],
 		handler: [requireAuth(), createRating]
 	},
 	{
-		uri: '/api/:movie_id/rating',
+		uri: '/api/rating/:movie_id',
 		methods: ['get'],
 		handler: getRatings
 	}
