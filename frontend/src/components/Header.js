@@ -1,13 +1,9 @@
 import React, { useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import '../styles/Header.scss';
 import Search from './Search';
 
-const Header = (props) => {
-    // let navigate = useNavigate();
-
-    // console.log(navigate)
-
+const Header = () => {
     return (
         <header>
             <div className='header-wrapper'>
@@ -19,6 +15,7 @@ const Header = (props) => {
                         <Search />
                     </div>
                 </div>
+                {/* <div>Logged In As:</div> */}
             </div>
         </header>
     )

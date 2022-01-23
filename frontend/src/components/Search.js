@@ -25,7 +25,7 @@ const Search = () => {
         getMovies(searchParams).then(res => {
             setSearchResults(res.response.results)
         }).catch(err => {
-            console.log(err);
+            // console.log(err);
         })
     }
 

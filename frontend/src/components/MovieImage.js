@@ -17,7 +17,6 @@ const MovieImage = (movie) => {
                 return res.json();
             }
         }).then((data) => {
-            // console.log(data)
             let genres = data.genres;
             let cast = data.cast;
             let genreArr = [];
@@ -36,18 +35,15 @@ const MovieImage = (movie) => {
                     movie_id: data.id,
                     title: data.title,
                     banner: data.backdrop_path,
+                    poster: data.poster_path,
                     genre: genreArr.join(', '),
                     cast: castArr,
-                    overview: data.overview,
+                    overview: data.overview
                 }
             });
         })
     }
-
-
-    // console.log(movieTitle)
-    // const
-
+    
     return (
         <div>
             <div className='movie-image-container' onClick={() => { getMovieDetails() }}>

@@ -4,22 +4,32 @@ import '../styles/Landing.scss';
 
 const MovieLanding = () => {
     let [movies, setMovies] = useState([]);
-    let [movieCount, setMovieCount] = useState(24);
-    let [moviePage, setMoviePage] = useState(1);
-    let [pages, setPages] = useState(1);
+    let [moviePage, setMoviePage] = useState(parseInt(localStorage.getItem('moviePage')));
 
     useEffect(() => {
+        localStorage.setItem('moviePage', moviePage);
         getMovies();
-    }, []);
+    }, [moviePage]);
+
+    const changePageUp = () => {
+        setMoviePage(moviePage + 1);
+    }
+
+    const changePageDown = () => {
+        setMoviePage(moviePage - 1);
+    }
+
+    const changeToFirstPage = () => {
+        setMoviePage((moviePage * 0) + 1)
+    }
 
     const getMovies = async () => {
-        await fetch(`http://localhost:3005/api/movies?page=${3}&count=${24}`, {
+        await fetch(`http://localhost:3005/api/movies?page=${moviePage}&count=16`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         }).then((res) => {
             return res.json();
         }).then((data) => {
-            // console.log(data);
             setMovies(data);
         })
     }
@@ -29,7 +39,7 @@ const MovieLanding = () => {
             <div className='movie-landing-header-wrapper'>
                 <div className='movie-landing-header'>
                     Movies
-                    <div className='movie-landing-page'>Page {pages}</div>
+                    <div className='movie-landing-page'>Page {moviePage}</div>
                 </div>
             </div>
             <div className='movie-landing-clickable-wrapper'>
@@ -47,12 +57,18 @@ const MovieLanding = () => {
             </div>
             <div className='page-switch-btn-wrapper'>
                 <div>
-                    {pages === 1 ? null : (
-                        <div className='page-switch-btn btn-prev'>
-                            Previous
-                        </div>
+                    {moviePage === 1 ? null : (
+                        <>
+                            <div className='page-switch-btn btn-prev' onClick={() => { changePageDown() }}>
+                                Previous
+                            </div>
+                            <div className='btn-first' onClick={() => { changeToFirstPage() }}>
+                                First Page
+                            </div>
+                        </>
                     )}
-                    <div className='page-switch-btn btn-next' onClick={() => { }}>
+                    <div className='bottom-page-number'>Page {moviePage}</div>
+                    <div className='page-switch-btn btn-next' onClick={() => { changePageUp() }}>
                         Next
                     </div>
                 </div>

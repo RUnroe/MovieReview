@@ -18,7 +18,7 @@ $header-font: Segoe UI;
 }
 
 .movie-landing-wrapper {
-    margin: 15px;
+    margin: 15px 15px 75px 15px;
 }
 
 .movie-landing-clickable-wrapper {
@@ -50,6 +50,13 @@ $header-font: Segoe UI;
     font-weight: 500 !important;
 }
 
+.bottom-page-number {
+    text-align: center;
+    font-size: 15px;
+    font-family: $serif-font;
+    font-weight: 500;
+}
+
 .page-switch-btn-wrapper {
     display: flex;
     justify-content: center;
@@ -68,12 +75,24 @@ $header-font: Segoe UI;
     color: #FFFFFF;
     padding: 12px;
     width: 58px;
+    user-select: none;
 }
 
 .btn-next {
     position: absolute;
     right: 0;
     top: 0;
+}
+
+.btn-first {
+    color: #1C2E4A;
+    font-size: 11px;
+    margin-top: 8px;
+    margin-left: 16px;
+}
+
+.btn-first:hover {
+    cursor: pointer;
 }
 
 .page-switch-btn:hover {
