@@ -7,10 +7,18 @@ const configure = (obj) => {
 const { requireAuth, requireNotAuth, handle } = require('../util');
 
 const createReview = (req, res) => {
-	dal.createReview(req.session.user_id, req.params.movie_id, req.body.review).then((review_id) => {
-		res.json(review_id);
-	})
-	.catch(handle(req, res));
+	if(req.query.api_key) {
+		dal.createReviewAPI(req.query.api_key, req.params.movie_id, req.body.review).then((review_id) => {
+			res.json(review_id);
+		})
+		.catch(handle(req, res));
+	}
+	else {
+		dal.createReview(req.session.user_id, req.params.movie_id, req.body.review).then((review_id) => {
+			res.json(review_id);
+		})
+		.catch(handle(req, res));
+	}
 }
 //get all reviews for a movie
 const getReviews = (req, res) => {
@@ -21,10 +29,18 @@ const getReviews = (req, res) => {
 }
 //Delete a review. Either delete a review you own or admin can delete any review
 const deleteReview = (req, res) => {
-	dal.deleteReview(req.session.user_id, req.session.is_admin, req.params.review_id).then(result => {
-		res.json(result);
-	})
-	.catch(handle(req, res));
+	if(req.query.api_key) {
+		dal.deleteReviewAPI(req.query.api_key, req.params.review_id).then(result => {
+			res.json(result);
+		})
+		.catch(handle(req, res));
+	}
+	else {
+		dal.deleteReview(req.session.user_id, req.session.is_admin, req.params.review_id).then(result => {
+			res.json(result);
+		})
+		.catch(handle(req, res));
+	}
 }
 
 
