@@ -1,46 +1,40 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import '../styles/Search.scss';
 
-const Search = () => {
-    let [searchParams, setSearchParams] = useState();
-    let [searchResults, setSearchResults] = useState();
+const Search = ({ onSearch }) => {
+    let [searchParams, setSearchParams] = useState('');
 
-    //Grabs the search parameters and fetch's the api
-    const getMovies = async (search) => {
-        let res = await fetch(`/api/getMovies/?search=${search}`);
-        let body = await res.json();
+    let { register, handleSubmit } = useForm();
 
-        //If the request status has not succeeded then throw an error
-        if (res.status !== 200) {
-            throw new Error('Something went wrong', body);
-        }
-
-        return body;
-    }
-
-    const handleInput = (e) => {
-        setSearchParams(e.target.value);
-
-        //Puts Search Paramaters into 'getMovies' and sets the results state
-        getMovies(searchParams).then(res => {
-            setSearchResults(res.response.results)
-        }).catch(err => {
-            // console.log(err);
+    const getMoviesBySearch = async () => {
+        await fetch(`http://localhost:3005/api/search?search=${searchParams}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        }).then(res => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                return Promise.reject(res);
+            }
+        }).then((data) => {
+            onSearch(data.results);
+            setSearchParams('');
         })
     }
 
     return (
-        <div className='search-wrapper'>
+        <form onSubmit={handleSubmit(getMoviesBySearch)} className='search-wrapper'>
             <div className='search-bar'>
                 <input
                     type='text'
                     placeholder='Search...'
                     value={searchParams}
-                    onChange={handleInput}
+                    onChange={(e) => { setSearchParams(e.target.value) }}
                     className='search-input input-small'
                 />
             </div>
-        </div>
+        </form>
     )
 }
 

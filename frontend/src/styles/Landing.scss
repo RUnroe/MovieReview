@@ -11,6 +11,12 @@ $theme-dark: #333333;
 $serif-font: Georgia, serif;
 $header-font: Segoe UI;
 
+@media screen and (min-width: 700px) {
+    .search-input {
+        width: 210px
+    }
+}
+
 @media screen and (min-width: 1230px) {
     .movie-landing-clickable-wrapper {
         max-width: 1230px;

@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import '../styles/Header.scss';
-import Search from './Search';
 
 const Header = () => {
     return (
@@ -12,10 +11,9 @@ const Header = () => {
                     <div className='header-links-wrapper'>
                         <NavLink to='/login' className={(navData) => navData.isActive ? 'active-header-link' : 'header-link'}>Login</NavLink>
                         <NavLink exact={'true'} to='/' className={(navData) => navData.isActive ? 'active-header-link' : 'header-link'}>Home</NavLink>
-                        <Search />
                     </div>
+                    <span className='settings'>Settings</span>
                 </div>
-                {/* <div>Logged In As:</div> */}
             </div>
         </header>
     )
