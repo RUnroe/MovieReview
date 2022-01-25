@@ -45,6 +45,15 @@ const authenticate = (req, res, next) => {
 };
 
 
+const getCredentials = (req, res) => {
+	dal.getUserById(req.session.user_id)
+		.then((user) => {
+			res.json(user);
+		})
+		.catch(handle(req, res));
+}
+
+
 const endSession = (req, res) => {
 	req.session.destroy();
 	res.status(204);
@@ -125,9 +134,15 @@ const routes = [
 	},
 	{
 		uri: '/api/auth',
+		methods: ['get'],
+		handler: [requireAuth(), getCredentials]
+	},
+	{
+		uri: '/api/auth',
 		methods: ['delete'],
 		handler: [requireAuth(), endSession]
 	}
+	
 
 ];
 
