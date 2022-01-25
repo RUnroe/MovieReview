@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import MovieImage from './MovieImage';
 import '../styles/Landing.scss';
+import Search from './Search';
 
 const MovieLanding = () => {
     let [movies, setMovies] = useState([]);
     let [moviePage, setMoviePage] = useState(parseInt(localStorage.getItem('moviePage')));
 
     useEffect(() => {
+        if (isNaN(moviePage)) {
+            setMoviePage(1);
+        }
         localStorage.setItem('moviePage', moviePage);
         getMovies();
     }, [moviePage]);
@@ -23,6 +27,10 @@ const MovieLanding = () => {
         setMoviePage((moviePage * 0) + 1)
     }
 
+    const changeMovies = (results) => {
+        setMovies(results);
+    }
+
     const getMovies = async () => {
         await fetch(`http://localhost:3005/api/movies?page=${moviePage}&count=16`, {
             method: 'GET',
@@ -36,6 +44,7 @@ const MovieLanding = () => {
 
     return (
         <div className='movie-landing-wrapper'>
+            <Search onSearch={changeMovies} />
             <div className='movie-landing-header-wrapper'>
                 <div className='movie-landing-header'>
                     Movies

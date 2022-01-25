@@ -32,10 +32,6 @@ $bebas-font: 'BebasNeue-Regular';
         text-align: center;
         width: 5%;
     }
-
-    .search-bar {
-        margin-left: 9px;
-    }
 }
 
 @media screen and (min-width: 700px) {
@@ -46,10 +42,6 @@ $bebas-font: 'BebasNeue-Regular';
         color: white;
         font-family: $bebas-font;
         font-size: 25px;
-    }
-
-    .search-bar {
-        margin: 18px 0 0 -3px;
     }
 }
 
@@ -68,6 +60,6 @@ $bebas-font: 'BebasNeue-Regular';
     color: #ACC8EA;
 }
 
-.search-input {
-    width: 210px
+.settings {
+    font-size: 15px !important;
 }

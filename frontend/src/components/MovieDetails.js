@@ -8,8 +8,9 @@ const MovieDetails = () => {
     let [clickedReview, setClickedReview] = useState(null);
     let [reviews, setReviews] = useState([]);
     let [readMore, setReadMore] = useState(false);
-    let [userRating, setUserRating] = useState('');
+    let [userRating, setUserRating] = useState(null);
     let [ratings, setRatings] = useState([]);
+    let [loggedInUserRating, setLoggedInUserRating] = useState(0);
     let [modal, setModal] = useState(false);
     let [admin, setAdmin] = useState(null);
 
@@ -31,7 +32,7 @@ const MovieDetails = () => {
 
     //useEffect will check everytime that userRating is changed and will call addRating()
     useEffect(() => {
-        if (userRating !== '') {
+        if (userRating !== null) {
             addRating();
         };
     }, [userRating])
@@ -46,7 +47,6 @@ const MovieDetails = () => {
     }
 
     const handleChange = (score) => {
-        // let userRatingToString = String(score);
         setUserRating(score);
     }
 
@@ -77,26 +77,9 @@ const MovieDetails = () => {
             }
         }).then((data) => {
             setRatings(data);
+            //TODO: Set Value of looged in user to the rating.
+            // setLoggedInUserRating();
         })
-    }
-
-    const DisplayAverageReview = () => {
-        let total = 0;
-
-        for (let i = 0; i < ratings.length; i++) {
-            total += ratings[i].rating;
-        }
-        let average = Math.round(total / ratings.length);
-
-        if (isNaN(average)) {
-            average = 'N/A';
-        }
-
-        return (
-            <span>
-                Total User Rating: {average}
-            </span>
-        )
     }
 
     const addRating = async () => {
@@ -123,6 +106,25 @@ const MovieDetails = () => {
     //         return res.json();
     //     })
     // }
+
+    const DisplayAverageReview = () => {
+        let total = 0;
+
+        for (let i = 0; i < ratings.length; i++) {
+            total += ratings[i].rating;
+        }
+        let average = Math.round(total / ratings.length);
+
+        if (isNaN(average)) {
+            average = 'N/A';
+        }
+
+        return (
+            <span>
+                Total User Rating: {average}
+            </span>
+        )
+    }
 
     const DisplayActors = () => {
         let actors = [];
@@ -199,12 +201,13 @@ const MovieDetails = () => {
                     </div>
                     <div className='movie-details-bar'>
                         <span className='movie-details-title'>{title}</span>
-                        <div className='movie-details-genre-and-rating'>
+                        <div className='movie-details-genre-and-rating '>
                             {genre} | <DisplayAverageReview />
                             <ReactStars
                                 count={5}
                                 size={19}
                                 // isHalf={true}
+                                value={loggedInUserRating}
                                 activeColor='#FFFFFF'
                                 onChange={(e) => { handleChange(e) }}
                             />

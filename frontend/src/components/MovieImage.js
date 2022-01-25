@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import '../styles/MovieImage.scss';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,7 +30,8 @@ const MovieImage = (movie) => {
                 castArr.push({ id: cast[i].id, name: cast[i].name, pic: cast[i].profile_path });
             }
 
-            navigate('/details', {
+            // /${data.id} 
+            navigate(`/movie/${data.id}`, {
                 state: {
                     movie_id: data.id,
                     title: data.title,
@@ -46,7 +47,7 @@ const MovieImage = (movie) => {
     
     return (
         <div>
-            <div className='movie-image-container' onClick={() => { getMovieDetails() }}>
+            <div className='movie-image-container' onClick={() => { getMovieDetails(); }}>
                 <img src={movieImage} className='movie-image' />
             </div>
             <div className='movie-name'>{name}</div>

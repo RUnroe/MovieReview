@@ -23,7 +23,7 @@ const Login = () => {
         }).then((res) => {
             if (res.ok) {
                 navigate('/');
-                return res.json()
+                return res.json();
             }
             throw new Error('Failed to create account');
         })

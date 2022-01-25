@@ -37,7 +37,7 @@
         color: #FFFFFF;
         font-size: 20px;
     }
-    
+
     .movie-details-banner {
         width: 100%;
     }
@@ -107,7 +107,6 @@
         // width: 350px;
         height: 350px;
         border-radius: 8px;
-        padding-left: 55px;
         margin: auto auto;
         margin-top: -32px;
     }
@@ -154,6 +153,10 @@
 .movie-details-genre-and-rating {
     font-family: 'RobotoCondensed-Regular';
     margin-left: 2.5px;
+}
+
+.star-review {
+   display: none;
 }
 
 .movie-details-bar {
