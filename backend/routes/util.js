@@ -1,12 +1,11 @@
 const requireAuth = (redirect) => (req, res, next) => {
-	// console.log("user_id", req.session);
-	if (req.session.user_id) next();
+	if (req.session.user_id || req.query.api_key) next();
 	else if (redirect) res.redirect(redirect);
 	else res.sendStatus(401);
 };
 
 const requireAdmin = (redirect) => (req, res, next) => {
-	if(req.session.user_id && req.session.is_admin) next();
+	if((req.session.user_id && req.session.is_admin) || req.query.api_key) next();
 	else if (redirect) res.redirect(redirect);
 	else res.sendStatus(401);
 
