@@ -119,13 +119,17 @@ const getUserById = async (user_id) => {
 const getUserByAPIKey = async (api_key) => {
     //Make sure user_id is a string
     api_key = `${api_key}`;
-    
+    console.log(api_key);
     //Get user by user_id
-    const user = await db.collection('users').where("api_key", "==", api_key).get();
-    if(!user.exists) throw `User with api_key (${api_key}) not found`;
+    const records = await db.collection('users').where("api_key", "==", api_key).get();
+    // console.log(records);
+    if(records.empty) throw `User with api_key (${api_key}) not found`;
     else {
+        let allUsers = [];
+        records.forEach(doc => allUsers.push(doc.data()));
+        let userData = allUsers[0];
+        console.log(userData);
         //Delete password and return back
-        let userData = user.data();
         delete userData.password; 
         return userData;
     }
@@ -189,14 +193,6 @@ const authenticate = async ({email, password}) => {
 	return undefined;		
 }
 
-const checkCredentials = async ({user_id, email}) => {
-	const errors = false;
-	await dbclient.db('Bello').collection('Users').findOne({"email": email})
-		.then(result => {
-			if(result && user_id != result.user_id) errors = true;
-		});
-	return errors;
-}
 
 
 // ==============================
@@ -388,7 +384,7 @@ const getMovieById = async (movie_id) => {
 
 module.exports =  {
 	createUser, getUserById, updatePassword, removeUser,
-    authenticate, checkCredentials,
+    authenticate,
     createRating, getAllRatings,
     createReview, createReviewAPI, getReviews, deleteReview, deleteReviewAPI, 
     getMovieById
