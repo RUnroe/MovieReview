@@ -199,6 +199,12 @@ const authenticate = async ({email, password}) => {
 //            Ratings
 // ==============================
 
+const createRatingAPI = async (api_key, movie_id, rating) => {
+    let user = await getUserByAPIKey(api_key);
+    return await createRating(user.user_id, movie_id, rating);
+}
+
+
 const createRating = async (user_id, movie_id, rating) => {
     //Make sure user_id and movie_id are strings
     user_id = `${user_id}`;
@@ -386,7 +392,7 @@ const getMovieById = async (movie_id) => {
 module.exports =  {
 	createUser, getUserById, updatePassword, removeUser,
     authenticate,
-    createRating, getAllRatings,
+    createRating, createRatingAPI, getAllRatings,
     createReview, createReviewAPI, getReviews, deleteReview, deleteReviewAPI, 
     getMovieById
 };
