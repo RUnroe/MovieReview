@@ -119,7 +119,7 @@ const getUserById = async (user_id) => {
 const getUserByAPIKey = async (api_key) => {
     //Make sure user_id is a string
     api_key = `${api_key}`;
-    console.log(api_key);
+    // console.log(api_key);
     //Get user by user_id
     const records = await db.collection('users').where("api_key", "==", api_key).get();
     // console.log(records);
@@ -128,7 +128,7 @@ const getUserByAPIKey = async (api_key) => {
         let allUsers = [];
         records.forEach(doc => allUsers.push(doc.data()));
         let userData = allUsers[0];
-        console.log(userData);
+        // console.log(userData);
         //Delete password and return back
         delete userData.password; 
         return userData;
@@ -316,20 +316,21 @@ const getReviewById = async (review_id) => {
 }
 
 const deleteReviewAPI = async (api_key, review_id) => {
-    let user = getUserByAPIKey(api_key);
+    let user = await getUserByAPIKey(api_key);
+    // console.log("user", user);
     deleteReview(user.user_id, user.is_admin, review_id);
 }
 
 const deleteReview = async (user_id, is_admin, review_id) => {
-    //Make sure user_id, movie_id and review_id are strings
+    //Make sure user_id and review_id are strings
     user_id = `${user_id}`;
-    movie_id = `${movie_id}`;
     review_id = `${review_id}`;
     
     //If the request is from an admin
     if(is_admin) {
+        // console.log("is_admin");
         const result = await db.collection('reviews').doc(review_id).delete();
-        console.log(result);
+        // console.log(result);
         return true;
     }
     else {
@@ -337,7 +338,7 @@ const deleteReview = async (user_id, is_admin, review_id) => {
         //If user owns the review
         if(review && review.user_id === user_id) {
             const result = await db.collection('reviews').doc(review_id).delete();
-            console.log(result);
+            // console.log(result);
             return true;
         }
         return false;
