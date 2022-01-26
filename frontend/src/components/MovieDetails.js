@@ -12,6 +12,7 @@ const MovieDetails = () => {
     let [ratings, setRatings] = useState([]);
     let [loggedInUserRating, setLoggedInUserRating] = useState(0);
     let [modal, setModal] = useState(false);
+    let [loggedInUser, setLoggedInUser] = useState('');
     let [admin, setAdmin] = useState(null);
 
     let location = useLocation();
@@ -28,6 +29,7 @@ const MovieDetails = () => {
     useEffect(() => {
         getReviews();
         getRating();
+        getLoggedInUser();
     }, []);
 
     //useEffect will check everytime that userRating is changed and will call addRating()
@@ -50,6 +52,28 @@ const MovieDetails = () => {
         setUserRating(score);
     }
 
+    const getLoggedInUser = async () => {
+        await fetch(`http://localhost:3005/api/auth`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                return Promise.reject(res);
+            }
+        }).then((data) => {
+            // console.log(data);
+            if (data.is_admin === false) {
+                setAdmin(false);
+            } else if (data.is_admin === true) {
+                setAdmin(true);
+            }
+            setLoggedInUser(data.user_id);
+        })
+    }
+
     const getReviews = async () => {
         await fetch(`http://localhost:3005/api/review/${movie_id}`, {
             method: 'GET',
@@ -62,6 +86,16 @@ const MovieDetails = () => {
             }
         }).then((data) => {
             setReviews(data);
+        })
+    }
+
+    const removeReview = async (review_id) => {
+        await fetch(`http://localhost:3005/api/review/${review_id}`, {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' }
+        }).then(res => {
+            return res.json();
         })
     }
 
@@ -96,16 +130,6 @@ const MovieDetails = () => {
             console.log(data);
         })
     }
-
-    // const removeReview = async () => {
-    //     await fetch(`http://localhost:3005/api/review/${review_id}`, {
-    //         method: 'DELETE',
-    //         credentials: 'include',
-    //         headers: { 'Content-Type': 'application/json' }
-    //     }).then(res => {
-    //         return res.json();
-    //     })
-    // }
 
     const DisplayAverageReview = () => {
         let total = 0;
@@ -159,30 +183,63 @@ const MovieDetails = () => {
                     let reviewToString = String(review.review);
                     return (
                         <div key={i} className='reviews-container'>
-                            {char <= 50 ? (
-                                //Looks at each character limit in reviews and if it's more than 250 then it will display extended div
-                                <div>
-                                    <div className='review-description'>{review.review}</div>
-                                    <div className='reviewer-name'>-{review.user}</div>
-                                </div>
-                            ) : (
-                                <div>
-                                    {readMore === true && clickedReview === review.review_id ? (
-                                        <>
+                            {review.user_id === loggedInUser ? (
+                                <>
+                                    <span className='remove-review' onClick={() => removeReview(review.review_id)}>&#10005;</span>
+                                    {char <= 50 ? (
+                                        //Looks at each character limit in reviews and if it's more than 250 then it will display extended div
+                                        <div>
                                             <div className='review-description'>{review.review}</div>
                                             <div className='reviewer-name'>-{review.user}</div>
-                                            <div className='read-more-link' onClick={toggleText}>Read Less</div>
-                                        </>
+                                        </div>
                                     ) : (
-                                        <>
-                                            <div className='review-description'>
-                                                {`${reviewToString.substring(0, 50)}...`}
-                                            </div>
-                                            <div className='reviewer-name'>-{review.user}</div>
-                                            <div className='read-more-link' onClick={() => toggleText(review.review_id)}>Read More</div>
-                                        </>
+                                        <div>
+                                            {readMore === true && clickedReview === review.review_id ? (
+                                                <>
+                                                    <div className='review-description'>{review.review}</div>
+                                                    <div className='reviewer-name'>-{review.user}</div>
+                                                    <div className='read-more-link' onClick={toggleText}>Read Less</div>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <div className='review-description'>
+                                                        {`${reviewToString.substring(0, 50)}...`}
+                                                    </div>
+                                                    <div className='reviewer-name'>-{review.user}</div>
+                                                    <div className='read-more-link' onClick={() => toggleText(review.review_id)}>Read More</div>
+                                                </>
+                                            )}
+                                        </div>
                                     )}
-                                </div>
+                                </>
+                            ) : (
+                                <>
+                                    {char <= 50 ? (
+                                        //Looks at each character limit in reviews and if it's more than 250 then it will display extended div
+                                        <div>
+                                            <div className='review-description'>{review.review}</div>
+                                            <div className='reviewer-name'>-{review.user}</div>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            {readMore === true && clickedReview === review.review_id ? (
+                                                <>
+                                                    <div className='review-description'>{review.review}</div>
+                                                    <div className='reviewer-name'>-{review.user}</div>
+                                                    <div className='read-more-link' onClick={toggleText}>Read Less</div>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <div className='review-description'>
+                                                        {`${reviewToString.substring(0, 50)}...`}
+                                                    </div>
+                                                    <div className='reviewer-name'>-{review.user}</div>
+                                                    <div className='read-more-link' onClick={() => toggleText(review.review_id)}>Read More</div>
+                                                </>
+                                            )}
+                                        </div>
+                                    )}
+                                </>
                             )}
                         </div>
                     )
