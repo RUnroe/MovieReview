@@ -4,6 +4,9 @@ import ReactStars from 'react-rating-stars-component';
 import '../styles/MovieDetails.scss';
 import ReviewModal from './ReviewModal';
 
+var filter = require('bad-words');
+filter = new filter;
+
 const MovieDetails = () => {
     let [clickedReview, setClickedReview] = useState(null);
     let [reviews, setReviews] = useState([]);
@@ -189,21 +192,21 @@ const MovieDetails = () => {
                                     {char <= 50 ? (
                                         //Looks at each character limit in reviews and if it's more than 250 then it will display extended div
                                         <div>
-                                            <div className='review-description'>{review.review}</div>
+                                            <div className='review-description'>{filter.clean(review.review)}</div>
                                             <div className='reviewer-name'>-{review.user}</div>
                                         </div>
                                     ) : (
                                         <div>
                                             {readMore === true && clickedReview === review.review_id ? (
                                                 <>
-                                                    <div className='review-description'>{review.review}</div>
+                                                    <div className='review-description'>{filter.clean(review.review)}</div>
                                                     <div className='reviewer-name'>-{review.user}</div>
                                                     <div className='read-more-link' onClick={toggleText}>Read Less</div>
                                                 </>
                                             ) : (
                                                 <>
                                                     <div className='review-description'>
-                                                        {`${reviewToString.substring(0, 50)}...`}
+                                                        {filter.clean(`${reviewToString.substring(0, 50)}...`)}
                                                     </div>
                                                     <div className='reviewer-name'>-{review.user}</div>
                                                     <div className='read-more-link' onClick={() => toggleText(review.review_id)}>Read More</div>
@@ -217,21 +220,21 @@ const MovieDetails = () => {
                                     {char <= 50 ? (
                                         //Looks at each character limit in reviews and if it's more than 250 then it will display extended div
                                         <div>
-                                            <div className='review-description'>{review.review}</div>
+                                            <div className='review-description'>{filter.clean(review.review)}</div>
                                             <div className='reviewer-name'>-{review.user}</div>
                                         </div>
                                     ) : (
                                         <div>
                                             {readMore === true && clickedReview === review.review_id ? (
                                                 <>
-                                                    <div className='review-description'>{review.review}</div>
+                                                    <div className='review-description'>{filter.clean(review.review)}</div>
                                                     <div className='reviewer-name'>-{review.user}</div>
                                                     <div className='read-more-link' onClick={toggleText}>Read Less</div>
                                                 </>
                                             ) : (
                                                 <>
                                                     <div className='review-description'>
-                                                        {`${reviewToString.substring(0, 50)}...`}
+                                                        {filter.clean(`${reviewToString.substring(0, 50)}...`)}
                                                     </div>
                                                     <div className='reviewer-name'>-{review.user}</div>
                                                     <div className='read-more-link' onClick={() => toggleText(review.review_id)}>Read More</div>
