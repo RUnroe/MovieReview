@@ -186,7 +186,7 @@ const MovieDetails = () => {
                     let reviewToString = String(review.review);
                     return (
                         <div key={i} className='reviews-container'>
-                            {review.user_id === loggedInUser ? (
+                            {(review.user_id === loggedInUser || admin) ? (
                                 <>
                                     <span className='remove-review' onClick={() => removeReview(review.review_id)}>&#10005;</span>
                                     {char <= 50 ? (
