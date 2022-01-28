@@ -60,6 +60,28 @@ $bebas-font: 'BebasNeue-Regular';
     color: #ACC8EA;
 }
 
-.settings {
-    font-size: 15px !important;
+.dropdown-menu-navigate {
+    font-size: 14px;   
+}
+
+.dropdown-control-navigate {
+    font-size: 17.5px;
+    max-width: 80px;
+}
+
+.dropdown-control-navigate:hover {
+    cursor: pointer;
+}
+
+.Dropdown-option:first-child {
+    display: none;
+}
+
+.Dropdown-option {
+    max-width: 84px;
+}
+
+.Dropdown-option:hover {
+    color: #ACC8EA;
+    cursor: pointer;
 }
