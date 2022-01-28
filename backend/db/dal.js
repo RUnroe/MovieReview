@@ -137,7 +137,7 @@ const getUserByAPIKey = async (api_key) => {
 
 const updatePassword = async (user_id, password) => {
     //validate password
-    const errors = findErrors([fields.push({name: "password", value: password, regex: /^.{6,}$/})]);
+    const errors = findErrors([{name: "password", value: password, regex: /^.{6,}$/}]);
 	if (errors.length) {
 		throw errors;
 	}
