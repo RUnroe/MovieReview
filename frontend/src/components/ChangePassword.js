@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import '../styles/ChangePassword.scss';
 
 const ChangePassword = () => {
-    let [email, setEmail] = useState('');
-    let [password, setPassword] = useState('');
     let [newPassword, setNewPassword] = useState('');
 
     let { register, handleSubmit } = useForm();
@@ -26,17 +24,17 @@ const ChangePassword = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit(changePassword)} className='login-wrapper'>
-            <div className='login-header'>Change Password</div>
+        <form onSubmit={handleSubmit(changePassword)} className='change-pass-wrapper'>
+            <div className='change-pass-header'>Change Password</div>
             <input
                 className=
-                'login-input'
+                'change-pass-input'
                 type='password'
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder='New Password'
             />
-            <div className='login-btn' onClick={() => { changePassword() }}>Update</div>
+            <div className='change-pass-btn' onClick={() => { changePassword() }}>Update</div>
         </form >
     )
 }
