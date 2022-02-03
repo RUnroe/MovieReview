@@ -298,11 +298,14 @@ const getReviews = async (movie_id) => {
 
     //Add user names to each allReviews
     for(let i = 0; i < allReviews.length; i++) {
+        try {
         let user = await getUserById(allReviews[i].user_id);
+        
         allReviews[i].user = `${user.fname} ${user.lname}`;
+        } catch{};
     }
 
-    return allReviews;
+    return allReviews.filter(review => review.hasOwnProperty('user'));
 }
 // const test = async () => {
 //     console.log( await getReviews("557"));
