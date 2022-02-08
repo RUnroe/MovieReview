@@ -13,7 +13,16 @@ const Register = () => {
     let [email, setEmail] = useState('');
     let [phone, setPhone] = useState('');
     let [password, setPassword] = useState('');
-    let [err, setErr] = useState(null);
+    //Very Ugly, Cleaner way to do this
+    let [validationMsgFirst, setValidationMsgFirst] = useState('');
+    let [validationMsgLast, setValidationMsgLast] = useState('');
+    let [validationMsgStreet, setValidationMsgStreet] = useState('');
+    let [validationMsgCity, setValidationMsgCity] = useState('');
+    let [validationMsgState, setValidationMsgState] = useState('');
+    let [validationMsgZip, setValidationMsgZip] = useState('');
+    let [validationMsgEmail, setValidationMsgEmail] = useState('');
+    let [validationMsgPhone, setValidationMsgPhone] = useState('');
+    let [validationMsgPassword, setValidationMsgPassword] = useState('');
 
     let { register, handleSubmit } = useForm();
 
@@ -39,11 +48,55 @@ const Register = () => {
                 navigate('/login');
                 return res.json()
             }
-            throw new Error('Failed to create account');
-        }).catch((err) => {
-            //Grabs all errors even in render. TODO: CHANGE IT LATER SO THAT DOES NOT HAPPEN, MORE SPECIFIC ERRORS
-            setErr(err.message);
-        })
+        });
+    }
+
+    const handleValidate = () => { 
+        if (/./.test(firstName) === false) {
+            setValidationMsgFirst('First name must have at least one character');
+        } else if (/./.test(firstName) === true) {
+            setValidationMsgFirst('');
+        }
+        if (/./.test(lastName) === false) {
+            setValidationMsgLast('Last name must have at least one character');
+        } else if (/./.test(lastName) === true) {
+            setValidationMsgLast('');
+        }
+        if (/../.test(streetAddress) === false) {
+            setValidationMsgStreet('Street address must have at least two characters');
+        } else if (/../.test(streetAddress) === true) {
+            setValidationMsgStreet('');
+        }
+        if (/../.test(city) === false) {
+            setValidationMsgCity('City must have at least two characters');
+        } else if (/../.test(city) === true) {
+            setValidationMsgCity('');
+        }
+        if (/^[a-z, A-Z]{2}$/.test(state) === false) {
+            setValidationMsgState('State can only be two letters');
+        } else if (/^[a-z, A-Z]{2}$/.test(state) === true) {
+            setValidationMsgState('');
+        }
+        if (/^[0-9]{5}(-[0-9]{4})?$/m.test(zip) === false) {
+            setValidationMsgZip('Zip can only 4-5 digits long of numbers');
+        } else if (/^[0-9]{5}(-[0-9]{4})?$/m.test(zip) === true) {
+            setValidationMsgZip('');
+        }
+        if (/\w+@\w+\.\w+/.test(email) === false) {
+            setValidationMsgEmail('Email has an invalid format please include @ and ending domain');
+        } else if (/\w+@\w+\.\w+/.test(email) === true) {
+            setValidationMsgEmail('');
+        }
+        if (/^(1?\([0-9]{3}\)( |)|(1-|1)?[0-9]{3}-?)[0-9]{3}-?[0-9]{4}$/m.test(phone) === false) {
+            setValidationMsgPhone('Phone number invlid format');
+        } else if (/^(1?\([0-9]{3}\)( |)|(1-|1)?[0-9]{3}-?)[0-9]{3}-?[0-9]{4}$/m.test(phone) === true) {
+            setValidationMsgPhone('');
+        }
+        if (/^.{6,}$/.test(password) === false) {
+            setValidationMsgPassword('Password must be at least 6 characters long');
+        } else if (/^.{6,}$/.test(password) === true) {
+            setValidationMsgPassword('');
+        }
     }
 
     return (
@@ -116,8 +169,16 @@ const Register = () => {
                 placeholder='Password'
                 autoComplete='new-password'
             />
-            <span className='error'>{err}</span>
-            <div onClick={() => { createUser() }} className='register-btn'>Create Account</div>
+            <span className='error-message-register'>{validationMsgFirst}</span>
+            <span className='error-message-register'>{validationMsgLast}</span>
+            <span className='error-message-register'>{validationMsgStreet}</span>
+            <span className='error-message-register'>{validationMsgCity}</span>
+            <span className='error-message-register'>{validationMsgState}</span>
+            <span className='error-message-register'>{validationMsgZip}</span>
+            <span className='error-message-register'>{validationMsgEmail}</span>
+            <span className='error-message-register'>{validationMsgPhone}</span>
+            <span className='error-message-register'>{validationMsgPassword}</span>
+            <button type='submit' onClick={handleValidate} className='register-btn'>Create Account</button>
         </form>
     )
 }

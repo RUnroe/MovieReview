@@ -265,7 +265,6 @@
     position: absolute;
     right: 15px;
     bottom: 20px;
-    cursor:pointer;
 }
 
 .review-description {
@@ -332,68 +331,4 @@
 
 .remove-review:hover {
     cursor: pointer;
-}
-
-
-.screen {
-    position: fixed;
-    top:0;
-    bottom: 0;
-    left:0;
-    right: 0;
-    width:100%;
-    height: 100%;
-    background-color:#0003;
-    cursor: pointer;
-    z-index: 100;
-
-}
-
-.modal {
-    background-color:#fff;
-    padding:2rem;
-    border-radius: 6px;
-    position: fixed;
-    top:50%;
-    left:50%;
-    transform: translate(-50%, -50%);
-    z-index: 105;
-
-}
-
-.modal .top h2 {
-    font-size: 25px;
-    font-weight: 700;
-    font-family: 'BebasNeue-Regular';
-}
-
-.modal.bottom {
-    padding: 1rem 0;
-    display:flex;
-    flex-direction:row;
-    justify-content: space-between;
-}
-
-
-.modal .btn {
-    margin-right:1rem;
-    cursor:pointer;
-
-    font-size: 15px;
-    font-family: 'RobotoCondensed-Regular';
-    text-align: center;
-    padding: 12px;
-    border-radius: 4px;
-    border:none;
-}
-
-
-.modal .btn.cancel {
-    background-color: #ccc;
-
-}
-
-.modal .btn.delete {
-    background-color: rgb(228, 72, 72);
-    color:#fff;
 }

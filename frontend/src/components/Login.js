@@ -6,6 +6,7 @@ import '../styles/Login.scss';
 const Login = () => {
     let [email, setEmail] = useState('');
     let [password, setPassword] = useState('');
+    let [validationMsg, setValidatationMsg] = useState('');
 
     let { register, handleSubmit } = useForm();
 
@@ -25,13 +26,15 @@ const Login = () => {
                 navigate('/');
                 return res.json();
             }
-            throw new Error('Failed to create account');
+            setValidatationMsg('Failed to login');
+            throw new Error('Failed to login to account');
         })
     }
 
     return (
         <form onSubmit={handleSubmit(loginUser)} className='login-wrapper'>
             <div className='login-header'>Sign in</div>
+            <span className='error-message'>{validationMsg}</span>
             <input
                 className='login-input'
                 type='text'

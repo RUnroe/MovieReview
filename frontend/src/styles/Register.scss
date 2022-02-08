@@ -15,6 +15,8 @@ $dark-blue: #1C2E4A;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    margin-right: 30px;
+    margin-left: 30px;
 }
 
 .register-header {
@@ -57,6 +59,7 @@ $dark-blue: #1C2E4A;
     color: #FFFFFF;
     background: #1C2E4A;
     padding: 15px 30px 15px 30px;
+    border: none;
     border-radius: 12px;
     font-family: 'Ubuntu', sans-serif;
     font-size: 11px;
@@ -76,9 +79,9 @@ $dark-blue: #1C2E4A;
     color: $light-blue;
 }
 
-.error {
+.error-message-register {
     text-align: center;
     color: rgb(184, 38, 38);
     font-size: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }

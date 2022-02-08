@@ -5,7 +5,7 @@ import '../styles/MovieDetails.scss';
 import ReviewModal from './ReviewModal';
 
 var filter = require('bad-words');
-filter = new filter();
+filter = new filter;
 
 const MovieDetails = () => {
     let [clickedReview, setClickedReview] = useState(null);
@@ -17,8 +17,6 @@ const MovieDetails = () => {
     let [modal, setModal] = useState(false);
     let [loggedInUser, setLoggedInUser] = useState('');
     let [admin, setAdmin] = useState(null);
-    let [modalDetails, setModalDetails] = useState(null);
-
 
     let location = useLocation();
     let navigate = useNavigate();
@@ -155,31 +153,6 @@ const MovieDetails = () => {
         )
     }
 
-    const openAccountModal = (review) => {
-        if(admin) {
-            setModalDetails(review);
-            console.log("Open modal");
-        }   
-    }
-    const closeAccountModal = () => {
-        setModalDetails(null);
-    }
-
-    const deleteUser = async (user_id) => {
-        //TODO: send request to delete user
-        
-        await fetch(`http://localhost:3005/api/user/${user_id}`, {
-            method: 'DELETE',
-            credentials: 'include',
-            headers: { 'Content-Type': 'application/json' }
-        }).then((res) => {
-            if (res.ok) {
-                closeAccountModal();
-            }
-            throw new Error('Failed to delete account');
-        });
-    }
-
     const DisplayActors = () => {
         let actors = [];
 
@@ -220,14 +193,14 @@ const MovieDetails = () => {
                                         //Looks at each character limit in reviews and if it's more than 250 then it will display extended div
                                         <div>
                                             <div className='review-description'>{filter.clean(review.review)}</div>
-                                            <div className='reviewer-name' onClick={() => openAccountModal(review)}>-{review.user}</div>
+                                            <div className='reviewer-name'>-{review.user}</div>
                                         </div>
                                     ) : (
                                         <div>
                                             {readMore === true && clickedReview === review.review_id ? (
                                                 <>
                                                     <div className='review-description'>{filter.clean(review.review)}</div>
-                                                    <div className='reviewer-name' onClick={() => openAccountModal(review)}>-{review.user}</div>
+                                                    <div className='reviewer-name'>-{review.user}</div>
                                                     <div className='read-more-link' onClick={toggleText}>Read Less</div>
                                                 </>
                                             ) : (
@@ -235,7 +208,7 @@ const MovieDetails = () => {
                                                     <div className='review-description'>
                                                         {filter.clean(`${reviewToString.substring(0, 50)}...`)}
                                                     </div>
-                                                    <div className='reviewer-name' onClick={() => openAccountModal(review)}>-{review.user}</div>
+                                                    <div className='reviewer-name'>-{review.user}</div>
                                                     <div className='read-more-link' onClick={() => toggleText(review.review_id)}>Read More</div>
                                                 </>
                                             )}
@@ -248,14 +221,14 @@ const MovieDetails = () => {
                                         //Looks at each character limit in reviews and if it's more than 250 then it will display extended div
                                         <div>
                                             <div className='review-description'>{filter.clean(review.review)}</div>
-                                            <div className='reviewer-name' onClick={() => openAccountModal(review)}>-{review.user}</div>
+                                            <div className='reviewer-name'>-{review.user}</div>
                                         </div>
                                     ) : (
                                         <div>
                                             {readMore === true && clickedReview === review.review_id ? (
                                                 <>
                                                     <div className='review-description'>{filter.clean(review.review)}</div>
-                                                    <div className='reviewer-name' onClick={() => openAccountModal(review)}>-{review.user}</div>
+                                                    <div className='reviewer-name'>-{review.user}</div>
                                                     <div className='read-more-link' onClick={toggleText}>Read Less</div>
                                                 </>
                                             ) : (
@@ -263,7 +236,7 @@ const MovieDetails = () => {
                                                     <div className='review-description'>
                                                         {filter.clean(`${reviewToString.substring(0, 50)}...`)}
                                                     </div>
-                                                    <div className='reviewer-name' onClick={() => openAccountModal(review)}>-{review.user}</div>
+                                                    <div className='reviewer-name'>-{review.user}</div>
                                                     <div className='read-more-link' onClick={() => toggleText(review.review_id)}>Read More</div>
                                                 </>
                                             )}
@@ -279,18 +252,6 @@ const MovieDetails = () => {
     }
 
     return (
-        <>
-        {modalDetails ? <div className='modal'>
-            <div className='top'>
-                <h2>{modalDetails.user}</h2>
-            </div>
-            <div className='bottom'>
-                <button className="btn delete" onClick={() => deleteUser(modalDetails.user_id)}>Delete {modalDetails.user}</button>
-                <button className="btn cancel" onClick={() => closeAccountModal()}>Cancel</button>
-            </div>
-
-        </div> : <></>}
-        {modalDetails ? <div className='screen' onClick={() => closeAccountModal()}></div> : <></>}
         <div className='movie-details-wrapper'>
             <div className='movie-details-header'>
                 <div className='back' onClick={() => navigate(-1)}>&#8592;</div>
@@ -331,7 +292,6 @@ const MovieDetails = () => {
                 </div>
             </div>
         </div>
-        </>
     )
 }
 
