@@ -3,8 +3,30 @@ const path = require('path');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
+const { ApolloServer } = require('apollo-server-express');
+
+//////////////////
+// Construct a schema, using GraphQL schema language
+const typeDefs = `
+  type Query {
+    hello: String
+  }
+`;
+
+// Provide resolver functions for your schema fields
+const resolvers = {
+  Query: {
+    hello: () => 'Hello world!',
+  },
+};
+
+///////////////////
+
+const server = new ApolloServer({ typeDefs, resolvers });
 
 const app = express();
+// server.start();
+// server.applyMiddleware({ app });
 const dal = require('./db/dal');
 
 
@@ -20,8 +42,6 @@ const corsOptions = {
     exposedHeaders: "Set-Cookie"
   }
 app.use(cors(corsOptions));
-
-// app.use(cors());
 
 
 app.use(express.json()); // Used to parse JSON bodies
@@ -54,5 +74,10 @@ routeFiles.forEach((file) => {
         routeManager.apply(app, component);
 });
 
-
-app.listen(3005, "localhost");
+server.start().then(res => {
+        server.applyMiddleware({ app });
+        app.listen({ port: 3005 }, () =>
+            console.log('Now browse to http://localhost:3005' + server.graphqlPath)
+        )
+       })
+// app.listen(3005, "localhost");
