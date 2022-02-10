@@ -5,24 +5,9 @@ const bcrypt = require('bcryptjs');
 const cors = require('cors');
 const { ApolloServer } = require('apollo-server-express');
 
-//////////////////
-// Construct a schema, using GraphQL schema language
-const typeDefs = `
-  type Query {
-    hello: String
-  }
-`;
+const schemas = require('./schemas');
 
-// Provide resolver functions for your schema fields
-const resolvers = {
-  Query: {
-    hello: () => 'Hello world!',
-  },
-};
-
-///////////////////
-
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer(schemas);
 
 const app = express();
 // server.start();
@@ -34,14 +19,14 @@ app.set("trust proxy", 1);
 app.use(express.static(path.join(__dirname + "/public")));
 
 
-const corsOptions = {
-    origin:  ['http://localhost:3000', 'http://localhost:3001', 'http://192.168.1.101:3000'],
-    credentials: true,
-    optionsSuccessStatus: 200,
-    allowedHeaders: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Set-Cookie",
-    exposedHeaders: "Set-Cookie"
-  }
-app.use(cors(corsOptions));
+// const corsOptions = {
+//     origin:  ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3005',  'http://192.168.1.101:3000'],
+//     credentials: true,
+//     optionsSuccessStatus: 200,
+//     allowedHeaders: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Set-Cookie",
+//     exposedHeaders: "Set-Cookie"
+//   }
+// app.use(cors(corsOptions));
 
 
 app.use(express.json()); // Used to parse JSON bodies
