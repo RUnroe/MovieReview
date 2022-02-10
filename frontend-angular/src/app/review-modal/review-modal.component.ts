@@ -2,13 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-review-modal',
-  template: `
-    <p>
-      review-modal works!
-    </p>
-  `,
-  styles: [
-  ]
+  templateUrl: './review-modal.component.html',
+  styleUrls: ['./review-modal.component.css']
 })
 export class ReviewModalComponent implements OnInit {
 

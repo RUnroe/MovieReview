@@ -10,6 +10,9 @@ import { MovieLandingComponent } from './movie-landing/movie-landing.component';
 import { ReviewModalComponent } from './review-modal/review-modal.component';
 import { SearchComponent } from './search/search.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { LoginComponent } from './login/login.component';
+import { MovieDetailsComponent } from './movie-details/movie-details.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     MovieLandingComponent,
     ReviewModalComponent,
     SearchComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    LoginComponent,
+    MovieDetailsComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

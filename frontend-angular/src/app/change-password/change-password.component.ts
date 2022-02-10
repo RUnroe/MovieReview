@@ -2,13 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-change-password',
-  template: `
-    <p>
-      change-password works!
-    </p>
-  `,
-  styles: [
-  ]
+  templateUrl: './change-password.component.html',
+  styleUrls: ['./change-password.component.css']
 })
 export class ChangePasswordComponent implements OnInit {
 

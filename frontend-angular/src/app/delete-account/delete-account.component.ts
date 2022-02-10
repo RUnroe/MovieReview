@@ -2,13 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-delete-account',
-  template: `
-    <p>
-      delete-account works!
-    </p>
-  `,
-  styles: [
-  ]
+  templateUrl: './delete-account.component.html',
+  styleUrls: ['./delete-account.component.css']
 })
 export class DeleteAccountComponent implements OnInit {
 
