@@ -1,16 +1,19 @@
 // Construct a schema, using GraphQL schema language
 const typeDefs = `
   type Query {
-    ratings(movie_id: String): [Rating]
+    ratings(movie_id: String)!: [Rating],
+    review(movie_id: String!): [Review]
   }
 
   type Mutation {
-    rating(input: RatingInput): Rating
+    createRating(input: RatingInput): Boolean
+    createReview(input: ReviewInput): Int
+    deleteReview(review_id: String!): Boolean
   }
 
   input RatingInput {
     movie_id: String!,
-    user_id: String!,
+    api_key: String,
     rating: Int!
   }
 
@@ -18,6 +21,19 @@ const typeDefs = `
     movie_id: String!,
     user_id: String!,
     rating: Int!
+  }
+
+  input ReviewInput {
+    movie_id: String!,
+    api_key: String,
+    review: String!
+  }
+
+  type Review {
+    movie_id: String!,
+    review_id: String!,
+    user_id: String!,
+    review: String!
   }
 `;
 
