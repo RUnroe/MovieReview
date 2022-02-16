@@ -10,7 +10,7 @@ const dal = require('./db/dal');
 
 const schemas = require('./schemas');
 schemas.configure(dal);
-console.log(schemas);
+// console.log(schemas);
 const server = new ApolloServer({typeDefs: schemas.typeDefs, resolvers: schemas.resolvers});
 
 const app = express();

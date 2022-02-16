@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const fetch = require('node-fetch');
 const short = require('short-uuid');
 const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
 const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
@@ -375,14 +376,20 @@ const getMovieById = async (movie_id) => {
     let reviews = await getReviews(movie_id);
     // console.log(reviews);
 
-    // for(let i = 0; i < reviews.length; i++) {
-    //     let user = await getUserById(reviews[i].user_id);
-    //     reviews[i].user = `${user.fname} ${user.lname}`;
-    // }
-    // console.log(reviews);
+    let apiData = await fetch(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=${require('../secrets').moviedb.api_key}`);
+	apiData = await apiData.json();
+
+	let castData = await fetch(`https://api.themoviedb.org/3/movie/${movie_id}/credits?api_key=${require('../secrets').moviedb.api_key}&language=en-US`);
+	castData = await castData.json();
+	delete castData.id;
+	castData.cast = await castData.cast.slice(0, 10);
+	castData.crew = await castData.crew.slice(0, 10);
+
+	let result = Object.assign(apiData, {ratings: ratings, reviews: reviews});
+	result = Object.assign(result, castData);
 
     //return data
-    return {ratings: ratings, reviews: reviews};
+    return result;
 }
 
 
@@ -392,10 +399,64 @@ const getMovieById = async (movie_id) => {
 
 // test();
 
+
+const getMoviesBySearch = async (page, search) => {
+    let genres = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${require('../secrets').moviedb.api_key}&language=en-US`);
+	genres = await genres.json();
+
+	let searchGenreId = false; 
+	genres.genres.forEach(genre => {
+		if(search.toLowerCase().includes(genre.name.toLowerCase())) searchGenreId = genre.id;
+	})
+
+	let apiData;
+	if(searchGenreId) {
+		apiData = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${require('../secrets').moviedb.api_key}&with_genres=${searchGenreId}`)
+		apiData = await apiData.json();
+	}
+	else {
+		//TODO: remove TV data. Normalize actor data
+		apiData = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${require('../secrets').moviedb.api_key}&language=en-US&query=${search}&page=${page}`);
+		apiData = await apiData.json();
+
+		//expand person known for results
+		apiData.results = apiData.results.map(media => {
+			if(media.media_type == "person") return [...media.known_for];
+			return media;
+		});
+
+		apiData.results = [].concat(...apiData.results);
+
+		//remove tv results
+		apiData.results = apiData.results.filter(media => media.media_type != "tv");
+	}
+    return apiData.results;
+}
+
+
+const getMovies = async (page, count) => {
+    let movieRange = [(count*(page-1)), ((page*count)-1)]; //Gives lower and upper bound indexes of requested movies (inclusive)
+	let firstPage = Math.ceil(movieRange[0]/20) === 0 ? 1 : Math.ceil(movieRange[0]/20); //Api gives 20 results at a time. This calculates what page we need to start gathering from.
+	let lastPage =  Math.ceil(movieRange[1]/20); //Determines last page to gather movies from.
+	// console.log(movieRange[0], movieRange[1], firstPage, lastPage);
+	let result = [];
+	for(let i = firstPage; i < (lastPage+1); i++) {
+		let apiData = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${require('../secrets').moviedb.api_key}&language=en-US&page=${i}`);
+		apiData = await apiData.json();
+		// console.log("loop",i, apiData.results.length);
+		result = result.concat(apiData.results);
+	}
+	// console.log("results", result.length);
+	//trim off movies that were not requested
+	let offset = movieRange[0] - (movieRange[0] % 20);
+	
+	result = result.slice(((movieRange[0] - offset) === -1 ? 0 : (movieRange[0] - offset)), (movieRange[1]-offset)+1); //add one to last param bc it is exclusive
+    return result;
+}
 module.exports =  {
 	createUser, getUserById, updatePassword, removeUser,
     authenticate,
     createRating, createRatingAPI, getAllRatings,
     createReview, createReviewAPI, getReviews, deleteReview, deleteReviewAPI, 
-    getMovieById
+    getMovieById, getMoviesBySearch, getMovies
 };

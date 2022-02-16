@@ -1,19 +1,19 @@
 // Construct a schema, using GraphQL schema language
 const typeDefs = `
   type Query {
-    getRatings(movie_id: String!): [Rating]
-    getReview(movie_id: String!): [Review]
-    getMovieById(movie_id: String!): [Movie]
-    getMoviesBySearch(search: String!): [Movie]
+    getRatings(movie_id: String): [Rating]
+    getReview(movie_id: String): [Review]
+    getMovieById(movie_id: String): Movie
+    getMoviesBySearch(search: String): [Movie]
     getMovies(input: MovieInput): [Movie]
-    getUser(user_id: String!): User
+    getUser(user_id: String): User
     getCredentials: User
   }
 
   type Mutation {
     createRating(input: RatingInput): Boolean
     createReview(input: ReviewInput): Int
-    deleteReview(review_id: String!): Boolean
+    deleteReview(review_id: String): Boolean
     createUser(input: UserInput): UserCredentials
     updatePassword(password: String): Boolean
     removeUser(user_id: String): Boolean
@@ -89,113 +89,139 @@ const typeDefs = `
   }
 
 
-  type Collection {
-    id: Int
-    name: String
-    poster_path: String
-    backdrop_path: String
-  }
-
-  type Genre {
-    id: Int
-    name: String
-  }
-
-  type ProductionCompany {
-    id: Int
-    logo_path: String
-    name: String
-    origin_country: String
-  }
-  
-  type ProductionCountries {
-    iso_3166_1: String
-    name: String
-  }
-
-  type SpokenLanguage {
-    english_name: String
-    iso_639_1: String
-    name: String
-  }
-
-  type CastMember {
+  type Crew {
     adult: Boolean
     gender: Int
     id: Int
     known_for_department: String
     name: String
     original_name: String
-    popularity: Int
+    popularity: Float
+    profile_path: String
+    credit_id: String
+    department: String
+    job: String
+  }
+  
+  type Cast {
+    adult: Boolean
+    gender: Int
+    id: Int
+    known_for_department: String
+    name: String
+    original_name: String
+    popularity: Float
     profile_path: String
     cast_id: Int
     character: String
     credit_id: String
     order: Int
   }
-
-  type CrewMember {
-    adult: Boolean
-    gender: Int
-    id: Int
-    known_for_department: String
-    name: String
-    original_name: String
-    popularity: Int
-    profile_path: String
-    credit_id: String
-    department: String
-    job: String
+  
+  type Reviews {
+    review: String
+    user_id: String
+    review_id: String
+    movie_id: String
+    user: String
   }
-
-
+  
+  type Ratings {
+    user_id: String
+    movie_id: String
+    rating: Int
+  }
+  
+  type SpokenLanguages {
+    english_name: String
+    iso_639_1: String
+    name: String
+  }
+  
+  type ProductionCountries {
+    iso_3166_1: String
+    name: String
+  }
+  
+  type ProductionCompanies {
+    id: Int
+    logo_path: String
+    name: String
+    origin_country: String
+  }
+  
+  type Genres {
+    id: Int
+    name: String
+  }
+  
+  type BelongsToCollection {
+    id: Int
+    name: String
+    poster_path: String
+    backdrop_path: String
+  }
+  
   type Movie {
     adult: Boolean
     backdrop_path: String
-    belongs_to_collection: Collection
     budget: Int
-    genres: [Genre]
     homepage: String
     id: Int
     imdb_id: String
     original_language: String
     original_title: String
     overview: String
-    popularity: Int
+    popularity: Float
     poster_path: String
-    production_companies: [ProductionCompany]
-    production_countries: [ProductionCountries]
     release_date: String
     revenue: Int
     runtime: Int
-    spoken_languages: [SpokenLanguage]
     status: String
     tagline: String
     title: String
     video: Boolean
     vote_average: Float
     vote_count: Int
-    ratings: [Rating]
-    reviews: [Review]
-    cast: [CastMember]
-    crew: [CrewMember]
+    crew: [Crew]
+    cast: [Cast]
+    reviews: [Reviews]
+    ratings: [Ratings]
+    spoken_languages: [SpokenLanguages]
+    production_countries: [ProductionCountries]
+    production_companies: [ProductionCompanies]
+    genres: [Genres]
+    belongs_to_collection: BelongsToCollection
   }
 `;
+        
 
+    
 const dal = {};
 const configure = (obj) => {
-	Object.assign(dal, obj.dal);
+	Object.assign(dal, obj);
+    console.log(dal);
 
 };   
     
 // Provide resolver functions for your schema fields
 const resolvers = {
   Query: {
-    getRatings: (movie_id) => [{movie_id: "1", user_id: "u1", rating: 5}],
-    // getReview: (movie_id: String!): [Review],
-    // getMovieById: (movie_id: String!): [Movie],
-    // getMoviesBySearch: (search: String!): [Movie],
-    // getMovies: (input: MovieInput): [Movie],
+    getRatings: async (parent, {movie_id}) => {
+        return await dal.getAllRatings(movie_id);
+    },
+    getReview: async (parent, {movie_id}) => {
+        return await dal.getReviews(movie_id);
+    },
+    getMovieById: async (parent, {movie_id}) => {
+        return await dal.getMovieById(movie_id);
+    },
+    getMoviesBySearch: async (parent, {page, search}) => {
+        return await dal.getMoviesBySearch(page, search);
+    },
+    getMovies: async (parent, {page, count}) => {
+        return await dal.getMovies(page ? page : 1, count && count <=100 ? count : 20);
+    },
     // getUser: (user_id: String!): User,
     // getCredentials(): User
   },
