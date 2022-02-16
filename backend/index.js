@@ -5,14 +5,18 @@ const bcrypt = require('bcryptjs');
 const cors = require('cors');
 const { ApolloServer } = require('apollo-server-express');
 
-const schemas = require('./schemas');
 
-const server = new ApolloServer(schemas);
+const dal = require('./db/dal');
+
+const schemas = require('./schemas');
+schemas.configure(dal);
+console.log(schemas);
+const server = new ApolloServer({typeDefs: schemas.typeDefs, resolvers: schemas.resolvers});
 
 const app = express();
 // server.start();
 // server.applyMiddleware({ app });
-const dal = require('./db/dal');
+
 
 
 app.set("trust proxy", 1);

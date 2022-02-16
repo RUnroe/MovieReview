@@ -7,18 +7,18 @@ const typeDefs = `
     getMoviesBySearch(search: String!): [Movie]
     getMovies(input: MovieInput): [Movie]
     getUser(user_id: String!): User
-    getCredentials(): User
+    getCredentials: User
   }
 
   type Mutation {
     createRating(input: RatingInput): Boolean
     createReview(input: ReviewInput): Int
     deleteReview(review_id: String!): Boolean
-    createUser(input: User): UserCredentials
+    createUser(input: UserInput): UserCredentials
     updatePassword(password: String): Boolean
     removeUser(user_id: String): Boolean
     authenticate(input: AuthInput): UserCredentials
-    endSession(): Boolean
+    endSession: Boolean
 
   }
 
@@ -182,7 +182,11 @@ const typeDefs = `
   }
 `;
 
-    
+const dal = {};
+const configure = (obj) => {
+	Object.assign(dal, obj.dal);
+
+};   
     
 // Provide resolver functions for your schema fields
 const resolvers = {
@@ -195,7 +199,7 @@ const resolvers = {
     // getUser: (user_id: String!): User,
     // getCredentials(): User
   },
-  Mutation: {
+//   Mutation: {
     // createRating: (RatingInput): Boolean,
     // createReview: (input: ReviewInput): Int,
     // deleteReview: (review_id: String!): Boolean,
@@ -205,8 +209,8 @@ const resolvers = {
     // authenticate(input: AuthInput): UserCredentials
     // endSession(): Boolean
 
-  }
+//   }
 };
 
 
-module.exports = {typeDefs, resolvers};
+module.exports = {typeDefs, resolvers, configure};
