@@ -7,6 +7,7 @@
     border-radius: 15px;
     box-shadow: 0 1px 50px 1px rgba(0, 0, 0, 0.1);
 }
+
 .register-wrapper > .input-name-wrapper {
     display: flex;
     flex-direction: row;
@@ -14,8 +15,9 @@
     margin-right: 30px;
     margin-left: 30px;
 }
+
 .register-header {
-    color: #acc8ea;
+    color: #ACC8EA;
     font-family: 'Ubuntu', sans-serif;
     font-weight: bold;
     font-size: 23px;
@@ -24,14 +26,16 @@
     user-select: none;
     align-self: center;
 }
+
 .register-header-text {
     align-self: center;
     margin-bottom: 32px;
-    color: #1c2e4a;
+    color: #1C2E4A;
 }
+
 .register-input {
     width: 85%;
-    color: #1c2e4a;
+    color: #1C2E4A;
     letter-spacing: 1px;
     background: rgba(136, 126, 126, 0.04);
     padding: 10px 20px;
@@ -43,12 +47,14 @@
     margin: 0 2px 25px 2px;
     font-family: 'Ubuntu', sans-serif;
 }
+
 .register-input:focus {
-    border: 2px solid #acc8ea !important;
+    border: 2px solid #ACC8EA !important;
 }
+
 .register-btn {
-    color: #fff;
-    background: #1c2e4a;
+    color: #FFFFFF;
+    background: #1C2E4A;
     padding: 15px 30px 15px 30px;
     border: none;
     border-radius: 12px;
@@ -60,16 +66,19 @@
     user-select: none;
     align-self: center;
 }
+
 .register-btn:hover {
     cursor: pointer;
 }
+
 .forgot-link {
     text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
-    color: #acc8ea;
+    color: #ACC8EA;
 }
+
 .error-message-register {
     text-align: center;
-    color: #b82626;
+    color: rgb(184, 38, 38);
     font-size: 15px;
     margin-bottom: 5px;
 }
