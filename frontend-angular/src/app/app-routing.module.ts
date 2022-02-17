@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { MovieDetailsComponent } from './movie-details/movie-details.component';
-import { RegisterComponent } from './register/register.component';
 import { DeleteAccountComponent } from './delete-account/delete-account.component';
 import { HeaderComponent } from './header/header.component';
 import { MovieImageComponent } from './movie-image/movie-image.component';
@@ -10,6 +7,9 @@ import { MovieLandingComponent } from './movie-landing/movie-landing.component';
 import { ReviewModalComponent } from './review-modal/review-modal.component';
 import { SearchComponent } from './search/search.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { MovieDetailsComponent } from './movie-details/movie-details.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   { path: 'details', component: MovieDetailsComponent},
