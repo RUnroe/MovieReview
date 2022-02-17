@@ -1,1 +1,10 @@
 <p>search works!</p>
+<form onSubmit={handleSubmit(getMoviesBySearch)} className='search-wrapper'>
+    <div className='search-bar'>
+        <input
+            type='text'
+            placeholder='Search...'
+            value={searchParams}
+        />
+    </div>
+</form>

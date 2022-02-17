@@ -1,0 +1,84 @@
+/* @font-face {
+    font-family: 'BebasNeue-Regular';
+    src: local('BebasNeue-Regular'), url('../fonts/BebasNeue-Regular.ttf') format('truetype');
+    font-weight: 700;
+} */
+@media screen and (min-width: 700px) {
+    .search-input {
+        width: 210px;
+   }
+}
+@media screen and (min-width: 1230px) {
+    .movie-landing-clickable-wrapper {
+        max-width: 1230px;
+   }
+}
+.movie-landing-wrapper {
+    margin: 15px 15px 75px 15px;
+}
+.movie-landing-clickable-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 35px auto;
+}
+.movie-landing-header-wrapper {
+    display: flex;
+    justify-content: center;
+}
+.movie-landing-header {
+    position: relative;
+    font-size: 35px;
+    font-family: Segoe UI;
+    font-weight: 700;
+    width: 1230px;
+}
+.movie-landing-page {
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+    font-size: 15px !important;
+    font-family: Georgia, serif !important;
+    font-weight: 500 !important;
+}
+.bottom-page-number {
+    text-align: center;
+    font-size: 15px;
+    font-family: Georgia, serif;
+    font-weight: 500;
+}
+.page-switch-btn-wrapper {
+    display: flex;
+    justify-content: center;
+}
+.page-switch-btn-wrapper > div {
+    position: relative;
+    width: 1230px;
+}
+.page-switch-btn {
+    font-size: 15px;
+    font-family: Georgia, serif;
+    background-color: #1c2e4a;
+    text-align: center;
+    color: #fff;
+    padding: 12px;
+    width: 58px;
+    user-select: none;
+}
+.btn-next {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.btn-first {
+    color: #1c2e4a;
+    font-size: 11px;
+    margin-top: 8px;
+    margin-left: 16px;
+}
+.btn-first:hover {
+    cursor: pointer;
+}
+.page-switch-btn:hover {
+    cursor: pointer;
+}

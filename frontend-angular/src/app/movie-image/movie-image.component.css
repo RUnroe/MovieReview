@@ -1,0 +1,27 @@
+/* @font-face {
+    font-family: 'RobotoCondensed-Regular';
+    src: local('RobotoCondensed-Regular'), url('../fonts/RobotoCondensed-Regular.ttf') format('truetype');
+    font-weight: 500;
+} */
+.movie-image {
+    width: 250px;
+    height: 350px;
+    border-radius: 10px;
+    transition: all 0.5s ease;
+}
+.movie-name {
+    font-family: 'RobotoCondensed-Regular';
+    font-size: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: -10px 0 0 15px;
+    width: 250px;
+}
+.movie-image-container {
+    margin: 15px;
+    transition: all 0.5s ease;
+}
+.movie-image-container:hover, .movie-image:hover {
+    cursor: pointer;
+    transform: translateY(-5px);
+}

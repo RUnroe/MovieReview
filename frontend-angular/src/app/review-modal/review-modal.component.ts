@@ -10,6 +10,28 @@ export class ReviewModalComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    const ReviewModal = () => {
+      // let [writtenReview, setWrittenReview] = useState('');
+  
+      // let { register, handleSubmit } = useForm();
+  
+      // const handleClick = () => {
+      //     props.toggle();
+      // }
+  
+      // const addReview = async () => {
+      //     await fetch(`http://localhost:3005/api/review/${props.movieId}`, {
+      //         method: 'POST',
+      //         credentials: 'include',
+      //         headers: { 'Content-Type': 'application/json' },
+      //         body: JSON.stringify({
+      //             review: writtenReview
+      //         })
+      //     }).then(res => {
+      //         return res.json();
+      //     }).then(() => {
+      //         handleClick();
+      //     }) 
+    }
   }
-
 }

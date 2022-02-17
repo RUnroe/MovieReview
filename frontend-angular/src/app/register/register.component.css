@@ -1,0 +1,75 @@
+.register-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    margin: 65px auto;
+    border-radius: 15px;
+    box-shadow: 0 1px 50px 1px rgba(0, 0, 0, 0.1);
+}
+.register-wrapper > .input-name-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+.register-header {
+    color: #acc8ea;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+    font-size: 23px;
+    margin-top: 55px;
+    margin-bottom: 15px;
+    user-select: none;
+    align-self: center;
+}
+.register-header-text {
+    align-self: center;
+    margin-bottom: 32px;
+    color: #1c2e4a;
+}
+.register-input {
+    width: 85%;
+    color: #1c2e4a;
+    letter-spacing: 1px;
+    background: rgba(136, 126, 126, 0.04);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    box-sizing: border-box;
+    border: 2px solid rgba(0, 0, 0, 0.02);
+    margin: 0 2px 25px 2px;
+    font-family: 'Ubuntu', sans-serif;
+}
+.register-input:focus {
+    border: 2px solid #acc8ea !important;
+}
+.register-btn {
+    color: #fff;
+    background: #1c2e4a;
+    padding: 15px 30px 15px 30px;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 11px;
+    text-align: center;
+    text-decoration: none;
+    margin-bottom: 45px;
+    user-select: none;
+    align-self: center;
+}
+.register-btn:hover {
+    cursor: pointer;
+}
+.forgot-link {
+    text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+    color: #acc8ea;
+}
+.error-message-register {
+    text-align: center;
+    color: #b82626;
+    font-size: 15px;
+    margin-bottom: 5px;
+}

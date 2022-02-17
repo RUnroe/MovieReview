@@ -10,6 +10,36 @@ export class MovieLandingComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    const MovieLanding = () => {
+      // let [movies, setMovies] = useState([]);
+      // let [moviePage, setMoviePage] = useState(parseInt(localStorage.getItem('moviePage')));
+  
+      // const changePageUp = () => {
+      //     setMoviePage(moviePage + 1);
+      // }
+  
+      // const changePageDown = () => {
+      //     setMoviePage(moviePage - 1);
+      // }
+  
+      // const changeToFirstPage = () => {
+      //     setMoviePage((moviePage * 0) + 1)
+      // }
+  
+      // const changeMovies = (results) => {
+      //     setMovies(results);
+      // }
+  
+      // const getMovies = async () => {
+      //     await fetch(`http://localhost:3005/api/movies?page=${moviePage}&count=16`, {
+      //         method: 'GET',
+      //         headers: { 'Content-Type': 'application/json' }
+      //     }).then((res) => {
+      //         return res.json();
+      //     }).then((data) => {
+      //         setMovies(data);
+      //     })
+      // }
+    }
   }
-
 }

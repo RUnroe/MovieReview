@@ -1,0 +1,283 @@
+/* @font-face {
+    font-family: 'RobotoCondensed-Regular';
+    src: local('RobotoCondensed-Regular'), url('../fonts/RobotoCondensed-Regular.ttf') format('truetype');
+    font-weight: 500;
+}
+@font-face {
+    font-family: 'BebasNeue-Regular';
+    src: local('BebasNeue-Regular'), url('../fonts/BebasNeue-Regular.ttf') format('truetype');
+    font-weight: 700;
+} */
+@media screen and (max-width: 699.9px) {
+    .movie-details-bar {
+        color: #000;
+   }
+    .movie-details-title {
+        background-color: #fff ec;
+        transform: skewY(-11deg);
+        position: absolute;
+        top: 125px;
+        left: 25px;
+        right: 25px;
+        font-size: 5vw;
+        font-weight: 700;
+        color: #1c2e4a;
+        overflow-wrap: break-word;
+        text-align: center;
+        padding: 15px;
+        border-radius: 5px;
+   }
+    .movie-details-genre-and-rating {
+        color: #fff;
+        font-size: 20px;
+   }
+    .movie-details-banner {
+        width: 100%;
+   }
+}
+@media screen and (min-width: 700px) {
+    .movie-details-bar {
+        color: #fff;
+   }
+    .movie-details-title {
+        font-size: 30px;
+        overflow-wrap: break-word;
+        text-align: center;
+        width: 50%;
+        max-width: 550px;
+   }
+    .movie-details-genre-and-rating {
+        font-size: 17px;
+        margin-top: 8px;
+   }
+    .movie-details-banner-container {
+        position: relative;
+        height: 490px;
+   }
+    .movie-details-banner {
+        position: relative;
+        z-index: -5;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+   }
+}
+@media screen and (max-width: 999.9px) {
+    .movie-details-overview-description {
+        display: flex;
+        padding: 5px 15px 25px 15px;
+        margin: 0 35px 25px 53px;
+        font-size: 20px;
+        line-height: 30px;
+        max-width: 1200px;
+        border-left: #fff 2px solid;
+   }
+    .movie-details-overview-poster {
+        display: none;
+   }
+}
+@media screen and (min-width: 1000px) {
+    .movie-details-overview-description {
+        display: flex;
+        padding: 5px 15px 25px 15px;
+        margin: 0 35px 25px 0;
+        font-size: 20px;
+        line-height: 30px;
+        max-width: 90%;
+   }
+    .movie-details-overview-poster {
+        height: 350px;
+        border-radius: 8px;
+        margin: auto auto;
+        margin-top: -32px;
+   }
+}
+@media screen and (min-width: 2500px) {
+    .movie-details-overview-description {
+        max-width: 1200px !important;
+        margin-left: 55px !important;
+        padding: none !important;
+   }
+}
+.movie-details-wrapper {
+    position: relative;
+}
+.back {
+    position: absolute;
+    top: 8px;
+    left: 15px;
+    z-index: 1;
+    font-size: 35px;
+    color: #fff;
+}
+.back:hover {
+    cursor: pointer;
+}
+.movie-details-container {
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+}
+.movie-details-banner {
+    overflow: hidden;
+    vertical-align: middle;
+    user-select: none;
+}
+.movie-details-genre-and-rating {
+    font-family: 'RobotoCondensed-Regular';
+    margin-left: 2.5px;
+}
+.star-review {
+    display: none;
+}
+.movie-details-bar {
+    background-color: #1c2e4a;
+    padding: 15px;
+    text-align: left;
+}
+.movie-details-actors-header {
+    margin: 15px 0 15px 15px;
+    font-size: 25px;
+    font-weight: 700;
+    font-family: 'BebasNeue-Regular';
+}
+.movie-details-overview-header {
+    margin: 15px 0 15px 15px;
+    font-size: 25px;
+    font-weight: 700;
+    font-family: 'BebasNeue-Regular';
+}
+.movie-details-actors-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.movie-details-actors-container > div {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.movie-details-actors-container > div::-webkit-scrollbar {
+    display: none;
+}
+.movie-details-actor {
+    flex-shrink: 0;
+    border-radius: 20px;
+    margin: 10px;
+    width: 105px;
+    height: 150px;
+    user-select: none;
+    object-fit: cover;
+    object-position: center;
+    box-shadow: 0 0 15px 0 rgba(2, 4, 5, 0.1);
+}
+.movie-details-actor-name {
+    text-align: center;
+    font-size: 15px;
+    font-family: 'RobotoCondensed-Regular';
+}
+.movie-details-overview-wrapper {
+    flex-direction: column;
+    background-color: #1c2e4a;
+    color: #fff;
+    padding: 5px 0 5px 0;
+    margin: 15px 0 30px 0;
+}
+.movie-details-overview-description {
+    font-family: 'RobotoCondensed-Regular';
+}
+.add-review-btn {
+    font-size: 15px;
+    font-family: 'RobotoCondensed-Regular';
+    text-align: center;
+    width: 115px;
+    padding: 8px;
+    margin: auto auto;
+    border-radius: 9px;
+    color: #fff;
+    background-color: #1c2e4a;
+    user-select: none;
+}
+.reviews-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 100px;
+}
+.reviews-container {
+    position: relative;
+    background-color: #1c2e4a;
+    box-shadow: 0 0 15px 0 rgba(18, 25, 33, .1);
+    border-radius: 9px;
+    width: 200px;
+    margin: 12px;
+}
+.reviewer-name {
+    color: #acc8ea;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    position: absolute;
+    right: 15px;
+    bottom: 20px;
+}
+.review-description {
+    padding: 20px 20px 45px 65px;
+    color: #fff;
+    word-wrap: break-word;
+    font-family: 'RobotoCondensed-Regular';
+}
+.review-description-active {
+    padding: 20px 20px 45px 65px;
+    color: #fff;
+    word-wrap: break-word;
+    font-family: 'RobotoCondensed-Regular';
+}
+.read-more-link {
+    color: blueviolet;
+    text-decoration: underline;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+.review-description::before {
+    position: absolute;
+    top: 10px;
+    left: 27px;
+    content: '\201C';
+    font-weight: 700;
+    font-size: 50px;
+    font-family: Georgia, serif;
+}
+.review-description::after {
+    content: '';
+    border: 10px solid;
+    border-color: #1c2e4a transparent transparent #1c2e4a;
+    position: absolute;
+    bottom: -19px;
+    left: 30px;
+}
+.read-more-link {
+    position: absolute;
+    right: 7px;
+    bottom: 6px;
+    color: #fff;
+    font-size: 10px;
+    text-decoration: none;
+    user-select: none;
+}
+.add-review-btn:hover {
+    cursor: pointer;
+}
+.remove-review {
+    position: absolute;
+    top: 3px;
+    right: 4px;
+    color: #fff;
+}
+.remove-review:hover {
+    cursor: pointer;
+}
