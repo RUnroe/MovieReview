@@ -13,13 +13,18 @@ const typeDefs = `
   type Mutation {
     createRating(input: RatingInput): Boolean
     createReview(input: ReviewInput): Int
-    deleteReview(review_id: String): Boolean
+    deleteReview(input DeleteReviewInput): Boolean
     createUser(input: UserInput): UserCredentials
     updatePassword(password: String): Boolean
     removeUser(user_id: String): Boolean
     authenticate(input: AuthInput): UserCredentials
     endSession: Boolean
 
+  }
+
+  input DeleteReviewInput {
+    api_key: String
+    review_id: String
   }
 
   input AuthInput {
@@ -222,24 +227,50 @@ const resolvers = {
         return await dal.getMovies(page ? page : 1, count && count <=100 ? count : 20);
     },
     getUser: async (parent, {user_id}) => {
-        return dal.getUserById(user_id);
+        return await dal.getUserById(user_id);
     },
     getCredentials: async (parent, {}, {session}) => {
-        if(session && session.user_id) return dal.getUserById(session.user_id);
+        if(session && session.user_id) return await dal.getUserById(session.user_id);
         return null;
     }
   },
-//   Mutation: {
-    // createRating: (RatingInput): Boolean,
-    // createReview: (input: ReviewInput): Int,
-    // deleteReview: (review_id: String!): Boolean,
-    // createUser: (input: User): UserCredentials,
-    // updatePassword: (password: String): Boolean,
-    // removeUser: (user_id: String): Boolean,
-    // authenticate(input: AuthInput): UserCredentials
-    // endSession(): Boolean
+  Mutation: {
+    createRating: async (parent, {movie_id, api_key, rating}, {session}) => {
+        if(api_key) return await dal.createRatingAPI(api_key, movie_id, rating);
+        else return await dal.createRating(session.user_id, movie_id, rating);
+    },
+    createReview: async (parent, {movie_id, api_key, review}, {session}) => {
+        if(api_key) return await dal.createReviewAPI(api_key, movie_id, review);
+        else return await dal.createReview(session.user_id, movie_id, review);
+    },
+    deleteReview: async (parent, {review_id, api_key}, {session}) => {
+      if(api_key) return await dal.deleteReviewAPI(api_key, review_id);
+      else return await dal.deleteReview(session.user_id, session.is_admin, review_id);
+    },
+    createUser: async (parent, user, {session}) => {
+      const credentials = await dal.createUser(user);
+      //Add credentials to session
+      session.user_id = credentials.user_id;
+      session.is_admin = credentials.is_admin;
+      return credentials;
+      // user_id: String
+      // is_admin: Boolean
+    },
+    updatePassword: async (parent, {password}, {session}) => {
+      return await dal.updatePassword(session.user_id, password);
+    },
+    removeUser: async (parent, {user_id}, {session}) => {
+      return await dal.removeUser(user_id);
+    },
+    authenticate: async (parent, credentials) => {
+      return await dal.authenticate(credentials);
+    }, 
+    endSession: async (parent, args) => {
+      req.session.destroy();
+      return req.session.user_id === "";
+    } 
 
-//   }
+  }
 };
 
 

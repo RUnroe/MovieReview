@@ -151,6 +151,7 @@ const updatePassword = async (user_id, password) => {
     //update password in database
     const result = await db.collection('users').doc(user_id).update({password: securePassword});
     console.log(result);
+    return result;
 }
 
 
@@ -255,7 +256,7 @@ const getAllRatings = async (movie_id) => {
 
 const createReviewAPI = async (api_key, movie_id, review) => {
     let user = await getUserByAPIKey(api_key);
-    createReview(user.user_id, movie_id, review);
+    return await createReview(user.user_id, movie_id, review);
 }
 
 const createReview = async (user_id, movie_id, review) => {
@@ -282,7 +283,7 @@ const createReview = async (user_id, movie_id, review) => {
         review: review
     });
     console.log(result);
-    return result;
+    return review_id;
 }
 
 // createReview("12d5qUwRS8Njr3pXfgfeyp", "557", "This movie was great!");
@@ -328,7 +329,7 @@ const getReviewById = async (review_id) => {
 const deleteReviewAPI = async (api_key, review_id) => {
     let user = await getUserByAPIKey(api_key);
     // console.log("user", user);
-    deleteReview(user.user_id, user.is_admin, review_id);
+    return await deleteReview(user.user_id, user.is_admin, review_id);
 }
 
 const deleteReview = async (user_id, is_admin, review_id) => {
