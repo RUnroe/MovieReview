@@ -13,7 +13,7 @@ const typeDefs = `
   type Mutation {
     createRating(input: RatingInput): Boolean
     createReview(input: ReviewInput): Int
-    deleteReview(input DeleteReviewInput): Boolean
+    deleteReview(input: DeleteReviewInput): Boolean
     createUser(input: UserInput): UserCredentials
     updatePassword(password: String): Boolean
     removeUser(user_id: String): Boolean
