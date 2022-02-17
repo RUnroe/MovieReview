@@ -200,7 +200,6 @@ const typeDefs = `
 const dal = {};
 const configure = (obj) => {
 	Object.assign(dal, obj);
-    console.log(dal);
 
 };   
     
@@ -222,8 +221,13 @@ const resolvers = {
     getMovies: async (parent, {page, count}) => {
         return await dal.getMovies(page ? page : 1, count && count <=100 ? count : 20);
     },
-    // getUser: (user_id: String!): User,
-    // getCredentials(): User
+    getUser: async (parent, {user_id}) => {
+        return dal.getUserById(user_id);
+    },
+    getCredentials: async (parent, {}, {session}) => {
+        if(session && session.user_id) return dal.getUserById(session.user_id);
+        return null;
+    }
   },
 //   Mutation: {
     // createRating: (RatingInput): Boolean,

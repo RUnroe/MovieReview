@@ -11,7 +11,13 @@ const dal = require('./db/dal');
 const schemas = require('./schemas');
 schemas.configure(dal);
 // console.log(schemas);
-const server = new ApolloServer({typeDefs: schemas.typeDefs, resolvers: schemas.resolvers});
+const server = new ApolloServer({
+        typeDefs: schemas.typeDefs, 
+        resolvers: schemas.resolvers,
+        context: ({req}) => {
+                return {session: req.session};
+        }
+});
 
 const app = express();
 // server.start();
