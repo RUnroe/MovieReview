@@ -3,25 +3,40 @@ const path = require('path');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
+const { ApolloServer } = require('apollo-server-express');
+
+
+const dal = require('./db/dal');
+
+const schemas = require('./schemas');
+schemas.configure(dal);
+// console.log(schemas);
+const server = new ApolloServer({
+        typeDefs: schemas.typeDefs, 
+        resolvers: schemas.resolvers,
+        context: ({req}) => {
+                return {session: req.session};
+        }
+});
 
 const app = express();
-const dal = require('./db/dal');
+// server.start();
+// server.applyMiddleware({ app });
+
 
 
 app.set("trust proxy", 1);
 app.use(express.static(path.join(__dirname + "/public")));
 
 
-const corsOptions = {
-    origin:  ['http://localhost:3000', 'http://localhost:3001', 'http://192.168.1.101:3000'],
-    credentials: true,
-    optionsSuccessStatus: 200,
-    allowedHeaders: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Set-Cookie",
-    exposedHeaders: "Set-Cookie"
-  }
-app.use(cors(corsOptions));
-
-// app.use(cors());
+// const corsOptions = {
+//     origin:  ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3005',  'http://192.168.1.101:3000'],
+//     credentials: true,
+//     optionsSuccessStatus: 200,
+//     allowedHeaders: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Set-Cookie",
+//     exposedHeaders: "Set-Cookie"
+//   }
+// app.use(cors(corsOptions));
 
 
 app.use(express.json()); // Used to parse JSON bodies
@@ -54,5 +69,10 @@ routeFiles.forEach((file) => {
         routeManager.apply(app, component);
 });
 
-
-app.listen(3005, "localhost");
+server.start().then(res => {
+        server.applyMiddleware({ app });
+        app.listen({ port: 3005 }, () =>
+            console.log('Now browse to http://localhost:3005' + server.graphqlPath)
+        )
+       })
+// app.listen(3005, "localhost");
