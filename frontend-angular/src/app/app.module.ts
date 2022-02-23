@@ -9,7 +9,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
 import {HttpLink} from 'apollo-angular/http';
 import {InMemoryCache} from '@apollo/client/core';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,8 @@ import {InMemoryCache} from '@apollo/client/core';
   imports: [
     BrowserModule, ApolloModule, HttpClientModule, 
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [   
     {
