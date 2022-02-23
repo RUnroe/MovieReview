@@ -28,7 +28,7 @@ import {InMemoryCache} from '@apollo/client/core';
       return {
         cache: new InMemoryCache(),
         link: httpLink.create({
-          uri: 'https://48p1r2roz4.sse.codesandbox.io',
+          uri: 'http://localhost:3005',
         }),
       };
     },
