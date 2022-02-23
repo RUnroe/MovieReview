@@ -1,4 +1,4 @@
-<p>search works!</p>
+<!-- <p>search works!</p>
 <form onSubmit={handleSubmit(getMoviesBySearch)} className='search-wrapper'>
     <div className='search-bar'>
         <input
@@ -7,4 +7,35 @@
             value={searchParams}
         />
     </div>
+</form> -->
+
+<!-- <div class="m-3">
+    <h3>Search Movie</h3>
+    <div class="wrap">
+        <input type="text" [(ngModel)]="term" class="searchTerm" placeholder="Search Movie">
+        <button (click)=""
+    </div>
+    <div *ngFor="let item of movies | filter:term">
+        <p>
+            {{ item.name }}
+        </p>
+    </div>
+</div> -->
+
+<h3>Search Movie</h3>
+
+<form class="form">
+    <div class="form-group mx-sm3 mb-2">
+        <label for="movie" class="sr-only">Search</label>
+        <input
+            [(ngModel)]="movie"
+            type="text"
+            class="form-control"
+            name="movie"
+            placeholder="search"
+        />
+    </div>
+    <button (click)="searchMovie()" type="submit" class="btn btn-primary mb-2">
+        Search
+    </button>
 </form>
