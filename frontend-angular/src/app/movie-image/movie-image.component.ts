@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Apollo, gql} from 'apollo-angular';
 
 @Component({
   selector: 'app-movie-image',
@@ -6,10 +7,39 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./movie-image.component.css']
 })
 export class MovieImageComponent implements OnInit {
-
-  constructor() { }
-
+  movie_id: string = "557";
+  movie: any = {};
+  
+  constructor(private apollo: Apollo) { }
+  
   ngOnInit(): void {
+    this.apollo
+      .watchQuery({
+        query: gql`
+          {
+            getMovieById(movie_id: "${this.movie_id}") {
+              backdrop_path
+              overview
+              original_title
+              poster_path
+              crew {
+                id
+                name
+                profile_path
+              }
+              genres {
+                name
+              }
+              id
+              title
+            }
+          }
+        `,
+      })
+      .valueChanges.subscribe((result: any) => {
+        this.movie = (result?.data?.getMovieById);
+        console.log(this.movie);
+      });
     const MovieImage = () => {
       // let movieImage = movie.image === null ? '' : `http://image.tmdb.org/t/p/w500${movie.image}`;
       // let name = movie.name;

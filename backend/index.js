@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname + "/public")));
 
 
 const corsOptions = {
-    origin:  ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3005', 'http://localhost:4200', 'http://192.168.1.101:3000'],
+    origin:  ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3005', 'http://localhost:4200', 'https://studio.apollographql.com'],
     credentials: true,
     optionsSuccessStatus: 200,
     allowedHeaders: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Set-Cookie",
