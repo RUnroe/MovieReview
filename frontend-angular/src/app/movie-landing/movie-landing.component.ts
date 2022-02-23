@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Apollo, gql} from 'apollo-angular';
 
 @Component({
   selector: 'app-movie-landing',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MovieLandingComponent implements OnInit {
 
-  constructor() { }
+  constructor(private apollo: Apollo) {}
 
   ngOnInit(): void {
+    this.apollo
+      .watchQuery({
+        query: gql`
+          {
+            getMovies {
+             original_title
+            }
+          }
+        `,
+      })
+      .valueChanges.subscribe((result: any) => {
+        console.log(result);
+      });
     const MovieLanding = () => {
       // let [movies, setMovies] = useState([]);
       // let [moviePage, setMoviePage] = useState(parseInt(localStorage.getItem('moviePage')));
