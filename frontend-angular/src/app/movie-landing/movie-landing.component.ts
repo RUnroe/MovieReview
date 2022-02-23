@@ -8,6 +8,8 @@ import {Apollo, gql} from 'apollo-angular';
 })
 export class MovieLandingComponent implements OnInit {
 
+  movies: any[] = [];
+
   constructor(private apollo: Apollo) {}
 
   ngOnInit(): void {
@@ -16,13 +18,18 @@ export class MovieLandingComponent implements OnInit {
         query: gql`
           {
             getMovies {
-             original_title
+              id
+              original_title
+              title
+              poster_path
+              
             }
           }
         `,
       })
       .valueChanges.subscribe((result: any) => {
-        console.log(result);
+        this.movies = (result?.data?.getMovies);
+        console.log(this.movies);
       });
     const MovieLanding = () => {
       // let [movies, setMovies] = useState([]);
