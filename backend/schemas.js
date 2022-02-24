@@ -2,7 +2,7 @@
 const typeDefs = `
   type Query {
     getRatings(movie_id: String): [Rating]
-    getReview(movie_id: String): [Review]
+    getReviews(movie_id: String): [Review]
     getMovieById(movie_id: String): Movie
     getMoviesBySearch(search: String): [Movie]
     getMovies(input: MovieInput): [Movie]
@@ -214,7 +214,7 @@ const resolvers = {
     getRatings: async (parent, {movie_id}) => {
         return await dal.getAllRatings(movie_id);
     },
-    getReview: async (parent, {movie_id}) => {
+    getReviews: async (parent, {movie_id}) => {
         return await dal.getReviews(movie_id);
     },
     getMovieById: async (parent, {movie_id}) => {
