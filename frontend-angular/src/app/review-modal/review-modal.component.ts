@@ -11,7 +11,25 @@ export class ReviewModalComponent implements OnInit {
   constructor(private apollo: Apollo) { }
 
   ngOnInit(): void {
+    //NOT SURE IF THIS NEEDS TO BE NESTED IN NGONINIT
     const ReviewModal = () => {
+
+        //TODO: Use these variable
+        let movie_id: String = "";
+        let review: String = "";
+        this.apollo
+        .watchQuery({
+          query: gql`
+            {
+                createReview(movie_id: ${movie_id}, review: ${review})
+            }
+          `,
+        })
+        .valueChanges.subscribe((result: any) => {
+          //Console.log if the review was removed
+          console.log(`Review for movie (${movie_id}) created: `, result?.data?.createReview);
+        });
+  
       // let [writtenReview, setWrittenReview] = useState('');
   
       // let { register, handleSubmit } = useForm();
