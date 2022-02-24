@@ -162,6 +162,7 @@ const removeUser = async (user_id) => {
     //remove user by user_id
     const result = await db.collection('users').doc(user_id).delete();
     console.log(result);
+    return result;
 }
 
 

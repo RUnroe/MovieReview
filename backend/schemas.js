@@ -235,17 +235,18 @@ const resolvers = {
     }
   },
   Mutation: {
-    createRating: async (parent, {movie_id, api_key, rating}, {session}) => {
-        if(api_key) return await dal.createRatingAPI(api_key, movie_id, rating);
-        else return await dal.createRating(session.user_id, movie_id, rating);
+    createRating: async (parent, {input}, {session}) => {
+      console.log(input.api_key, input.movie_id, input.rating);
+        if(input.api_key) return await !!dal.createRatingAPI(input.api_key, input.movie_id, input.rating);
+        else return await (!!dal.createRating(session.user_id, input.movie_id, input.rating));
     },
-    createReview: async (parent, {movie_id, api_key, review}, {session}) => {
-        if(api_key) return await dal.createReviewAPI(api_key, movie_id, review);
-        else return await dal.createReview(session.user_id, movie_id, review);
+    createReview: async (parent, {input}, {session}) => {
+        if(input.api_key) return await dal.createReviewAPI(input.api_key, input.movie_id, input.review);
+        else return await (dal.createReview(session.user_id, input.movie_id, input.review));
     },
-    deleteReview: async (parent, {review_id, api_key}, {session}) => {
-      if(api_key) return await dal.deleteReviewAPI(api_key, review_id);
-      else return await dal.deleteReview(session.user_id, session.is_admin, review_id);
+    deleteReview: async (parent, {input}, {session}) => {
+      if(input.api_key) return await !!dal.deleteReviewAPI(input.api_key, input.review_id);
+      else return await !!dal.deleteReview(session.user_id, session.is_admin, input.review_id);
     },
     createUser: async (parent, user, {session}) => {
       const credentials = await dal.createUser(user);
@@ -257,10 +258,10 @@ const resolvers = {
       // is_admin: Boolean
     },
     updatePassword: async (parent, {password}, {session}) => {
-      return await dal.updatePassword(session.user_id, password);
+      return await !!dal.updatePassword(session.user_id, password);
     },
     removeUser: async (parent, {user_id}, {session}) => {
-      return await dal.removeUser(user_id);
+      return await !!dal.removeUser(user_id);
     },
     authenticate: async (parent, credentials) => {
       return await dal.authenticate(credentials);

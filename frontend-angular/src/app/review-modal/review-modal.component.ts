@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Apollo, gql} from 'apollo-angular';
 
 @Component({
   selector: 'app-review-modal',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReviewModalComponent implements OnInit {
 
-  constructor() { }
+  constructor(private apollo: Apollo) { }
 
   ngOnInit(): void {
     const ReviewModal = () => {
