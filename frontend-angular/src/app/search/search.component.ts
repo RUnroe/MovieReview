@@ -52,22 +52,43 @@
 //}
 
 import { Component, OnInit } from "@angular/core";
-import { Apollo } from "apollo-angular";
-import gql from "graphql-tag";
+import {Apollo, gql} from 'apollo-angular';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent {
-  title!: string;
-  genre!: string;
-  actor!: string;
+export class SearchComponent implements OnInit {
+
+  movies: any[] = [];
   movie: any = {};
 
+  constructor(private apollo: Apollo) { }
+
+  ngOnInit(): void {
+    throw new Error("Method not implemented.");
+  }
   searchMovie() {
     console.log(this.movie);
+    this.apollo
+        .watchQuery({
+          query: gql`
+            {
+              getMoviesBySearch(search: "${this.movie}") {
+                id
+                original_title
+                title
+                poster_path
+              }
+            }
+          `,
+        })
+        .valueChanges.subscribe((result: any) => {
+          this.movies = (result?.data?.getMoviesBySearch);
+          console.log(this.movies);
+          //TODO: rerender screen here
+        });
   }
 }
 
