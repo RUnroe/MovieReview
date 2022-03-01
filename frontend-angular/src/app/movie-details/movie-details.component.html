@@ -30,8 +30,10 @@
                         <img src=poster className='movie-details-overview-poster' />
                     </div>
                 </div>
-                <div className='add-review-btn' onClick={toggleModal}>Add Review &#x2B;</div>
+                <div className='add-review-btn' (click)="toggleModal()">Add Review &#x2B;</div>
+
                 <!-- {modal ? <ReviewModal toggle={toggleModal} movieId={movie_id} /> : null} -->
+                <app-review-modal></app-review-modal>
                 <!-- <DisplayReviews /> -->
             </div>
         </div>

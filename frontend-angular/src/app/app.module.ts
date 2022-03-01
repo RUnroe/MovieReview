@@ -11,16 +11,19 @@ import {HttpLink} from 'apollo-angular/http';
 import {InMemoryCache} from '@apollo/client/core';
 import { FormsModule } from '@angular/forms';
 
+import { ReviewModalComponent } from './review-modal/review-modal.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    routingComponents
+    routingComponents,
+    ReviewModalComponent
   ],
   imports: [
     BrowserModule, ApolloModule, HttpClientModule, 
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule,
+    FormsModule
   ],
   providers: [   
     {

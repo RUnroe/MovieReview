@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {Apollo, gql} from 'apollo-angular';
 
 @Component({
@@ -6,29 +6,43 @@ import {Apollo, gql} from 'apollo-angular';
   templateUrl: './review-modal.component.html',
   styleUrls: ['./review-modal.component.css']
 })
-export class ReviewModalComponent implements OnInit {
-
+export class ReviewModalComponent implements OnInit, OnDestroy {
+  movie_id: String = "";
+  userReview: String = "";
+  
   constructor(private apollo: Apollo) { }
-
-  ngOnInit(): void {
-    //NOT SURE IF THIS NEEDS TO BE NESTED IN NGONINIT
-    const ReviewModal = () => {
-
-        //TODO: Use these variable
-        let movie_id: String = "";
-        let review: String = "";
-        this.apollo
+  
+  addReview(): void {
+    console.log("add review")
+    this.apollo
         .watchQuery({
           query: gql`
             {
-                createReview(movie_id: ${movie_id}, review: ${review})
+                createReview(movie_id: ${this.movie_id}, review: ${this.userReview})
             }
           `,
         })
         .valueChanges.subscribe((result: any) => {
           //Console.log if the review was removed
-          console.log(`Review for movie (${movie_id}) created: `, result?.data?.createReview);
+          console.log(`Review for movie (${this.movie_id}) created: `, result?.data?.createReview);
+          this.closeModal();
         });
+  }
+  openModal(): void {
+    console.log("open modal")
+
+  }
+  closeModal(): void {
+    console.log("close modal")
+  }
+  ngOnInit(): void {
+    //NOT SURE IF THIS NEEDS TO BE NESTED IN NGONINIT
+    
+
+        //TODO: Use these variable
+        let movie_id: String = "";
+        let review: String = "";
+        
   
       // let [writtenReview, setWrittenReview] = useState('');
   
@@ -51,6 +65,9 @@ export class ReviewModalComponent implements OnInit {
       //     }).then(() => {
       //         handleClick();
       //     }) 
-    }
+    
+  }
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
   }
 }
