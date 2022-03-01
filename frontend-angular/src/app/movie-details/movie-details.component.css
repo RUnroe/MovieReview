@@ -1,13 +1,14 @@
-/* @font-face {
+@font-face {
     font-family: 'RobotoCondensed-Regular';
-    src: local('RobotoCondensed-Regular'), url('../fonts/RobotoCondensed-Regular.ttf') format('truetype');
+    src: local('RobotoCondensed-Regular'), url('/frontend-angular/src/fonts/RobotoCondensed-Regular.ttf') format('truetype');
     font-weight: 500;
 }
 @font-face {
     font-family: 'BebasNeue-Regular';
-    src: local('BebasNeue-Regular'), url('../fonts/BebasNeue-Regular.ttf') format('truetype');
+    src: local('BebasNeue-Regular'), url('/frontend-angular/src/fonts/BebasNeue-Regular.ttf') format('truetype');
     font-weight: 700;
-} */
+}
+
 @media screen and (max-width: 699.9px) {
     .movie-details-bar {
         color: #000;

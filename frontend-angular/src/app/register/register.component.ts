@@ -25,14 +25,14 @@ export class RegisterComponent implements OnInit {
     email: new FormControl('', [Validators.required, Validators.pattern(/\w+@\w+\.\w+/)])
   });
 
-  onSubmit() {
+  async onSubmit() {
     let form = this.registerForm;
 
     this.submitted = true;
 
     // console.log(form.value)
     //fetch here
-    return fetch(`http://localhost:3005/api/user`, {
+    return await fetch(`http://localhost:3005/api/user`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
