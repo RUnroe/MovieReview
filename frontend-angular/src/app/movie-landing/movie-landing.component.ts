@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Apollo, gql } from 'apollo-angular';
 
 @Component({
   selector: 'app-movie-landing',
@@ -8,14 +9,14 @@ import { Router } from '@angular/router';
 })
 
 export class MovieLandingComponent implements OnInit {
-  moviesArray: any[] = [{id: 1, name: 'mOne', test: 'one'}, {id: 2, name: 'mTwo', test: 'two'}, {id: 3, name: 'mThree', test: 'three'}];
+  movies: any[] = [];
   pageNum: number = 0;
 
-  constructor(private router: Router) { }
-  //Create fetch to put into movies array
+  constructor(private router: Router, private apollo: Apollo) {}
 
-  sendData(i: any) {
-    console.log(this.moviesArray[i]);
+  //transfer data over
+  redirectDetails(i: any) {
+    console.log(this.movies[i]);
     this.router.navigateByUrl('/details', {
       state: {
         id: '',
@@ -27,7 +28,6 @@ export class MovieLandingComponent implements OnInit {
   changePageUp() {
     this.pageNum += 1;
     localStorage.setItem('moviePage', JSON.stringify(this.pageNum));
-    console.log(this.pageNum)
   }
 
   changePageDown() {
@@ -35,18 +35,30 @@ export class MovieLandingComponent implements OnInit {
       this.pageNum -= 1;
     }
     localStorage.setItem('moviePage', JSON.stringify(this.pageNum));
-    console.log(this.pageNum)
   }
 
   changeToFirstPage() {
     this.pageNum = ((this.pageNum * 0) + 1);
+    localStorage.setItem('moviePage', JSON.stringify(this.pageNum));
   }
 
   ngOnInit(): void {
     this.pageNum = JSON.parse(localStorage.getItem('moviePage') || '1');
-    
-    // changeMovies (results) {
-    //     setMovies(results);
-    // }
+    this.apollo
+      .watchQuery({
+        query: gql`
+          {
+            getMovies {
+              id
+              original_title
+              title
+              poster_path
+            }
+          }
+        `,
+      })
+      .valueChanges.subscribe((result: any) => {
+        this.movies = (result?.data?.getMovies);
+      });
   }
 }
