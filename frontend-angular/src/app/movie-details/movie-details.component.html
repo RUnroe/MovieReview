@@ -1,13 +1,13 @@
-<div className='movie-details-wrapper'>
-    <div className='movie-details-header'>
-        <div className='back'>&#8592;</div>
-        <div className='movie-details-container'>
-            <div className='movie-details-banner-container'>
-                <img src=banner className='movie-details-banner' />
+<div class='movie-details-wrapper'>
+    <div class='movie-details-header'>
+        <div class='back'>&#8592;</div>
+        <div class='movie-details-container'>
+            <div class='movie-details-banner-container'>
+                <img src=banner class='movie-details-banner' />
             </div>
-            <div className='movie-details-bar'>
-                <span className='movie-details-title'>title</span>
-                <div className='movie-details-genre-and-rating '>
+            <div class='movie-details-bar'>
+                <span class='movie-details-title'>title</span>
+                <div class='movie-details-genre-and-rating '>
                     <!-- genre | <DisplayAverageReview /> -->
                     <!-- <ReactStars
                         count={5}
@@ -17,19 +17,19 @@
                     /> -->
                 </div>
             </div>
-            <div className='movie-details-actors-wrapper'>
-                <div className='movie-details-actors-header'>Actors</div>
-                <div className='movie-details-actors-container'>
+            <div class='movie-details-actors-wrapper'>
+                <div class='movie-details-actors-header'>Actors</div>
+                <div class='movie-details-actors-container'>
                     <!-- <DisplayActors /> -->
                 </div>
-                <div className='movie-details-overview-wrapper'>
-                    <div className='movie-details-overview-header'>Overview</div>
-                    <div className='movie-details-overview-description'>
+                <div class='movie-details-overview-wrapper'>
+                    <div class='movie-details-overview-header'>Overview</div>
+                    <div class='movie-details-overview-description'>
                         overview
-                        <img src=poster className='movie-details-overview-poster' />
+                        <img src=poster class='movie-details-overview-poster' />
                     </div>
                 </div>
-                <div className='add-review-btn' (click)="toggleModal()">Add Review &#x2B;</div>
+                <div class='add-review-btn' (click)="toggleModal()">Add Review &#x2B;</div>
 
                 <!-- {modal ? <ReviewModal toggle={toggleModal} movieId={movie_id} /> : null} -->
                 <app-review-modal [movie_id]="movie_id" [isModalOpen]="openModal" (toggleModalEvent)="setModal($event)"></app-review-modal>
@@ -39,36 +39,36 @@
     </div>
 </div>
 
-<div className='reviews-wrapper'>
+<div class='reviews-wrapper'>
     <!-- {reviews.map((review, i) => {
         let char = review.review.length;
         let reviewToString = String(review.review);
         return ( -->
-            <!-- <div key={i} className='reviews-container'>
+            <!-- <div key={i} class='reviews-container'>
                 {(review.user_id === loggedInUser || admin) ? ( -->
                     <!-- <>
-                        <span className='remove-review' onClick={() => removeReview(review.review_id)}>&#10005;</span>
+                        <span class='remove-review' onClick={() => removeReview(review.review_id)}>&#10005;</span>
                         {char <= 50 ? (
                             //Looks at each character limit in reviews and if it's more than 250 then it will display extended div
                             <div>
-                                <div className='review-description'>{filter.clean(review.review)}</div>
-                                <div className='reviewer-name'>-{review.user}</div>
+                                <div class='review-description'>{filter.clean(review.review)}</div>
+                                <div class='reviewer-name'>-{review.user}</div>
                             </div>
                         ) : (
                             <div>
                                 {readMore === true && clickedReview === review.review_id ? (
                                     <>
-                                        <div className='review-description'>{filter.clean(review.review)}</div>
-                                        <div className='reviewer-name'>-{review.user}</div>
-                                        <div className='read-more-link' onClick={toggleText}>Read Less</div>
+                                        <div class='review-description'>{filter.clean(review.review)}</div>
+                                        <div class='reviewer-name'>-{review.user}</div>
+                                        <div class='read-more-link' onClick={toggleText}>Read Less</div>
                                     </>
                                 ) : (
                                     <>
-                                        <div className='review-description'>
+                                        <div class='review-description'>
                                             {filter.clean(`${reviewToString.substring(0, 50)}...`)}
                                         </div>
-                                        <div className='reviewer-name'>-{review.user}</div>
-                                        <div className='read-more-link' onClick={() => toggleText(review.review_id)}>Read More</div>
+                                        <div class='reviewer-name'>-{review.user}</div>
+                                        <div class='read-more-link' onClick={() => toggleText(review.review_id)}>Read More</div>
                                     </>
                                 )}
                             </div>
@@ -79,24 +79,24 @@
                         {char <= 50 ? (
                             //Looks at each character limit in reviews and if it's more than 250 then it will display extended div
                             <div>
-                                <div className='review-description'>{filter.clean(review.review)}</div>
-                                <div className='reviewer-name'>-{review.user}</div>
+                                <div class='review-description'>{filter.clean(review.review)}</div>
+                                <div class='reviewer-name'>-{review.user}</div>
                             </div>
                         ) : (
                             <div>
                                 {readMore === true && clickedReview === review.review_id ? (
                                     <>
-                                        <div className='review-description'>{filter.clean(review.review)}</div>
-                                        <div className='reviewer-name'>-{review.user}</div>
-                                        <div className='read-more-link' onClick={toggleText}>Read Less</div>
+                                        <div class='review-description'>{filter.clean(review.review)}</div>
+                                        <div class='reviewer-name'>-{review.user}</div>
+                                        <div class='read-more-link' onClick={toggleText}>Read Less</div>
                                     </>
                                 ) : (
                                     <>
-                                        <div className='review-description'>
+                                        <div class='review-description'>
                                             {filter.clean(`${reviewToString.substring(0, 50)}...`)}
                                         </div>
-                                        <div className='reviewer-name'>-{review.user}</div>
-                                        <div className='read-more-link' onClick={() => toggleText(review.review_id)}>Read More</div>
+                                        <div class='reviewer-name'>-{review.user}</div>
+                                        <div class='read-more-link' onClick={() => toggleText(review.review_id)}>Read More</div>
                                     </>
                                 )}
                             </div>
@@ -111,13 +111,13 @@
 <div>
     <!-- {actors && actors.map((actor, i) => {
         return (
-            <div key={i} className='actor'>
+            <div key={i} class='actor'>
                 <img
                     src={actor.pic === null ? '/images/placeholder.png' : `http://image.tmdb.org/t/p/w500${actor.pic}`}
                     alt={actor.name}
-                    className='movie-details-actor'
+                    class='movie-details-actor'
                 />
-                <div className='movie-details-actor-name'>{`${actor.name}`}</div>
+                <div class='movie-details-actor-name'>{`${actor.name}`}</div>
             </div>
         )
     })} -->
