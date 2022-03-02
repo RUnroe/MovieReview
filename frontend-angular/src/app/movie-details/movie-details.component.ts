@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import {Apollo, gql} from 'apollo-angular';
 
 
@@ -8,15 +8,21 @@ import {Apollo, gql} from 'apollo-angular';
   styleUrls: ['./movie-details.component.css']
 })
 export class MovieDetailsComponent implements OnInit {
+  @Output() movie_id: string = "557";
   loggedInUser: any = {};
   isAdmin: Boolean = false;
   reviews: any[] = [];
   ratings: any[] = [];
+  @Output() openModal: boolean = false;
 
   constructor(private apollo: Apollo) { }
   toggleModal(): void {
-    console.log("toggle");
+    this.openModal = !this.openModal;
   }
+  setModal(value: boolean): void {
+    this.openModal = value;
+  }
+
   ngOnInit(): void {
 
     const MovieDetails = () => {
@@ -87,12 +93,12 @@ export class MovieDetailsComponent implements OnInit {
   
       const getReviews = async () => {
         //TODO: Use this variable
-        let movie_id: String = "";
+        
         this.apollo
         .watchQuery({
           query: gql`
             {
-              getReviews(movie_id: "${movie_id}") {
+              getReviews(movie_id: "${this.movie_id}") {
                 review
                 user_id
                 review_id

@@ -33,7 +33,7 @@
                 <div className='add-review-btn' (click)="toggleModal()">Add Review &#x2B;</div>
 
                 <!-- {modal ? <ReviewModal toggle={toggleModal} movieId={movie_id} /> : null} -->
-                <app-review-modal></app-review-modal>
+                <app-review-modal [movie_id]="movie_id" [isModalOpen]="openModal" (toggleModalEvent)="setModal($event)"></app-review-modal>
                 <!-- <DisplayReviews /> -->
             </div>
         </div>
