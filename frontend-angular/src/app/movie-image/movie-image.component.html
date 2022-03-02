@@ -1,7 +1,6 @@
-<p>movie-image works!</p>
 <div>
-    <div className='movie-image-container' (Click)="getMovieDetails()">
-        <img class="images" src={{movie.poster_path}} className='movie-image' />
+    <div class='movie-image-container'>
+        <img class="images" src="{{'http://image.tmdb.org/t/p/w500' + movie.poster_path}}" class='movie-image' />
     </div>
-    <div className='movie-name'>{{movie.title}}</div>
+    <div class='movie-name'>{{movie.title}}</div>
 </div>

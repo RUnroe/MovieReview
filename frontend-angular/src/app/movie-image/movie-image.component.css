@@ -3,6 +3,7 @@
     src: local('RobotoCondensed-Regular'), url('../fonts/RobotoCondensed-Regular.ttf') format('truetype');
     font-weight: 500;
 } */
+
 .movie-image {
     width: 250px;
     height: 350px;
@@ -10,7 +11,7 @@
     transition: all 0.5s ease;
 }
 .movie-name {
-    font-family: 'RobotoCondensed-Regular';
+    /* font-family: 'RobotoCondensed-Regular'; */
     font-size: 15px;
     padding-top: 5px;
     padding-bottom: 5px;

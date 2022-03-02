@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
     email: new FormControl('', [Validators.required, Validators.pattern(/\w+@\w+\.\w+/)])
   });
 
-  onSubmit() {
+  async onSubmit() {
     let form = this.registerForm;
     this.submitted = true;
     
@@ -54,6 +54,7 @@ export class RegisterComponent implements OnInit {
       let credentials = result?.data?.createUser;
       console.log(credentials);
     });
+    
     // console.log(form.value)
     //fetch here
     // return fetch(`http://localhost:3005/api/user`, {

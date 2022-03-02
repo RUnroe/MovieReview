@@ -1,41 +1,30 @@
-<p>movie-landing works!</p>
-<div className='movie-landing-wrapper'>
+<div class='movie-landing-wrapper'>
     <!-- <Search onSearch={changeMovies} /> -->
-    <div className='movie-landing-header-wrapper'>
-        <div className='movie-landing-header'>
+    <div class='movie-landing-header-wrapper'>
+        <div class='movie-landing-header'>
             Movies
-            <div className='movie-landing-page'>Page moviePage</div>
+            <div class='movie-landing-page'>Page {{pageNum}}</div>
         </div>
     </div>
-    <div className='movie-landing-clickable-wrapper'>
-        <!-- {movies.map((movie => {
-            return (
-                //Grabs movie ID then gives it to MovieImage to change page
-                <MovieImage
-                    key={movie.id}
-                    id={movie.id}
-                    name={movie.title}
-                    image={movie.poster_path}
-                />
-            )
-        }))} -->
+    <div class='movie-landing-clickable-wrapper'>
+        <div *ngFor="let movie of movies; let i = index">
+            <app-movie-image (click)="redirectDetails(i)" [movie]=movie></app-movie-image>
+        </div>
     </div>
-    <div className='page-switch-btn-wrapper'>
-        <!-- <div>
-            {moviePage === 1 ? null : (
-                <>
-                    <div className='page-switch-btn btn-prev' onClick={() => { changePageDown() }}>
-                        Previous
-                    </div>
-                    <div className='btn-first' onClick={() => { changeToFirstPage() }}>
-                        First Page
-                    </div>
-                </>
-            )}
-            <div className='bottom-page-number'>Page {moviePage}</div>
-            <div className='page-switch-btn btn-next' onClick={() => { changePageUp() }}>
+    <div class='page-switch-btn-wrapper'>
+        <div>
+            <div *ngIf="pageNum !== 1">
+                <div class='page-switch-btn btn-prev' (click)="changePageDown()">
+                    Previous
+                </div>
+                <div class='btn-first' (click)="changeToFirstPage()">
+                    First Page
+                </div>
+            </div>
+            <div class='bottom-page-number'>Page {{pageNum}}</div>
+            <div class='page-switch-btn btn-next' (click)="changePageUp()">
                 Next
             </div>
-        </div> -->
+        </div>
     </div>
 </div>
