@@ -1,13 +1,10 @@
-<p>review-modal works!</p>
-<form onSubmit={handleSubmit(addReview)} className='modal-wrapper'>
+<div onSubmit="{handleSubmit(addReview)}" className='modal-wrapper'>
     <div className='modal-container'>
-        <span className='close' onClick={handleClick}>&times;</span>
+        <span className='close' (click)="closeModal()">&times;</span>
         <div className='modal-header'>Write Review Below</div>
         <div>
-            <!-- <textarea
-                value={writtenReview}
-            /> -->
+            <textarea [(ngModel)]="userReview"> </textarea>
         </div>
-        <!-- <div onClick={() => { addReview() }} className='modal-btn'>Critique</div> -->
+        <div (click)="addReview()" className='modal-btn'>Critique</div>
     </div>
-</form>
+</div>

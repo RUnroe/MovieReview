@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Apollo, gql} from 'apollo-angular';
 
+
 @Component({
   selector: 'app-movie-details',
   templateUrl: './movie-details.component.html',
@@ -13,7 +14,9 @@ export class MovieDetailsComponent implements OnInit {
   ratings: any[] = [];
 
   constructor(private apollo: Apollo) { }
-
+  toggleModal(): void {
+    console.log("toggle");
+  }
   ngOnInit(): void {
 
     const MovieDetails = () => {
