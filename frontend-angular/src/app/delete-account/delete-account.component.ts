@@ -12,6 +12,7 @@ export class DeleteAccountComponent implements OnInit {
 
   removeAccount = async () => {
     console.log(this.userId);
+    //TODO Test this error
     this.apollo
         .watchQuery({
           query: gql`

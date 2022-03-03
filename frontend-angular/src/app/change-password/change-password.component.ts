@@ -12,10 +12,10 @@ export class ChangePasswordComponent implements OnInit {
   messageClass: string = "";
 
   constructor(private apollo: Apollo) { }
-
+  //TODO Test this error
   changePassword = async () => {
     if(this.newPassword.length >= 6) { 
-      console.log(this.newPassword);
+      // console.log(this.newPassword);
       this.apollo
           .watchQuery({
             query: gql`
@@ -26,13 +26,13 @@ export class ChangePasswordComponent implements OnInit {
           })
           .valueChanges.subscribe((result: any) => {
             console.log(result);
-            //TODO display message
+            //Display message
             this.messageClass = "positive";
             this.message = "Successfully changed password!"
           });
     }
     else {
-      //TODO display error
+      //Display error
       this.messageClass = "delete-message";
       this.message = "Error when changing password"
     }
