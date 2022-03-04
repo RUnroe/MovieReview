@@ -3,10 +3,10 @@
         <div class='back'>&#8592;</div>
         <div class='movie-details-container'>
             <div class='movie-details-banner-container'>
-                <img src=banner class='movie-details-banner' />
+                <img src="{{'http://image.tmdb.org/t/p/original' + data.backdrop}}" class='movie-details-banner' />
             </div>
             <div class='movie-details-bar'>
-                <span class='movie-details-title'>title</span>
+                <span class='movie-details-title'>{{data.title}}</span>
                 <div class='movie-details-genre-and-rating '>
                     <!-- genre | <DisplayAverageReview /> -->
                     <!-- <ReactStars
@@ -15,18 +15,30 @@
                         value={loggedInUserRating}
                         activeColor='#FFFFFF'
                     /> -->
+                    <div *ngFor="let genre of data.genres; let i = index">
+                        <div>
+                            {{genre.name}}
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class='movie-details-actors-wrapper'>
                 <div class='movie-details-actors-header'>Actors</div>
                 <div class='movie-details-actors-container'>
-                    <!-- <DisplayActors /> -->
+                    <div *ngFor="let actor of data.actors; let i = index">
+                        <div>
+                            <!-- {{actor.}} -->
+                        </div>
+                        <div>
+                            {{actor.name}}
+                        </div>
+                    </div>
                 </div>
                 <div class='movie-details-overview-wrapper'>
                     <div class='movie-details-overview-header'>Overview</div>
                     <div class='movie-details-overview-description'>
-                        overview
-                        <img src=poster class='movie-details-overview-poster' />
+                        {{data.overview}}
+                        <img src="{{'http://image.tmdb.org/t/p/w500' + data.poster}}" class='movie-details-overview-poster' />
                     </div>
                 </div>
                 <div class='add-review-btn' (click)="toggleModal()">Add Review &#x2B;</div>
@@ -44,9 +56,15 @@
         let char = review.review.length;
         let reviewToString = String(review.review);
         return ( -->
+<<<<<<< HEAD
+    <!-- <div key={i} class='reviews-container'>
+                {(review.user_id === loggedInUser || admin) ? ( -->
+    <!-- <>
+=======
             <!-- <div key={i} class='reviews-container'>
                 {(review.user_id === loggedInUser || admin) ? ( -->
                     <!-- <>
+>>>>>>> e2de0b5465ac32564347ba1ee03e2f45b858e785
                         <span class='remove-review' onClick={() => removeReview(review.review_id)}>&#10005;</span>
                         {char <= 50 ? (
                             //Looks at each character limit in reviews and if it's more than 250 then it will display extended div
@@ -102,7 +120,7 @@
                             </div>
                         )}
                     </> -->
-                <!-- )}
+    <!-- )}
             </div>
         )
     })} -->
