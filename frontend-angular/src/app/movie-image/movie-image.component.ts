@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import {Apollo, gql} from 'apollo-angular';
 
 @Component({
@@ -12,13 +13,14 @@ export class MovieImageComponent implements OnInit {
   @Input() movie: any = {};
 
   constructor(private apollo: Apollo) {}
-  
+
   ngOnInit(): void {
+    // console.log(this.movie.id)
     // this.apollo
     //   .watchQuery({
     //     query: gql`
     //       {
-    //         getMovieById(movie_id: "${this.movie_id}") {
+    //         getMovieById(movie_id: "${this.movie.id}") {
     //           backdrop_path
     //           overview
     //           original_title
@@ -39,8 +41,8 @@ export class MovieImageComponent implements OnInit {
     //   })
     //   .valueChanges.subscribe((result: any) => {
     //     this.movie = (result?.data?.getMovieById);
+    //     // navigate to details page
     //     // console.log(this.movie);
     //   });
-      // console.log(this.movie.poster_path)
   }
 }
