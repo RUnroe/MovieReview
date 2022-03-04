@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
       })
     }).then((res) => {
       if (res.ok) {
+        console.log(res);
         this.router.navigate(['/']);
         return res.json()
       }
