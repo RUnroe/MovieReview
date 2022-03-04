@@ -44,7 +44,7 @@
                 <div class='add-review-btn' (click)="toggleModal()">Add Review &#x2B;</div>
 
                 <!-- {modal ? <ReviewModal toggle={toggleModal} movieId={movie_id} /> : null} -->
-                <app-review-modal></app-review-modal>
+                <app-review-modal [movie_id]="movie_id" [isModalOpen]="openModal" (toggleModalEvent)="setModal($event)"></app-review-modal>
                 <!-- <DisplayReviews /> -->
             </div>
         </div>
@@ -56,9 +56,15 @@
         let char = review.review.length;
         let reviewToString = String(review.review);
         return ( -->
+<<<<<<< HEAD
     <!-- <div key={i} class='reviews-container'>
                 {(review.user_id === loggedInUser || admin) ? ( -->
     <!-- <>
+=======
+            <!-- <div key={i} class='reviews-container'>
+                {(review.user_id === loggedInUser || admin) ? ( -->
+                    <!-- <>
+>>>>>>> e2de0b5465ac32564347ba1ee03e2f45b858e785
                         <span class='remove-review' onClick={() => removeReview(review.review_id)}>&#10005;</span>
                         {char <= 50 ? (
                             //Looks at each character limit in reviews and if it's more than 250 then it will display extended div
