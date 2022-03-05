@@ -230,6 +230,7 @@ const resolvers = {
         return await dal.getUserById(user_id);
     },
     getCredentials: async (parent, {}, {session}) => {
+      console.log(session);
         if(session && session.user_id) return await dal.getUserById(session.user_id);
         return null;
     }

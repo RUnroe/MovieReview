@@ -39,22 +39,33 @@ export class DeleteAccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.apollo
-        .watchQuery({
-          query: gql`
-            {
-              getCredentials {
-                fname
-                lname
-                is_admin
-                api_key
-                user_id
-              }
+    fetch(`http://localhost:3005/api/auth`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                return Promise.reject(res);
             }
-          `,
+        }).then((data) => {
+          console.log(data.user_id);
+          this.userId = (data.user_id);
         })
-        .valueChanges.subscribe((result: any) => {
-          this.userId = (result?.data?.getCredentials?.user_id);
-        });
+    // this.apollo
+    //     .watchQuery({
+    //       query: gql`
+    //         {
+    //           getCredentials {
+    //             user_id
+    //           }
+    //         }
+    //       `,
+    //     })
+    //     .valueChanges.subscribe((result: any) => {
+    //       console.log(result?.data);
+    //       this.userId = (result?.data?.getCredentials?.user_id);
+    //     });
   }
 }
