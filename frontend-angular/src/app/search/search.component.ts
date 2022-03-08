@@ -62,7 +62,7 @@ import {Apollo, gql} from 'apollo-angular';
 export class SearchComponent implements OnInit {
 
   movies: any[] = [];
-  movie: any = {};
+  movie: string = "";
 
   constructor(private apollo: Apollo) { }
 
