@@ -16,7 +16,6 @@ export class MovieLandingComponent implements OnInit {
 
   //transfer data over but in image not details
   redirectDetails(i: any) {
-    // console.log(this.movies[i]);
     this.apollo
       .watchQuery({
         query: gql`
@@ -53,7 +52,7 @@ export class MovieLandingComponent implements OnInit {
             backdrop: data.backdrop_path
           }
         })
-        console.log(data)
+        // console.log(data)
       });
   }
 

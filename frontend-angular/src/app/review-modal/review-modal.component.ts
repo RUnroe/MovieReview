@@ -39,7 +39,7 @@ export class ReviewModalComponent implements OnInit, OnDestroy {
     this.toggleModalEvent.emit(false);
   }
   ngOnInit(): void {
-      console.log(this.movie_id);
+      // console.log(this.movie_id);
   
         
   

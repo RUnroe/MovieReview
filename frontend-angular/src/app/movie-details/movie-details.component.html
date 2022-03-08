@@ -8,29 +8,27 @@
             <div class='movie-details-bar'>
                 <span class='movie-details-title'>{{data.title}}</span>
                 <div class='movie-details-genre-and-rating '>
-                    <!-- genre | <DisplayAverageReview /> -->
-                    <!-- <ReactStars
-                        count={5}
-                        size={19}
-                        value={loggedInUserRating}
-                        activeColor='#FFFFFF'
-                    /> -->
                     <div *ngFor="let genre of data.genres; let i = index">
-                        <div>
+                        <div class='movie-details-genre-and-rating'>
                             {{genre.name}}
                         </div>
                     </div>
+                    <app-star-rating class="star-rating"></app-star-rating> <span class="average-rating">Total User Rating: {{averageRating}}</span>
                 </div>
             </div>
             <div class='movie-details-actors-wrapper'>
                 <div class='movie-details-actors-header'>Actors</div>
                 <div class='movie-details-actors-container'>
                     <div *ngFor="let actor of data.actors; let i = index">
-                        <div>
-                            <!-- {{actor.}} -->
-                        </div>
-                        <div>
-                            {{actor.name}}
+                        <div class='actor'>
+                            <span *ngIf="actor.profile_path !== null; else placeholder">
+                                <img src="{{'http://image.tmdb.org/t/p/w500' + actor.profile_path}}" alt={{actor.name}}
+                                    class='movie-details-actor' />
+                            </span>
+                            <ng-template #placeholder>
+                                <img src="./assets/images/placeholder.png" class='movie-details-actor' />
+                            </ng-template>
+                            <div class='movie-details-actor-name'>{{actor.name}}</div>
                         </div>
                     </div>
                 </div>
@@ -38,109 +36,24 @@
                     <div class='movie-details-overview-header'>Overview</div>
                     <div class='movie-details-overview-description'>
                         {{data.overview}}
-                        <img src="{{'http://image.tmdb.org/t/p/w500' + data.poster}}" class='movie-details-overview-poster' />
+                        <img src="{{'http://image.tmdb.org/t/p/w500' + data.poster}}"
+                            class='movie-details-overview-poster' />
                     </div>
                 </div>
                 <div class='add-review-btn' (click)="toggleModal()">Add Review &#x2B;</div>
-
-                <!-- {modal ? <ReviewModal toggle={toggleModal} movieId={movie_id} /> : null} -->
-                <app-review-modal [movie_id]="movie_id" [isModalOpen]="openModal" (toggleModalEvent)="setModal($event)"></app-review-modal>
-                <!-- <DisplayReviews /> -->
+                <app-review-modal [movie_id]="movie_id" [isModalOpen]="openModal" (toggleModalEvent)="setModal($event)">
+                </app-review-modal>
+                <div class='reviews-wrapper'>
+                    <div *ngFor="let review of reviews; let i = index">
+                        <div class='reviews-container'>
+                            <div>
+                                <div class='review-description'>{{review.review}}</div>
+                                <div class='reviewer-name'>-{{review.user}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-<div class='reviews-wrapper'>
-    <!-- {reviews.map((review, i) => {
-        let char = review.review.length;
-        let reviewToString = String(review.review);
-        return ( -->
-<<<<<<< HEAD
-    <!-- <div key={i} class='reviews-container'>
-                {(review.user_id === loggedInUser || admin) ? ( -->
-    <!-- <>
-=======
-            <!-- <div key={i} class='reviews-container'>
-                {(review.user_id === loggedInUser || admin) ? ( -->
-                    <!-- <>
->>>>>>> e2de0b5465ac32564347ba1ee03e2f45b858e785
-                        <span class='remove-review' onClick={() => removeReview(review.review_id)}>&#10005;</span>
-                        {char <= 50 ? (
-                            //Looks at each character limit in reviews and if it's more than 250 then it will display extended div
-                            <div>
-                                <div class='review-description'>{filter.clean(review.review)}</div>
-                                <div class='reviewer-name'>-{review.user}</div>
-                            </div>
-                        ) : (
-                            <div>
-                                {readMore === true && clickedReview === review.review_id ? (
-                                    <>
-                                        <div class='review-description'>{filter.clean(review.review)}</div>
-                                        <div class='reviewer-name'>-{review.user}</div>
-                                        <div class='read-more-link' onClick={toggleText}>Read Less</div>
-                                    </>
-                                ) : (
-                                    <>
-                                        <div class='review-description'>
-                                            {filter.clean(`${reviewToString.substring(0, 50)}...`)}
-                                        </div>
-                                        <div class='reviewer-name'>-{review.user}</div>
-                                        <div class='read-more-link' onClick={() => toggleText(review.review_id)}>Read More</div>
-                                    </>
-                                )}
-                            </div>
-                        )}
-                    </>
-                ) : (
-                    <>
-                        {char <= 50 ? (
-                            //Looks at each character limit in reviews and if it's more than 250 then it will display extended div
-                            <div>
-                                <div class='review-description'>{filter.clean(review.review)}</div>
-                                <div class='reviewer-name'>-{review.user}</div>
-                            </div>
-                        ) : (
-                            <div>
-                                {readMore === true && clickedReview === review.review_id ? (
-                                    <>
-                                        <div class='review-description'>{filter.clean(review.review)}</div>
-                                        <div class='reviewer-name'>-{review.user}</div>
-                                        <div class='read-more-link' onClick={toggleText}>Read Less</div>
-                                    </>
-                                ) : (
-                                    <>
-                                        <div class='review-description'>
-                                            {filter.clean(`${reviewToString.substring(0, 50)}...`)}
-                                        </div>
-                                        <div class='reviewer-name'>-{review.user}</div>
-                                        <div class='read-more-link' onClick={() => toggleText(review.review_id)}>Read More</div>
-                                    </>
-                                )}
-                            </div>
-                        )}
-                    </> -->
-    <!-- )}
-            </div>
-        )
-    })} -->
-</div>
-
-<div>
-    <!-- {actors && actors.map((actor, i) => {
-        return (
-            <div key={i} class='actor'>
-                <img
-                    src={actor.pic === null ? '/images/placeholder.png' : `http://image.tmdb.org/t/p/w500${actor.pic}`}
-                    alt={actor.name}
-                    class='movie-details-actor'
-                />
-                <div class='movie-details-actor-name'>{`${actor.name}`}</div>
-            </div>
-        )
-    })} -->
-</div>
-
-<!-- <span>
-    Total User Rating: {average}
-</span> -->

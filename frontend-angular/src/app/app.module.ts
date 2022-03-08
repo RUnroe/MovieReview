@@ -9,21 +9,28 @@ import {HttpClientModule} from '@angular/common/http';
 import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
 import {HttpLink} from 'apollo-angular/http';
 import {InMemoryCache} from '@apollo/client/core';
-// import { FormsModule } from '@angular/forms';
 
 import { ReviewModalComponent } from './review-modal/review-modal.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StarRatingModule } from './star-rating/star-rating.module';
+import { CommonModule } from '@angular/common';
+import { StarRatingComponent } from './star-rating/star-rating.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
-    ReviewModalComponent
+    ReviewModalComponent,
+    StarRatingComponent
   ],
   imports: [
     BrowserModule, ApolloModule, HttpClientModule, 
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    StarRatingModule,
+    CommonModule
   ],
   providers: [   
     {

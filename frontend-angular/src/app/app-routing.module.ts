@@ -11,17 +11,14 @@ import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { MovieImageComponent } from './movie-image/movie-image.component';
+import { StarRatingComponent } from './star-rating/star-rating.component';
 
 const routes: Routes = [
   { path: 'details', component: MovieDetailsComponent},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'delete-account', component: DeleteAccountComponent},
-  // { path: 'header', component: HeaderComponent},
-  // { path: 'movie-image', component: MovieImageComponent},
   { path: 'landing', component: MovieLandingComponent},
-  // { path: 'review-modal', component: ReviewModalComponent},
-  // { path: 'search', component: SearchComponent},
   { path: 'change-password', component: ChangePasswordComponent}
 ];
 
@@ -41,9 +38,7 @@ export const routingComponents = [
   RegisterComponent,
   DeleteAccountComponent,
   HeaderComponent,
-  // MovieImageComponent,
   MovieLandingComponent,
-  // ReviewModalComponent,
   SearchComponent,
   ChangePasswordComponent
 ]
