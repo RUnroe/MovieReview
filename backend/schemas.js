@@ -223,11 +223,11 @@ const resolvers = {
     getMovieById: async (parent, {movie_id}) => {
         return await dal.getMovieById(movie_id);
     },
-    getMoviesBySearch: async (parent, {page, search}) => {
-        return await dal.getMoviesBySearch(page, search);
+    getMoviesBySearch: async (parent, {search}) => {
+        return await dal.getMoviesBySearch(search);
     },
-    getMovies: async (parent, {page, count}) => {
-        return await dal.getMovies(page ? page : 1, count && count <=100 ? count : 20);
+    getMovies: async (parent, {input}) => {
+        return await dal.getMovies(input.page ? input.page : 1, input.count && input.count <=100 ? input.count : 20);
     },
     getUser: async (parent, {user_id}) => {
         return await dal.getUserById(user_id);
