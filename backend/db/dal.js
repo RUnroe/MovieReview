@@ -293,7 +293,7 @@ const createReview = async (user_id, movie_id, review) => {
 // createReview("16zb572krkr7mYHmk2FBLj", "557", "I like Tom Holland better tbh.");
 
 const getReviews = async (movie_id) => {
-    console.log(movie_id)
+    // console.log(movie_id)
     //Make sure movie_id is a string
     movie_id = `${movie_id}`;
     //Get all reviews for a movie
@@ -309,7 +309,7 @@ const getReviews = async (movie_id) => {
         allReviews[i].user = `${user.fname} ${user.lname}`;
         } catch{};
     }
-    console.log(allReviews);
+    // console.log(allReviews);
     return allReviews.filter(review => review.hasOwnProperty('user'));
 }
 // const test = async () => {

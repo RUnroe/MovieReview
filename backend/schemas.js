@@ -12,7 +12,7 @@ const typeDefs = `
 
   type Mutation {
     createRating(input: RatingInput): Boolean
-    createReview(input: ReviewInput): Int
+    createReview(input: ReviewInput): String
     deleteReview(input: DeleteReviewInput): Boolean
     createUser(input: UserInput): UserCredentials
     updatePassword(password: String): Boolean
@@ -217,7 +217,7 @@ const resolvers = {
     },
     getReviews: async (parent, {movie_id}) => {
         let reviews = await dal.getReviews(movie_id);
-        console.log(reviews);
+        // console.log(reviews);
         return reviews;
     },
     getMovieById: async (parent, {movie_id}) => {
@@ -245,7 +245,8 @@ const resolvers = {
         else return await (!!dal.createRating(session.user_id, input.movie_id, input.rating));
     },
     createReview: async (parent, {input}, {session}) => {
-      console.log(input);
+      console.log("input", input);
+      console.log("session", session);
         if(input.api_key) return await dal.createReviewAPI(input.api_key, input.movie_id, input.review);
         else return await (dal.createReview(session.user_id, input.movie_id, input.review));
     },

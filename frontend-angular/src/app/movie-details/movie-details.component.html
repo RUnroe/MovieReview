@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class='add-review-btn' (click)="toggleModal()">Add Review &#x2B;</div>
-                <app-review-modal [movie_id]="movie_id" [isModalOpen]="openModal" (toggleModalEvent)="setModal($event)">
+                <app-review-modal [movie_id]="data.id" [isModalOpen]="openModal" (toggleModalEvent)="setModal($event)">
                 </app-review-modal>
                 <div class='reviews-wrapper'>
                     <div *ngFor="let review of reviews; let i = index">
