@@ -230,6 +230,7 @@ const resolvers = {
         return await dal.getUserById(user_id);
     },
     getCredentials: async (parent, {}, {session}) => {
+      console.log(session);
         if(session && session.user_id) return await dal.getUserById(session.user_id);
         return null;
     }
@@ -249,7 +250,8 @@ const resolvers = {
       else return await !!dal.deleteReview(session.user_id, session.is_admin, input.review_id);
     },
     createUser: async (parent, user, {session}) => {
-      const credentials = await dal.createUser(user);
+      // console.log(user.input);
+      const credentials = await dal.createUser(user.input);
       //Add credentials to session
       session.user_id = credentials.user_id;
       session.is_admin = credentials.is_admin;

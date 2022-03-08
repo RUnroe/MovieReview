@@ -43,6 +43,7 @@ const findErrors = fields => {
 
 const createUser = async (_user) => {
     //validate data
+    // console.log("sdfdsfdsfds",_user);
     const errors = findErrors([
 		{name: "email", value: _user.email, regex: /\w+@\w+\.\w+/}, 
 		{name: "password", value: _user.password, regex: /^.{6,}$/},

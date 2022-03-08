@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
     font-family: 'RobotoCondensed-Regular';
     src: local('RobotoCondensed-Regular'), url('/frontend-angular/src/fonts/RobotoCondensed-Regular.ttf') format('truetype');
     font-weight: 500;
@@ -7,14 +7,14 @@
     font-family: 'BebasNeue-Regular';
     src: local('BebasNeue-Regular'), url('/frontend-angular/src/fonts/BebasNeue-Regular.ttf') format('truetype');
     font-weight: 700;
-}
+} */
 
 @media screen and (max-width: 699.9px) {
     .movie-details-bar {
         color: #000;
    }
     .movie-details-title {
-        background-color: #fff ec;
+        background-color: rgba(255, 255, 255, 0.626);
         transform: skewY(-11deg);
         position: absolute;
         top: 125px;
@@ -35,6 +35,10 @@
     .movie-details-banner {
         width: 100%;
    }
+   .average-rating {
+    margin-top: 1px;
+    margin-left: 4px;
+}
 }
 @media screen and (min-width: 700px) {
     .movie-details-bar {
@@ -50,6 +54,13 @@
     .movie-details-genre-and-rating {
         font-size: 17px;
         margin-top: 8px;
+   }
+   .star-rating {
+       margin-top: 5px;
+   }
+   .average-rating {
+       margin-top: 8px;
+       margin-left: 4px;
    }
     .movie-details-banner-container {
         position: relative;
@@ -126,8 +137,11 @@
     user-select: none;
 }
 .movie-details-genre-and-rating {
+    display: flex;
+    flex-direction: row;
     font-family: 'RobotoCondensed-Regular';
-    margin-left: 2.5px;
+    margin-left: 1.5px;
+    padding: 0 3.5px 0 0;
 }
 .star-review {
     display: none;
@@ -154,14 +168,14 @@
     height: 100%;
     overflow: hidden;
 }
-.movie-details-actors-container > div {
+.movie-details-actors-container {
     display: flex;
     flex-direction: row;
     overflow-x: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
-.movie-details-actors-container > div::-webkit-scrollbar {
+.movie-details-actors-container::-webkit-scrollbar {
     display: none;
 }
 .movie-details-actor {

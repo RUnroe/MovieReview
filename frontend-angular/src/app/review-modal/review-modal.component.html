@@ -1,10 +1,10 @@
-<div onSubmit="{handleSubmit(addReview)}" className='modal-wrapper'>
-    <div className='modal-container'>
-        <span className='close' (click)="closeModal()">&times;</span>
-        <div className='modal-header'>Write Review Below</div>
+<div onSubmit="{handleSubmit(addReview)}" class='modal-wrapper {{isModalOpen ? "" : "hidden"}}'>
+    <div class='modal-container'>
+        <span class='close' (click)="closeModal()">&times;</span>
+        <div class='modal-header'>Write Review Below</div>
         <div>
             <textarea [(ngModel)]="userReview"> </textarea>
         </div>
-        <div (click)="addReview()" className='modal-btn'>Critique</div>
+        <div (click)="addReview()" class='modal-btn'>Critique</div>
     </div>
 </div>

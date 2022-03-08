@@ -12,17 +12,48 @@ export class MovieLandingComponent implements OnInit {
   movies: any[] = [];
   pageNum: number = 0;
 
-  constructor(private router: Router, private apollo: Apollo) {}
+  constructor(private router: Router, private apollo: Apollo) { }
 
-  //transfer data over
+  //transfer data over but in image not details
   redirectDetails(i: any) {
-    console.log(this.movies[i]);
-    this.router.navigateByUrl('/details', {
-      state: {
-        id: '',
-        name: '',
-      }
-    })
+    this.apollo
+      .watchQuery({
+        query: gql`
+          {
+            getMovieById(movie_id: "${this.movies[i].id}") {
+              backdrop_path
+              overview
+              original_title
+              poster_path
+              crew {
+                id
+                name
+                profile_path
+              }
+              genres {
+                name
+              }
+              id
+              title
+            }
+          }
+        `,
+      })
+      .valueChanges.subscribe((result: any) => {
+        let data = result?.data?.getMovieById;
+        this.router.navigateByUrl('/details', {
+          state: {
+            id: data.id,
+            title: data.title,
+            overview: data.overview,
+            actors: data.crew,
+            genres: data.genres,
+            poster: data.poster_path,
+            backdrop: data.backdrop_path
+          }
+        })
+        // console.log(data)
+      });
   }
 
   changePageUp() {

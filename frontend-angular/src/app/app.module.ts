@@ -17,12 +17,17 @@ import { MainNavComponent } from './main-nav/main-nav.component';
 import { MatTreeModule } from '@angular/material/tree';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { StarRatingModule } from './star-rating/star-rating.module';
+import { CommonModule } from '@angular/common';
+import { StarRatingComponent } from './star-rating/star-rating.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
     ReviewModalComponent,
-    MainNavComponent
+    MainNavComponent,
+    StarRatingComponent
   ],
   imports: [
     BrowserModule, ApolloModule, HttpClientModule, 
@@ -32,7 +37,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatToolbarModule,
     MatSidenavModule,
     MatTreeModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    StarRatingModule,
+    CommonModule
   ],
   providers: [   
     {

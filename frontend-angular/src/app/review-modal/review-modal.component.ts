@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {Apollo, gql} from 'apollo-angular';
 
 @Component({
@@ -7,8 +7,10 @@ import {Apollo, gql} from 'apollo-angular';
   styleUrls: ['./review-modal.component.css']
 })
 export class ReviewModalComponent implements OnInit, OnDestroy {
-  movie_id: String = "";
+  @Input() movie_id = "";
   userReview: String = "";
+  @Input() isModalOpen: boolean = false;
+  @Output() toggleModalEvent = new EventEmitter<boolean>();
   
   constructor(private apollo: Apollo) { }
   
@@ -30,18 +32,15 @@ export class ReviewModalComponent implements OnInit, OnDestroy {
   }
   openModal(): void {
     console.log("open modal")
-
+    this.toggleModalEvent.emit(true);
   }
   closeModal(): void {
     console.log("close modal")
+    this.toggleModalEvent.emit(false);
   }
   ngOnInit(): void {
-    //NOT SURE IF THIS NEEDS TO BE NESTED IN NGONINIT
-    
-
-        //TODO: Use these variable
-        let movie_id: String = "";
-        let review: String = "";
+      // console.log(this.movie_id);
+  
         
   
       // let [writtenReview, setWrittenReview] = useState('');
