@@ -60,6 +60,7 @@ const typeDefs = `
     review_id: String!
     user_id: String!
     review: String!
+    user: String
   }
 
   input UserInput {
@@ -215,7 +216,9 @@ const resolvers = {
         return await dal.getAllRatings(movie_id);
     },
     getReviews: async (parent, {movie_id}) => {
-        return await dal.getReviews(movie_id);
+        let reviews = await dal.getReviews(movie_id);
+        console.log(reviews);
+        return reviews;
     },
     getMovieById: async (parent, {movie_id}) => {
         return await dal.getMovieById(movie_id);
@@ -242,6 +245,7 @@ const resolvers = {
         else return await (!!dal.createRating(session.user_id, input.movie_id, input.rating));
     },
     createReview: async (parent, {input}, {session}) => {
+      console.log(input);
         if(input.api_key) return await dal.createReviewAPI(input.api_key, input.movie_id, input.review);
         else return await (dal.createReview(session.user_id, input.movie_id, input.review));
     },

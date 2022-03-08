@@ -16,6 +16,7 @@ export class MovieLandingComponent implements OnInit {
 
   //transfer data over but in image not details
   redirectDetails(i: any) {
+    console.log(this.movies[i].id);
     this.apollo
       .watchQuery({
         query: gql`
@@ -90,6 +91,7 @@ export class MovieLandingComponent implements OnInit {
       })
       .valueChanges.subscribe((result: any) => {
         this.movies = (result?.data?.getMovies);
+        // console.log(this.movies);
       });
   }
 }

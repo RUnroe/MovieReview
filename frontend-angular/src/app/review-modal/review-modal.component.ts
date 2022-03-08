@@ -15,12 +15,12 @@ export class ReviewModalComponent implements OnInit, OnDestroy {
   constructor(private apollo: Apollo) { }
   
   addReview(): void {
-    console.log("add review")
+    console.log("add review: ", this.userReview)
     this.apollo
         .watchQuery({
           query: gql`
             {
-                createReview(movie_id: ${this.movie_id}, review: ${this.userReview})
+                createReview(input: {movie_id: "${this.movie_id}", review: "${this.userReview}"})
             }
           `,
         })
