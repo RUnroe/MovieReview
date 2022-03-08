@@ -47,11 +47,11 @@
     border-radius: 12px;
     font-family: 'Ubuntu', sans-serif;
     font-size: 12px;
-    width: 50px;
     text-align: center;
     text-decoration: none;
     margin-bottom: 15px;
     user-select: none;
+    border:none;
 }
 
 .login-btn:hover {
