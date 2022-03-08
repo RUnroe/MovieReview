@@ -10,11 +10,10 @@ import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
 import {HttpLink} from 'apollo-angular/http';
 import {InMemoryCache} from '@apollo/client/core';
 // import { FormsModule } from '@angular/forms';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/.material-kJTStIAi/toolbar';
+import { MatSidenavModule } from '@angular/.material-kJTStIAi/sidenav';
 import { ReviewModalComponent } from './review-modal/review-modal.component';
-import { MainNavComponent } from './main-nav/main-nav.component';
-import { MatTreeModule } from '@angular/material/tree';
+import { MatTreeModule } from '@angular/.material-kJTStIAi/tree';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { StarRatingModule } from './star-rating/star-rating.module';
@@ -26,7 +25,6 @@ import { StarRatingComponent } from './star-rating/star-rating.component';
     AppComponent,
     routingComponents,
     ReviewModalComponent,
-    MainNavComponent,
     StarRatingComponent
   ],
   imports: [

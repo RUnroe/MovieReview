@@ -65,6 +65,7 @@
     .movie-details-banner-container {
         position: relative;
         height: 490px;
+        margin-top: 25px;
    }
     .movie-details-banner {
         position: relative;
