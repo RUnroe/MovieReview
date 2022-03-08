@@ -4,7 +4,7 @@ const typeDefs = `
     getRatings(movie_id: String): [Rating]
     getReviews(movie_id: String): [Review]
     getMovieById(movie_id: String): Movie
-    getMoviesBySearch(search: String): [Movie]
+    getMoviesBySearch(input: SearchInput): [Movie]
     getMovies(input: MovieInput): [Movie]
     getUser(user_id: String): User
     getCredentials: User
@@ -20,6 +20,11 @@ const typeDefs = `
     authenticate(input: AuthInput): UserCredentials
     endSession: Boolean
 
+  }
+
+  input SearchInput {
+    page: String
+    search: String
   }
 
   input DeleteReviewInput {
@@ -223,8 +228,9 @@ const resolvers = {
     getMovieById: async (parent, {movie_id}) => {
         return await dal.getMovieById(movie_id);
     },
-    getMoviesBySearch: async (parent, {search}) => {
-        return await dal.getMoviesBySearch(search);
+    getMoviesBySearch: async (parent, {input}) => {
+      console.log(input);
+        return await dal.getMoviesBySearch(input.page, input.search);
     },
     getMovies: async (parent, {input}) => {
         return await dal.getMovies(input.page ? input.page : 1, input.count && input.count <=100 ? input.count : 20);
