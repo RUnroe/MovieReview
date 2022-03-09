@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-star-rating',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./star-rating.component.css']
 })
 export class StarRatingComponent implements OnInit {
+
+  @Output() ratingEvent = new EventEmitter<number>();
 
   selectedRating = 0;
   stars = [
@@ -43,7 +45,7 @@ export class StarRatingComponent implements OnInit {
 
   selectStar(value: any): void {
     // prevent multiple selection
-    if (this.selectedRating === 0) {
+    // if (this.selectedRating === 0) {
       this.stars.filter((star) => {
         if (star.id <= value) {
           star.class = 'star-gold star';
@@ -52,7 +54,8 @@ export class StarRatingComponent implements OnInit {
         }
         return star;
       });
-    }
+    // }
     this.selectedRating = value;
+    this.ratingEvent.emit(value);
   }
 }

@@ -13,7 +13,8 @@
                             {{genre.name}}
                         </div>
                     </div>
-                    <app-star-rating class="star-rating"></app-star-rating> <span class="average-rating">Total User Rating: {{averageRating}}</span>
+                    <app-star-rating (ratingEvent)="addRating($event)" class="star-rating"></app-star-rating> <span class="average-rating">Total User
+                        Rating: {{averageRating}}</span>
                 </div>
             </div>
             <div class='movie-details-actors-wrapper'>
@@ -22,7 +23,8 @@
                     <div *ngFor="let actor of data.actors; let i = index">
                         <div class='actor'>
                             <span *ngIf="actor.profile_path !== null; else placeholder">
-                                <img src="{{'http://image.tmdb.org/t/p/w500' + actor.profile_path}}" alt={{actor.name}} class='movie-details-actor' />
+                                <img src="{{'http://image.tmdb.org/t/p/w500' + actor.profile_path}}" alt={{actor.name}}
+                                    class='movie-details-actor' />
                             </span>
                             <ng-template #placeholder>
                                 <img src="./assets/images/placeholder.png" class='movie-details-actor' />

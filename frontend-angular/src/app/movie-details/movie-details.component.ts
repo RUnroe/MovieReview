@@ -15,6 +15,7 @@ export class MovieDetailsComponent implements OnInit {
   averageRating: any = 'N/A';
   @Output() openModal: boolean = false;
   data: any = history.state;
+  user: any = {};
 
   reviews: any[] = [{
     review: 'this is test review',
@@ -23,7 +24,6 @@ export class MovieDetailsComponent implements OnInit {
     review: 'ayooooo',
     user: 'Bob'
   }];
-
 
   constructor(private apollo: Apollo) { }
 
@@ -34,25 +34,74 @@ export class MovieDetailsComponent implements OnInit {
     this.openModal = value;
   }
 
+  addRating(value: any): void {
+    let input = { movie_id: this.data.id, rating: value, api_key: this.user.api_key }
+
+    this.apollo.mutate({
+      mutation: gql`
+        mutation CreateRating($input: RatingInput) {
+            createRating(input: $input)
+        }
+      `,
+      variables: {
+        input
+      }
+    })
+      .subscribe((result: any) => {
+        console.log(`Review for movie (${this.data.id}) created: `, result?.data?.createRating);
+      });
+    console.log(value);
+  }
+
   getAverageReview() {
     let total = 0;
 
     for (let i = 0; i < this.ratings.length; i++) {
-        total += this.ratings[i].rating;
+      total += this.ratings[i].rating;
     }
 
     let average = Math.round(total / this.ratings.length);
 
-    // if (isNaN(average)) {
-    //     average = 'N/A';
-    // }
     this.averageRating = average;
-}
+  }
 
   ngOnInit(): void {
     // localStorage.setItem('movieDetails', JSON.stringify(this.data));
     // localStorage.getItem('movieDetails');
-    
+
+    // this.apollo
+    // .watchQuery({
+    //   query: gql`
+    //     {
+    //       getRatings(movie_id: "${this.data.id}") {
+    //         movie_id
+    //         user_id
+    //         rating
+    //       }
+    //     }
+    //   `,
+    // })
+    // .valueChanges.subscribe((result: any) => {
+    //   this.ratings = (result?.data?.getRatings);
+    //   console.log(this.ratings);
+    // });
+
+    fetch(`http://localhost:3005/api/auth`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        return Promise.reject(res);
+      }
+    }).then((data) => {
+      console.log(data);
+      this.user = (data);
+    })
+
+
     this.apollo
       .watchQuery({
         query: gql`
@@ -71,8 +120,6 @@ export class MovieDetailsComponent implements OnInit {
         this.reviews = (result?.data?.getReviews);
         console.log("Review", result?.data?.getReviews);
       });
-    // console.log(this.reviews);
-    // console.log(this.data.actors)
 
     const getLoggedInUser = async () => {
       this.apollo
@@ -110,45 +157,6 @@ export class MovieDetailsComponent implements OnInit {
         .valueChanges.subscribe((result: any) => {
           //Console.log if the review was removed
           console.log(`Review (${review_id}) removed: `, result?.data?.deleteReview);
-        });
-    }
-
-    const getRating = async () => {
-      //TODO: Use this variable
-      let movie_id: String = "";
-      this.apollo
-        .watchQuery({
-          query: gql`
-            {
-              getRatings(movie_id: "${movie_id}") {
-                movie_id
-                user_id
-                rating
-              }
-            }
-          `,
-        })
-        .valueChanges.subscribe((result: any) => {
-          this.ratings = (result?.data?.getRatings);
-          console.log(this.ratings);
-        });
-    }
-
-    const addRating = async () => {
-      //TODO: Use these variable
-      let movie_id: String = "";
-      let rating: number = 1;
-      this.apollo
-        .watchQuery({
-          query: gql`
-            {
-                createRating(movie_id: ${this.movie_id}, rating: ${rating})
-            }
-          `,
-        })
-        .valueChanges.subscribe((result: any) => {
-          //Console.log if the review was removed
-          console.log(`Rating for movie (${movie_id}) created: `, result?.data?.createRating);
         });
     }
   }
