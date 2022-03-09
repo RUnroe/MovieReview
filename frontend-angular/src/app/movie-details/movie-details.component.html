@@ -22,8 +22,7 @@
                     <div *ngFor="let actor of data.actors; let i = index">
                         <div class='actor'>
                             <span *ngIf="actor.profile_path !== null; else placeholder">
-                                <img src="{{'http://image.tmdb.org/t/p/w500' + actor.profile_path}}" alt={{actor.name}}
-                                    class='movie-details-actor' />
+                                <img src="{{'http://image.tmdb.org/t/p/w500' + actor.profile_path}}" alt={{actor.name}} class='movie-details-actor' />
                             </span>
                             <ng-template #placeholder>
                                 <img src="./assets/images/placeholder.png" class='movie-details-actor' />
@@ -41,7 +40,7 @@
                     </div>
                 </div>
                 <div class='add-review-btn' (click)="toggleModal()">Add Review &#x2B;</div>
-                <app-review-modal [movie_id]="movie_id" [isModalOpen]="openModal" (toggleModalEvent)="setModal($event)">
+                <app-review-modal [movie_id]="data.id" [isModalOpen]="openModal" (toggleModalEvent)="setModal($event)">
                 </app-review-modal>
                 <div class='reviews-wrapper'>
                     <div *ngFor="let review of reviews; let i = index">

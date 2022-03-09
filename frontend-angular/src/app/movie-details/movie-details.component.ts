@@ -7,7 +7,7 @@ import { Apollo, gql } from 'apollo-angular';
   styleUrls: ['./movie-details.component.css']
 })
 export class MovieDetailsComponent implements OnInit {
-  @Output() movie_id: string = "634649";
+  @Output() movie_id: string = "557"; //634649
   loggedInUser: any = {};
   isAdmin: Boolean = false;
   // reviews: any[] = [];
@@ -52,11 +52,12 @@ export class MovieDetailsComponent implements OnInit {
   ngOnInit(): void {
     // localStorage.setItem('movieDetails', JSON.stringify(this.data));
     // localStorage.getItem('movieDetails');
+    
     this.apollo
       .watchQuery({
         query: gql`
         {
-          getReviews(movie_id: "${this.movie_id}") {
+          getReviews(movie_id: "${this.data.id}") {
             review
             user_id
             review_id
@@ -68,7 +69,7 @@ export class MovieDetailsComponent implements OnInit {
       })
       .valueChanges.subscribe((result: any) => {
         this.reviews = (result?.data?.getReviews);
-        console.log(result?.data?.getReviews);
+        console.log("Review", result?.data?.getReviews);
       });
     // console.log(this.reviews);
     // console.log(this.data.actors)
@@ -141,7 +142,7 @@ export class MovieDetailsComponent implements OnInit {
         .watchQuery({
           query: gql`
             {
-                createRating(movie_id: ${movie_id}, rating: ${rating})
+                createRating(movie_id: ${this.movie_id}, rating: ${rating})
             }
           `,
         })

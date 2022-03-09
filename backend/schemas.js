@@ -4,7 +4,7 @@ const typeDefs = `
     getRatings(movie_id: String): [Rating]
     getReviews(movie_id: String): [Review]
     getMovieById(movie_id: String): Movie
-    getMoviesBySearch(search: String): [Movie]
+    getMoviesBySearch(input: SearchInput): [Movie]
     getMovies(input: MovieInput): [Movie]
     getUser(user_id: String): User
     getCredentials: User
@@ -12,7 +12,7 @@ const typeDefs = `
 
   type Mutation {
     createRating(input: RatingInput): Boolean
-    createReview(input: ReviewInput): Int
+    createReview(input: ReviewInput): String
     deleteReview(input: DeleteReviewInput): Boolean
     createUser(input: UserInput): UserCredentials
     updatePassword(password: String): Boolean
@@ -20,6 +20,11 @@ const typeDefs = `
     authenticate(input: AuthInput): UserCredentials
     endSession: Boolean
 
+  }
+
+  input SearchInput {
+    page: String
+    search: String
   }
 
   input DeleteReviewInput {
@@ -60,6 +65,7 @@ const typeDefs = `
     review_id: String!
     user_id: String!
     review: String!
+    user: String
   }
 
   input UserInput {
@@ -215,16 +221,19 @@ const resolvers = {
         return await dal.getAllRatings(movie_id);
     },
     getReviews: async (parent, {movie_id}) => {
-        return await dal.getReviews(movie_id);
+        let reviews = await dal.getReviews(movie_id);
+        // console.log(reviews);
+        return reviews;
     },
     getMovieById: async (parent, {movie_id}) => {
         return await dal.getMovieById(movie_id);
     },
-    getMoviesBySearch: async (parent, {page, search}) => {
-        return await dal.getMoviesBySearch(page, search);
+    getMoviesBySearch: async (parent, {input}) => {
+      console.log(input);
+        return await dal.getMoviesBySearch(input.page, input.search);
     },
-    getMovies: async (parent, {page, count}) => {
-        return await dal.getMovies(page ? page : 1, count && count <=100 ? count : 20);
+    getMovies: async (parent, {input}) => {
+        return await dal.getMovies(input.page ? input.page : 1, input.count && input.count <=100 ? input.count : 20);
     },
     getUser: async (parent, {user_id}) => {
         return await dal.getUserById(user_id);
@@ -242,6 +251,8 @@ const resolvers = {
         else return await (!!dal.createRating(session.user_id, input.movie_id, input.rating));
     },
     createReview: async (parent, {input}, {session}) => {
+      console.log("input", input);
+      console.log("session", session);
         if(input.api_key) return await dal.createReviewAPI(input.api_key, input.movie_id, input.review);
         else return await (dal.createReview(session.user_id, input.movie_id, input.review));
     },
