@@ -1,15 +1,17 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy } from '@angular/compiler';
+import { ChangeDetectorRef, Component, Input, OnInit, Output } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 
 @Component({
   selector: 'app-movie-details',
   templateUrl: './movie-details.component.html',
-  styleUrls: ['./movie-details.component.css']
+  styleUrls: ['./movie-details.component.css'],
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MovieDetailsComponent implements OnInit {
   @Output() movie_id: string = "557"; //634649
-  loggedInUser: any = {};
-  isAdmin: Boolean = false;
+  @Input() loggedInUser: any = {};
+  @Input() isAdmin: Boolean = false;
   // reviews: any[] = [];
   ratings: any[] = [];
   averageRating: any = 'N/A';
@@ -51,6 +53,34 @@ export class MovieDetailsComponent implements OnInit {
         console.log(`Review for movie (${this.data.id}) created: `, result?.data?.createRating);
       });
     console.log(value);
+  }
+
+  removeReview(review_id: String): void {
+    // fetch(`http://localhost:3005/api/review/${review_id}`, {
+    //       method: 'DELETE',
+    //       credentials: 'include',
+    //       headers: { 'Content-Type': 'application/json' }
+    //   }).then(res => {
+    //       return res.json();
+    //   })
+    let input = {
+      api_key: this.loggedInUser.api_key,
+      review_id
+    }
+    this.apollo.mutate({
+      mutation: gql`
+      mutation Mutation($input: DeleteReviewInput) {
+        deleteReview(input: $input)
+      }
+      `,
+      variables: {
+        input
+      }
+    })
+    .subscribe((result: any) => {
+      //Console.log if the review was removed
+      console.log(`Review for movie (${this.movie_id}) created: `, result?.data?.createReview);
+    });
   }
 
   getAverageReview() {
@@ -121,27 +151,43 @@ export class MovieDetailsComponent implements OnInit {
         console.log("Review", result?.data?.getReviews);
       });
 
-    const getLoggedInUser = async () => {
-      this.apollo
-        .watchQuery({
-          query: gql`
-            {
-              getCredentials {
-                fname
-                lname
-                is_admin
-                api_key
-                user_id
-              }
+    fetch(`http://localhost:3005/api/auth`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                return Promise.reject(res);
             }
-          `,
+        }).then((data) => {
+          this.loggedInUser = (data);
+          this.isAdmin = data.is_admin;
+          console.log(this.loggedInUser, this.isAdmin);
+          // this.ref.markForCheck();
         })
-        .valueChanges.subscribe((result: any) => {
-          this.loggedInUser = (result?.data?.getCredentials);
-          this.isAdmin = result?.data?.getCredentials?.is_admin;
-          console.log(this.loggedInUser);
-        });
-    }
+    // this.apollo
+    //   .watchQuery({
+    //     query: gql`
+    //       {
+    //         getCredentials {
+    //           fname
+    //           lname
+    //           is_admin
+    //           api_key
+    //           user_id
+    //         }
+    //       }
+    //     `,
+    //   })
+    //   .valueChanges.subscribe((result: any) => {
+    //     this.loggedInUser = (result?.data?.getCredentials);
+    //     this.isAdmin = result?.data?.getCredentials?.is_admin;
+    //     console.log(this.loggedInUser, this.isAdmin);
+    //     // this.ref.markForCheck();
+    //   });
+    
 
     const removeReview = async () => {
       //TODO: Use this variable

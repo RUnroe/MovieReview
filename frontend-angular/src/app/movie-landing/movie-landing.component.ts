@@ -13,7 +13,7 @@ export class MovieLandingComponent implements OnInit {
   pageNum: any = JSON.parse(localStorage.getItem('moviePage') || '1');
   input: any = {
     page: this.pageNum,
-    count: 4
+    count: 16
   }
 
   constructor(private router: Router, private apollo: Apollo) { }
@@ -100,6 +100,10 @@ export class MovieLandingComponent implements OnInit {
   changeToFirstPage() {
     this.pageNum = ((this.pageNum * 0) + 1);
     localStorage.setItem('moviePage', JSON.stringify(this.pageNum));
+  }
+
+  updateSearch() {
+    
   }
 
   ngOnInit(): void {
