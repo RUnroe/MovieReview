@@ -54,6 +54,7 @@
     font-size: 15px;
     font-family: Georgia, serif;
     font-weight: 500;
+    margin-bottom: 22px;
 }
 
 .page-switch-btn-wrapper {
@@ -64,6 +65,7 @@
 .page-switch-btn-wrapper > div {
     position: relative;
     width: 1230px;
+    margin-bottom: 25px;
 }
 
 .page-switch-btn {
