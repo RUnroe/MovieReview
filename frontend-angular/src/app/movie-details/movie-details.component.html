@@ -46,6 +46,10 @@
                     <div *ngFor="let review of reviews; let i = index">
                         <div class='reviews-container'>
                             <div>
+                                <!-- <ng-template [ngIf]="(review.user_id === loggedInUser.user_id) || isAdmin"> -->
+                                    <!-- <span> {{review.user_id === (loggedInUser && loggedInUser.user_id)}} || {{isAdmin}}</span> -->
+                                    <span *ngIf="(loggedInUser && (review.user_id === loggedInUser.user_id)) || isAdmin" class='remove-review' (click)="removeReview(review.review_id)">&#10005;</span>
+                                <!-- </ng-template> -->
                                 <div class='review-description'>{{review.review}}</div>
                                 <div class='reviewer-name'>-{{review.user}}</div>
                             </div>
