@@ -102,6 +102,10 @@ export class MovieLandingComponent implements OnInit {
     localStorage.setItem('moviePage', JSON.stringify(this.pageNum));
   }
 
+  updateSearch() {
+    
+  }
+
   ngOnInit(): void {
     this.getMovies();
   }

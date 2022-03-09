@@ -53,6 +53,7 @@
 
 import { Component, OnInit } from "@angular/core";
 import {Apollo, gql} from 'apollo-angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -64,7 +65,7 @@ export class SearchComponent implements OnInit {
   movies: any[] = [];
   movie: string = "";
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo, private router: Router) { }
 
   ngOnInit(): void {
     
