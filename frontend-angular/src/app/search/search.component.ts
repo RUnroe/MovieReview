@@ -51,7 +51,7 @@
 //   }
 //}
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import {Apollo, gql} from 'apollo-angular';
 import { Router } from '@angular/router';
 
@@ -60,10 +60,13 @@ import { Router } from '@angular/router';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
+
 export class SearchComponent implements OnInit {
 
   movies: any[] = [];
   movie: string = "";
+
+  @Output() nameEmitter = new EventEmitter<any> ();
 
   constructor(private apollo: Apollo, private router: Router) { }
 
