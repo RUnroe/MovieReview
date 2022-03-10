@@ -1,32 +1,22 @@
-/* @font-face {
+@font-face {
     font-family: 'RobotoCondensed-Regular';
-    src: local('RobotoCondensed-Regular'), url('/frontend-angular/src/fonts/RobotoCondensed-Regular.ttf') format('truetype');
+    src: local('RobotoCondensed-Regular'), url('/assets/fonts/RobotoCondensed-Regular.ttf') format('truetype');
     font-weight: 500;
 }
 @font-face {
     font-family: 'BebasNeue-Regular';
-    src: local('BebasNeue-Regular'), url('/frontend-angular/src/fonts/BebasNeue-Regular.ttf') format('truetype');
+    src: local('BebasNeue-Regular'), url('/assets/fonts/BebasNeue-Regular.ttf') format('truetype');
     font-weight: 700;
-} */
+}
 
 @media screen and (max-width: 699.9px) {
-    .movie-details-bar {
-        color: #000;
-   }
     .movie-details-title {
-        background-color: rgba(255, 255, 255, 0.626);
-        transform: skewY(-11deg);
-        position: absolute;
-        top: 125px;
-        left: 25px;
-        right: 25px;
-        font-size: 5vw;
-        font-weight: 700;
-        color: #1c2e4a;
+        color: #ffffff;
+        font-size: 30px;
         overflow-wrap: break-word;
-        text-align: center;
-        padding: 15px;
-        border-radius: 5px;
+        width: 50%;
+        max-width: 550px;
+        margin-left: 1px;
    }
     .movie-details-genre-and-rating {
         color: #fff;
@@ -65,7 +55,6 @@
     .movie-details-banner-container {
         position: relative;
         height: 490px;
-        margin-top: 25px;
    }
     .movie-details-banner {
         position: relative;
@@ -104,6 +93,7 @@
         border-radius: 8px;
         margin: auto auto;
         margin-top: -32px;
+        margin-left: 55px;
    }
 }
 @media screen and (min-width: 2500px) {
@@ -123,6 +113,7 @@
     z-index: 1;
     font-size: 35px;
     color: #fff;
+    user-select: none;
 }
 .back:hover {
     cursor: pointer;

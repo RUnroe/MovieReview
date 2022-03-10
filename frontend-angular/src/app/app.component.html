@@ -1,12 +1,15 @@
-<div>
-  <h1>Landing</h1>
-  <nav>
-    <a class="button" routerLink="/">Home</a>
-    <a class="button" routerLink="/landing" routerLinkActive="active">Test Landing</a>
-    <a class="button" routerLink="/login" routerLinkActive="active">Login</a>
-    <a class="button" routerLink="/register" routerLinkActive="active">Register</a>
-    <a class="button" routerLink="/delete-account" routerLinkActive="active">Delete Account</a>
-    <a class="button" routerLink="/change-password" routerLinkActive="active">Change Password</a>
-  </nav>
-</div>
+<header>
+  <div class='header-wrapper'>
+    <nav>
+      Full Stack Boys - Group 2
+      <div class='header-links-wrapper'>
+        <a class="header-link" routerLink="/landing" routerLinkActive="active">Home</a>
+        <a class="header-link" routerLink="/login" routerLinkActive="active">Login</a>
+        <a class="header-link" routerLink="/register" routerLinkActive="active">Register</a>
+        <a class="header-link" routerLink="/delete-account" routerLinkActive="active">Delete Account</a>
+        <a class="header-link" routerLink="/change-password" routerLinkActive="active">Change Password</a>
+      </div>
+    </nav>
+  </div>
+</header>
 <router-outlet></router-outlet>

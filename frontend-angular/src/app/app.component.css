@@ -2,67 +2,29 @@ html, body {
     margin: 0;
     padding: 0;
 }
-/* @font-face {
+
+@font-face {
     font-family: 'BebasNeue-Regular';
-    src: local('BebasNeue-Regular'), url('../fonts/BebasNeue-Regular.ttf') format('truetype');
+    src: local('BebasNeue-Regular'), url('../assets/fonts/BebasNeue-Regular.ttf') format('truetype');
     font-weight: 700;
-} */
-@media screen and (max-width: 699.9px) {
-    .header-wrapper {
-        display: flex;
-        justify-content: center;
-        padding: 100px;
-        background-color: #1c2e4a;
-        color: #fff;
-        font-family: 'BebasNeue-Regular';
-        font-size: 25px;
-   }
-    .header-links-wrapper {
-        display: flex;
-        flex-direction: row;
-        text-align: center;
-        width: 5%;
-   }
 }
-@media screen and (min-width: 700px) {
-    .header-wrapper {
-        display: flex;
-        padding: 30px 10px 30px 20px;
-        background-color: #1c2e4a;
-        color: white;
-        font-family: 'BebasNeue-Regular';
-        font-size: 25px;
-   }
+
+.header-wrapper {
+    display: flex;
+    padding: 30px 10px 30px 20px;
+    background-color: #1c2e4a;
+    color: white;
+    font-family: 'BebasNeue-Regular';
+    font-size: 15px;
 }
-.header-link, .active-header-link {
+
+.header-link {
     text-decoration: none;
     user-select: none;
     color: #fff;
     margin: 0 8px 0 1px;
 }
-.active-header-link {
-    text-decoration: underline;
-}
-.header-link:hover, .active-header-link:hover {
+
+.header-link:hover {
     color: #acc8ea;
-}
-.dropdown-menu-navigate {
-    font-size: 14px;
-}
-.dropdown-control-navigate {
-    font-size: 17.5px;
-    max-width: 80px;
-}
-.dropdown-control-navigate:hover {
-    cursor: pointer;
-}
-.Dropdown-option:first-child {
-    display: none;
-}
-.Dropdown-option {
-    max-width: 84px;
-}
-.Dropdown-option:hover {
-    color: #acc8ea;
-    cursor: pointer;
 }
