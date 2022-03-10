@@ -10,12 +10,15 @@ import { Apollo, gql } from 'apollo-angular';
 })
 export class MovieDetailsComponent implements OnInit {
   @Output() movie_id: string = "557"; //634649
+  @Output() selectedUserName: string = "";
+  @Output() selectedUserId: string = "";
   @Input() loggedInUser: any = {};
   @Input() isAdmin: Boolean = false;
   // reviews: any[] = [];
   ratings: any[] = [];
   averageRating: any = 'N/A';
   @Output() openModal: boolean = false;
+  @Output() openDeleteModal: boolean = false;
   data: any = history.state;
   user: any = {};
 
@@ -34,6 +37,17 @@ export class MovieDetailsComponent implements OnInit {
   }
   setModal(value: boolean): void {
     this.openModal = value;
+  }
+
+  setDeleteModal(value: boolean): void {
+    this.openDeleteModal = value;
+  }
+
+  openDeleteAccountModal(id: string, name: string): void {
+    console.log("selectedUser",name);
+    this.selectedUserId = id;
+    this.selectedUserName = name;
+    this.openDeleteModal = true;
   }
 
   addRating(value: any): void {
@@ -94,6 +108,8 @@ export class MovieDetailsComponent implements OnInit {
 
     this.averageRating = average;
   }
+
+  
 
   ngOnInit(): void {
     // localStorage.setItem('movieDetails', JSON.stringify(this.data));

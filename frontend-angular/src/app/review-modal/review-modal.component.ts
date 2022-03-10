@@ -56,7 +56,7 @@ export class ReviewModalComponent implements OnInit, OnDestroy {
                 return Promise.reject(res);
             }
         }).then((data) => {
-          console.log(data);
+          // console.log(data);
           this.user = (data);
         })
       // console.log(this.movie_id);
