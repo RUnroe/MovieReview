@@ -45,10 +45,11 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   openDeleteAccountModal(id: string, name: string): void {
-    console.log("selectedUser",name);
-    this.selectedUserId = id;
-    this.selectedUserName = name;
-    this.openDeleteModal = true;
+    if(this.loggedInUser.is_admin) {
+      this.selectedUserId = id;
+      this.selectedUserName = name;
+      this.openDeleteModal = true;
+    }
   }
   previousPage() {
     this.location.back();
