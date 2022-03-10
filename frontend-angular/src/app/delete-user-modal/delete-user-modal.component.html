@@ -1,0 +1,8 @@
+<div class='modal-wrapper {{isModalOpen ? "" : "hidden"}}'>
+    <div class='modal-container'>
+        <span class='close' (click)="closeModal()">&times;</span>
+        <div class='modal-header'>Delete User: {{selectedUserName}}</div>
+        
+        <div (click)="deleteUser()" class='modal-btn'>Delete</div>
+    </div>
+</div>

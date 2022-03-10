@@ -19,13 +19,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StarRatingModule } from './star-rating/star-rating.module';
 import { CommonModule } from '@angular/common';
 import { StarRatingComponent } from './star-rating/star-rating.component';
+import { DeleteUserModalComponent } from './delete-user-modal/delete-user-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
     ReviewModalComponent,
-    StarRatingComponent
+    StarRatingComponent,
+    DeleteUserModalComponent
   ],
   imports: [
     BrowserModule, ApolloModule, HttpClientModule, 
