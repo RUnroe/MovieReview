@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { ChangeDetectionStrategy } from '@angular/compiler';
 import { ChangeDetectorRef, Component, Input, OnInit, Output } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
@@ -27,13 +28,17 @@ export class MovieDetailsComponent implements OnInit {
     user: 'Bob'
   }];
 
-  constructor(private apollo: Apollo) { }
+  constructor(private location: Location, private apollo: Apollo) { }
 
   toggleModal(): void {
     this.openModal = !this.openModal;
   }
   setModal(value: boolean): void {
     this.openModal = value;
+  }
+
+  previousPage() {
+    this.location.back();
   }
 
   addRating(value: any): void {
