@@ -10,12 +10,15 @@ import { Apollo, gql } from 'apollo-angular';
 })
 export class MovieDetailsComponent implements OnInit {
   @Output() movie_id: string = "557"; //634649
+  @Output() selectedUserName: string = "";
+  @Output() selectedUserId: string = "";
   @Input() loggedInUser: any = {};
   @Input() isAdmin: Boolean = false;
   reviews: any[] = [];
   ratings: any[] = [];
   averageRating: any = '';
   @Output() openModal: boolean = false;
+  @Output() openDeleteModal: boolean = false;
   stateData: any = history.state;
   info: any =  localStorage.getItem('movieDetails');
   data: any = JSON.parse(this.info);
@@ -30,6 +33,17 @@ export class MovieDetailsComponent implements OnInit {
     this.openModal = value;
   }
 
+  setDeleteModal(value: boolean): void {
+    this.openDeleteModal = value;
+  }
+
+  openDeleteAccountModal(id: string, name: string): void {
+    if(this.loggedInUser.is_admin) {
+      this.selectedUserId = id;
+      this.selectedUserName = name;
+      this.openDeleteModal = true;
+    }
+  }
   previousPage() {
     this.location.back();
   }
@@ -93,6 +107,8 @@ export class MovieDetailsComponent implements OnInit {
 
     this.averageRating = average;
   }
+
+  
 
   ngOnInit(): void {
     if (localStorage.getItem('movieDetails') === null) {

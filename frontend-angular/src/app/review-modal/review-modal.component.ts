@@ -63,7 +63,7 @@ export class ReviewModalComponent implements OnInit {
         return Promise.reject(res);
       }
     }).then((data) => {
-      console.log(data);
+      // console.log(data);
       this.user = (data);
     })
   }

@@ -16,3 +16,18 @@
 .search-input:focus {
     outline: none;
 }
+
+.form-control {
+    border-radius: 16px;
+}
+
+.search-btn {
+    border-radius: 8px;
+    transition-duration: 0.4s;
+    border: 2px solid #1c2e4a;
+}
+
+.search-btn:hover {
+    background-color: #1c2e4a; /* Green */
+    color: white;
+}

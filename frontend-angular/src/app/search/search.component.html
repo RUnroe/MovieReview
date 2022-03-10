@@ -1,7 +1,7 @@
 <h3>Search Movie</h3>
 
 <form class="form">
-    <div class="form-group mx-sm3 mb-2">
+    <div class="search-box">
         <label for="movie" class="sr-only"></label>
         <input
             [(ngModel)]="movie"
@@ -11,7 +11,7 @@
             placeholder="search"
         />
     </div>
-    <button (click)="searchMovie()" type="submit" class="btn btn-primary mb-2">
+    <button (click)="searchMovie()" type="submit" class="search-btn">
         Search
     </button>
 </form>
