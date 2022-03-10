@@ -127,7 +127,10 @@ export class MovieDetailsComponent implements OnInit {
         return Promise.reject(res);
       }
     }).then((data) => {
-      console.log(data);
+      // console.log(data);
+      this.loggedInUser = (data);
+      this.isAdmin = data.is_admin;
+          // console.log(this.loggedInUser, this.isAdmin);
       this.user = (data);
     })
 
@@ -151,59 +154,21 @@ export class MovieDetailsComponent implements OnInit {
         console.log("Review", result?.data?.getReviews);
       });
 
-    fetch(`http://localhost:3005/api/auth`, {
-            method: 'GET',
-            credentials: 'include',
-            headers: { 'Content-Type': 'application/json' },
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            } else {
-                return Promise.reject(res);
-            }
-        }).then((data) => {
-          this.loggedInUser = (data);
-          this.isAdmin = data.is_admin;
-          console.log(this.loggedInUser, this.isAdmin);
-          // this.ref.markForCheck();
-        })
-    // this.apollo
-    //   .watchQuery({
-    //     query: gql`
-    //       {
-    //         getCredentials {
-    //           fname
-    //           lname
-    //           is_admin
-    //           api_key
-    //           user_id
-    //         }
-    //       }
-    //     `,
-    //   })
-    //   .valueChanges.subscribe((result: any) => {
-    //     this.loggedInUser = (result?.data?.getCredentials);
-    //     this.isAdmin = result?.data?.getCredentials?.is_admin;
-    //     console.log(this.loggedInUser, this.isAdmin);
-    //     // this.ref.markForCheck();
-    //   });
-    
+    this.apollo
+      .watchQuery({
+        query: gql`
+        {
+          getRatings(movie_id: "${this.data.id}") {
+            rating
+          }
+        }
+      `,
+      })
+      .valueChanges.subscribe((result: any) => {
+        this.ratings = (result?.data?.getRatings);
+        console.log("Ratings", result?.data?.getRatings);
+        this.getAverageReview();
+      });
 
-    const removeReview = async () => {
-      //TODO: Use this variable
-      let review_id: String = "";
-      this.apollo
-        .watchQuery({
-          query: gql`
-            {
-              deleteReview(review_id: "${review_id}")
-            }
-          `,
-        })
-        .valueChanges.subscribe((result: any) => {
-          //Console.log if the review was removed
-          console.log(`Review (${review_id}) removed: `, result?.data?.deleteReview);
-        });
-    }
   }
 }
