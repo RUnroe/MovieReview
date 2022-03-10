@@ -6,7 +6,7 @@
             <div class='movie-landing-page'>Page {{pageNum}}</div>
         </div>
     </div>
-    <app-search></app-search>
+    <app-search (searchEvent)="updateSearch($event)"></app-search>
     <div class='movie-landing-clickable-wrapper'>
         <div *ngFor="let movie of movies; let i = index">
             <app-movie-image (click)="redirectDetails(i)" [movie]=movie></app-movie-image>

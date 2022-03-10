@@ -66,7 +66,7 @@ export class SearchComponent implements OnInit {
   movies: any[] = [];
   movie: string = "";
 
-  @Output() nameEmitter = new EventEmitter<any> ();
+  @Output() searchEvent = new EventEmitter<any> ();
 
   constructor(private apollo: Apollo, private router: Router) { }
 
@@ -94,6 +94,7 @@ export class SearchComponent implements OnInit {
         .valueChanges.subscribe((result: any) => {
           this.movies = (result?.data?.getMoviesBySearch);
           console.log(this.movies);
+          this.searchEvent.emit(this.movies);
           //TODO: rerender screen here
         });
   }
