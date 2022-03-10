@@ -1,0 +1,66 @@
+<div class='movie-details-wrapper'>
+    <div class='movie-details-header'>
+        <div class='back' (click)="previousPage()">&#8592;</div>
+        <div class='movie-details-container'>
+            <div class='movie-details-banner-container'>
+                <img src="{{'http://image.tmdb.org/t/p/original' + data.backdrop}}" class='movie-details-banner' />
+            </div>
+            <div class='movie-details-bar'>
+                <span class='movie-details-title'>{{data.title}}</span>
+                <div class='movie-details-genre-and-rating '>
+                    <div *ngFor="let genre of data.genres; let i = index">
+                        <div class='movie-details-genre-and-rating'>
+                            {{genre.name}}
+                        </div>
+                    </div>
+                    <app-star-rating (ratingEvent)="addRating($event)" class="star-rating"></app-star-rating> <span class="average-rating">Total User
+                        Rating: {{averageRating}}</span>
+                </div>
+            </div>
+            <div class='movie-details-actors-wrapper'>
+                <div class='movie-details-actors-header'>Actors</div>
+                <div class='movie-details-actors-container'>
+                    <div *ngFor="let actor of data.actors; let i = index">
+                        <div class='actor'>
+                            <span *ngIf="actor.profile_path !== null; else placeholder">
+                                <img src="{{'http://image.tmdb.org/t/p/w500' + actor.profile_path}}" alt={{actor.name}}
+                                    class='movie-details-actor' />
+                            </span>
+                            <ng-template #placeholder>
+                                <img src="./assets/images/placeholder.png" class='movie-details-actor' />
+                            </ng-template>
+                            <div class='movie-details-actor-name'>{{actor.name}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class='movie-details-overview-wrapper'>
+                    <div class='movie-details-overview-header'>Overview</div>
+                    <div class='movie-details-overview-description'>
+                        {{data.overview}}
+                        <img src="{{'http://image.tmdb.org/t/p/w500' + data.poster}}"
+                            class='movie-details-overview-poster' />
+                    </div>
+                </div>
+                <div class='add-review-btn' (click)="toggleModal()">Add Review &#x2B;</div>
+                <app-review-modal [movie_id]="data.id" [isModalOpen]="openModal" (toggleModalEvent)="setModal($event)">
+                </app-review-modal>
+                <div class='reviews-wrapper'>
+                    <div *ngFor="let review of reviews; let i = index">
+                        <div class='reviews-container'>
+                            <div>
+                                <!-- <ng-template [ngIf]="(review.user_id === loggedInUser.user_id) || isAdmin"> -->
+                                    <!-- <span> {{review.user_id === (loggedInUser && loggedInUser.user_id)}} || {{isAdmin}}</span> -->
+                                    <span *ngIf="(loggedInUser && (review.user_id === loggedInUser.user_id)) || isAdmin" class='remove-review' (click)="removeReview(review.review_id)">&#10005;</span>
+                                <!-- </ng-template> -->
+                                <div class='review-description'>{{review.review}}</div>
+                                <div class='reviewer-name' (click)="openDeleteAccountModal(review.user_id, review.user)">-{{review.user}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <app-delete-user-modal [selectedUserId]="selectedUserId" [selectedUserName]="selectedUserName" [isModalOpen]="openDeleteModal" (toggleDeleteModalEvent)="setDeleteModal($event)">
+                </app-delete-user-modal>
+            </div>
+        </div>
+    </div>
+</div>

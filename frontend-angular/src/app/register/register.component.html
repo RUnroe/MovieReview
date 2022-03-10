@@ -1,0 +1,68 @@
+<!-- 
+    const createUser = async () => {
+        await fetch(`http://localhost:3005/api/user`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                fname: firstName,
+                lname: lastName,
+                password: password,
+                email: email,
+                phone: phone,
+                state: state,
+                city: city,
+                street: streetAddress,
+                zip_code: zip
+            })
+        }).then((res) => {
+            if (res.ok) {
+                navigate('/login');
+                return res.json()
+            }
+        });
+    } -->
+
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class='register-wrapper'>
+    <div class='register-header'>Register</div>
+    <div class='register-header-text'>Please fill in this form to create an account</div>
+    <div class='input-name-wrapper'>
+        <input class='register-input' type='text' placeholder='First Name' formControlName="fName" />
+        <input class='register-input' type='text' placeholder='Last Name' formControlName="lName" />
+    </div>
+    <input class='register-input' type='text' placeholder='Street Address' formControlName="street" />
+    <input class='register-input' type='text' placeholder='City' formControlName="city" />
+    <input class='register-input' type='text' placeholder='State' formControlName="state" />
+    <input class='register-input' type='text' placeholder='Zip' formControlName="zip_code" />
+    <input class='register-input' type='text' placeholder='Email' formControlName="email" />
+    <input class='register-input' type='text' placeholder='Phone' formControlName="phone" />
+    <input class='register-input' type='password' placeholder='Password' autoComplete='new-password'
+        formControlName="password" />
+    <div *ngIf="submitted && form['fName'].errors?.['required']" class='error-message-register'>
+        First Name is required.
+    </div>
+    <div *ngIf="submitted && form['lName'].errors?.['required']" class='error-message-register'>
+        Last Name is required.
+    </div>
+    <div *ngIf="submitted && form['street'].errors?.['required']" class='error-message-register'>
+        Street Address is required.
+    </div>
+    <div *ngIf="submitted && form['city'].errors?.['required']" class='error-message-register'>
+        City is required.
+    </div>
+    <div *ngIf="submitted && form['state'].errors?.['required']" class='error-message-register'>
+        State is required.
+    </div>
+    <div *ngIf="submitted && form['zip_code'].errors?.['required']" class='error-message-register'>
+        Zip is required.
+    </div>
+    <div *ngIf="submitted && form['email'].errors?.['required']" class='error-message-register'>
+        Email is required.
+    </div>
+    <div *ngIf="submitted && form['phone'].errors?.['required']" class='error-message-register'>
+        Phone is required.
+    </div>
+    <div *ngIf="submitted && form['password'].errors?.['required']" class='error-message-register'>
+        Password is required.
+    </div>
+    <button type='submit' class='register-btn' (click)="onRedirect()">Create Account</button>
+</form>

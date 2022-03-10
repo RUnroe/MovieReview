@@ -2,11 +2,11 @@ html, body {
     margin: 0;
     padding: 0;
 }
-@font-face {
+/* @font-face {
     font-family: 'BebasNeue-Regular';
     src: local('BebasNeue-Regular'), url('../fonts/BebasNeue-Regular.ttf') format('truetype');
     font-weight: 700;
-}
+} */
 @media screen and (max-width: 699.9px) {
     .header-wrapper {
         display: flex;

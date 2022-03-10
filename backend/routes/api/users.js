@@ -30,8 +30,10 @@ const authenticate = (req, res, next) => {
 				return;
 			}
 			if (value.user_id) {
+				// console.log(value);
 				req.session.user_id = value.user_id;
 				req.session.is_admin = value.is_admin.toString(); // log them in
+				console.log(req.session);
 
 				console.log("session created");
 				res.statusMessage = 'Authenticated';
@@ -46,6 +48,7 @@ const authenticate = (req, res, next) => {
 
 
 const getCredentials = (req, res) => {
+	console.log(req.session);
 	dal.getUserById(req.session.user_id)
 		.then((user) => {
 			res.json(user);

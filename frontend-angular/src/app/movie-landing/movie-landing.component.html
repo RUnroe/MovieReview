@@ -1,0 +1,31 @@
+<div class='movie-landing-wrapper'>
+    <!-- <Search onSearch={changeMovies} /> -->
+    <div class='movie-landing-header-wrapper'>
+        <div class='movie-landing-header'>
+            Movies
+            <div class='movie-landing-page'>Page {{pageNum}}</div>
+        </div>
+    </div>
+    <app-search (searchEvent)="updateSearch($event)"></app-search>
+    <div class='movie-landing-clickable-wrapper'>
+        <div *ngFor="let movie of movies; let i = index">
+            <app-movie-image (click)="redirectDetails(i)" [movie]=movie></app-movie-image>
+        </div>
+    </div>
+    <div class='page-switch-btn-wrapper'>
+        <div>
+            <div *ngIf="pageNum !== 1">
+                <div class='page-switch-btn btn-prev' (click)="changePageDown()">
+                    Previous
+                </div>
+                <div class='btn-first' (click)="changeToFirstPage()">
+                    First Page
+                </div>
+            </div>
+            <div class='bottom-page-number'>Page {{pageNum}}</div>
+            <div class='page-switch-btn btn-next' (click)="changePageUp()">
+                Next
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+<form class='login-wrapper' [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
+    <div class='login-header'>Sign in</div>
+    <input class='login-input' type='text' placeholder='Email' formControlName="email" />
+    <input class='login-input' type='password' placeholder='Password' formControlName="password" />
+    <div *ngIf="submitted && (form['email'].errors?.['required'] || form['password'].errors?.['required'])" class='error-message-register'>
+        Email or password is incorrect.
+    </div>
+    <button type='submit' class='login-btn' (click)="onRedirect()">Sign in</button>
+    <a routerLink='/register' class='login-btn'>Register</a>
+    <a routerLink='/forgotpassword' class='forgot-div'>Forgot Password?</a>
+</form>
