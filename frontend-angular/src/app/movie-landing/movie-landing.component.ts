@@ -40,6 +40,13 @@ export class MovieLandingComponent implements OnInit {
       });
   }
 
+  updateMovies() {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
+  }
+
   //transfer data over but in image not details
   redirectDetails(i: any) {
     console.log(this.movies[i].id);
@@ -87,6 +94,7 @@ export class MovieLandingComponent implements OnInit {
     this.pageNum += 1;
     localStorage.setItem('moviePage', JSON.stringify(this.pageNum));
     this.getMovies();
+    this.updateMovies();
   }
 
   changePageDown() {
@@ -95,15 +103,18 @@ export class MovieLandingComponent implements OnInit {
     }
     localStorage.setItem('moviePage', JSON.stringify(this.pageNum));
     this.getMovies();
+    this.updateMovies();
   }
 
   changeToFirstPage() {
     this.pageNum = ((this.pageNum * 0) + 1);
     localStorage.setItem('moviePage', JSON.stringify(this.pageNum));
+    this.getMovies();
+    this.updateMovies();
   }
 
-  updateSearch() {
-    
+  updateSearch(value: any): void {
+    this.movies = value;
   }
 
   ngOnInit(): void {
