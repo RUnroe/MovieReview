@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 
 @Component({
@@ -13,7 +14,14 @@ export class ReviewModalComponent implements OnInit {
   @Output() toggleModalEvent = new EventEmitter<boolean>();
   user: any = {};
 
-  constructor(private apollo: Apollo) { }
+  constructor(private router: Router, private apollo: Apollo) { }
+
+  updatePage() {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
+  }
 
   addReview(): void {
     let input = { movie_id: `${this.movie_id}`, review: this.userReview, api_key: this.user.api_key }
@@ -29,10 +37,9 @@ export class ReviewModalComponent implements OnInit {
       }
     })
       .subscribe((result: any) => {
-        //Console.log if the review was removed
-        console.log(`Review for movie (${this.movie_id}) created: `, result?.data?.createReview);
         this.closeModal();
-      });
+        window.location.reload();
+      });      
   }
   openModal(): void {
     console.log("open modal")

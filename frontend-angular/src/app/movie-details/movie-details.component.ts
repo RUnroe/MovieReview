@@ -1,34 +1,27 @@
 import { Location } from '@angular/common';
-import { ChangeDetectionStrategy } from '@angular/compiler';
-import { ChangeDetectorRef, Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 
 @Component({
   selector: 'app-movie-details',
   templateUrl: './movie-details.component.html',
-  styleUrls: ['./movie-details.component.css'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./movie-details.component.css']
 })
 export class MovieDetailsComponent implements OnInit {
   @Output() movie_id: string = "557"; //634649
   @Input() loggedInUser: any = {};
   @Input() isAdmin: Boolean = false;
-  // reviews: any[] = [];
+  reviews: any[] = [];
   ratings: any[] = [];
-  averageRating: any = 'N/A';
+  averageRating: any = '';
   @Output() openModal: boolean = false;
-  data: any = history.state;
+  stateData: any = history.state;
+  info: any =  localStorage.getItem('movieDetails');
+  data: any = JSON.parse(this.info);
   user: any = {};
 
-  reviews: any[] = [{
-    review: 'this is test review',
-    user: 'Billy'
-  }, {
-    review: 'ayooooo',
-    user: 'Bob'
-  }];
-
-  constructor(private location: Location, private apollo: Apollo) { }
+  constructor(private router: Router, private location: Location, private apollo: Apollo) { }
 
   toggleModal(): void {
     this.openModal = !this.openModal;
@@ -39,6 +32,13 @@ export class MovieDetailsComponent implements OnInit {
 
   previousPage() {
     this.location.back();
+  }
+
+  updatePage() {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
   }
 
   addRating(value: any): void {
@@ -57,17 +57,9 @@ export class MovieDetailsComponent implements OnInit {
       .subscribe((result: any) => {
         console.log(`Review for movie (${this.data.id}) created: `, result?.data?.createRating);
       });
-    console.log(value);
   }
 
   removeReview(review_id: String): void {
-    // fetch(`http://localhost:3005/api/review/${review_id}`, {
-    //       method: 'DELETE',
-    //       credentials: 'include',
-    //       headers: { 'Content-Type': 'application/json' }
-    //   }).then(res => {
-    //       return res.json();
-    //   })
     let input = {
       api_key: this.loggedInUser.api_key,
       review_id
@@ -82,10 +74,8 @@ export class MovieDetailsComponent implements OnInit {
         input
       }
     })
-    .subscribe((result: any) => {
-      //Console.log if the review was removed
-      console.log(`Review for movie (${this.movie_id}) created: `, result?.data?.createReview);
-    });
+      .subscribe((result: any) => {
+      });
   }
 
   getAverageReview() {
@@ -97,29 +87,18 @@ export class MovieDetailsComponent implements OnInit {
 
     let average = Math.round(total / this.ratings.length);
 
+    // if (isNaN(average)) {
+    //   this.averageRating = 'N/A';
+    // }
+
     this.averageRating = average;
   }
 
   ngOnInit(): void {
-    // localStorage.setItem('movieDetails', JSON.stringify(this.data));
-    // localStorage.getItem('movieDetails');
-
-    // this.apollo
-    // .watchQuery({
-    //   query: gql`
-    //     {
-    //       getRatings(movie_id: "${this.data.id}") {
-    //         movie_id
-    //         user_id
-    //         rating
-    //       }
-    //     }
-    //   `,
-    // })
-    // .valueChanges.subscribe((result: any) => {
-    //   this.ratings = (result?.data?.getRatings);
-    //   console.log(this.ratings);
-    // });
+    if (localStorage.getItem('movieDetails') === null) {
+      localStorage.setItem('movieDetails', JSON.stringify(this.stateData));
+      this.updatePage();
+    }
 
     fetch(`http://localhost:3005/api/auth`, {
       method: 'GET',
@@ -135,10 +114,9 @@ export class MovieDetailsComponent implements OnInit {
       // console.log(data);
       this.loggedInUser = (data);
       this.isAdmin = data.is_admin;
-          // console.log(this.loggedInUser, this.isAdmin);
+      // console.log(this.loggedInUser, this.isAdmin);
       this.user = (data);
     })
-
 
     this.apollo
       .watchQuery({
@@ -156,7 +134,7 @@ export class MovieDetailsComponent implements OnInit {
       })
       .valueChanges.subscribe((result: any) => {
         this.reviews = (result?.data?.getReviews);
-        console.log("Review", result?.data?.getReviews);
+        // console.log("Review", result?.data?.getReviews);
       });
 
     this.apollo
@@ -171,7 +149,7 @@ export class MovieDetailsComponent implements OnInit {
       })
       .valueChanges.subscribe((result: any) => {
         this.ratings = (result?.data?.getRatings);
-        console.log("Ratings", result?.data?.getRatings);
+        // console.log("Ratings", result?.data?.getRatings);
         this.getAverageReview();
       });
 

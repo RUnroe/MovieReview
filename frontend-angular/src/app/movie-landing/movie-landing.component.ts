@@ -47,9 +47,8 @@ export class MovieLandingComponent implements OnInit {
     this.router.navigate([currentUrl]);
   }
 
-  //transfer data over but in image not details
   redirectDetails(i: any) {
-    console.log(this.movies[i].id);
+    localStorage.removeItem('movieDetails');
     this.apollo
       .watchQuery({
         query: gql`

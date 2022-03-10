@@ -44,8 +44,6 @@ export class StarRatingComponent implements OnInit {
   ngOnInit(): void {}
 
   selectStar(value: any): void {
-    // prevent multiple selection
-    // if (this.selectedRating === 0) {
       this.stars.filter((star) => {
         if (star.id <= value) {
           star.class = 'star-gold star';
@@ -54,7 +52,6 @@ export class StarRatingComponent implements OnInit {
         }
         return star;
       });
-    // }
     this.selectedRating = value;
     this.ratingEvent.emit(value);
   }
