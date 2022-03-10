@@ -37,8 +37,8 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   addRating(value: any): void {
-    let input = { movie_id: this.data.id, rating: value, api_key: this.user.api_key }
-
+    let input = { movie_id: `${this.data.id}`, rating: value, api_key: this.user.api_key }
+    console.log("input", input);
     this.apollo.mutate({
       mutation: gql`
         mutation CreateRating($input: RatingInput) {
